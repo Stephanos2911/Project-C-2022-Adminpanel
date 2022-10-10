@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Project_C.Models
+namespace AdminApplication.Models
 {
     public class Product
     {

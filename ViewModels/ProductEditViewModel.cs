@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Project_C.ViewModels
+namespace AdminApplication.ViewModels
 {
     public class ProductEditViewModel : ProductCreateViewModel
     {

@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography.X509Certificates;
 
-namespace Project_C.Models
+namespace AdminApplication.Models
 {
     public class ProductRepository : IProductRepository
     {

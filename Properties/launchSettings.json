@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "Project_C": {
+    "AdminApplication": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

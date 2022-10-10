@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Project_C.Models;
-using Project_C.ViewModels;
+using AdminApplication.Models;
+using AdminApplication.ViewModels;
 using System.Diagnostics;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
-namespace Project_C.Controllers
+namespace AdminApplication.Controllers
 {
     public class HomeController : Controller
     {
@@ -166,6 +166,13 @@ namespace Project_C.Controllers
         {
             string filePath = Path.Combine(hostingEnvironment.WebRootPath, "images" , uniqueName);
             System.IO.File.Delete(filePath);
+        }
+
+        private string ProcessYoutubeLink(string originalLink)
+        {
+            string processedLink = null;
+
+            return processedLink;
         }
     }
 }

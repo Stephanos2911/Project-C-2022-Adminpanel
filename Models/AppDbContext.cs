@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Project_C.Models
+namespace AdminApplication.Models
 {
     public class AppDbContext : DbContext
     {

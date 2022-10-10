@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Project_C.Migrations
+namespace AdminApplication.Migrations
 {
     public partial class PhotoPathColumn : Migration
     {

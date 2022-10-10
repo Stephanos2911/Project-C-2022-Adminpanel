@@ -1,0 +1,60 @@
+﻿@model Project_C.Models.Product
+
+@{
+    ViewData["Title"] = "Details";
+    var photoPath = "";
+    if(Model.PhotoPath != null){
+        photoPath = "~/images/" + (Model.PhotoPath ?? "noimage");
+    }
+}
+
+
+<h1>Details</h1>
+<div class="navbar-nav-scroll">
+    <div class="divTableBody">
+        <div class="divTableRow">
+            <h4>Name</h4>
+            <div class="divTableCell">&nbsp;  @Html.DisplayFor(model => model.Name)</div>
+        </div>
+        <div class="divTableRow">
+            <h4>Description</h4>
+            <div class="divTableCell">&nbsp; @Html.DisplayFor(model => model.Description)</div>
+        </div>
+        <div class="divTableRow">
+            <<h4>Price</h4>
+            <div class="divTableCell">&nbsp; @Html.DisplayFor(model => model.Price)</div>
+        </div>
+        <div class="divTableRow">
+            <h4>Place</h4>
+            <div class="divTableCell">&nbsp; @Html.DisplayFor(model => model.Place)</div>
+        </div>
+
+        <h2>Content</h2>
+
+        <div class="divTableRow">
+            <h4>Product Picture</h4>
+            <div class="divTableCell">&nbsp; Photo</div>
+            <div class="divTableCell">
+                &nbsp;
+                <img class="img-fluid" src="@photoPath" asp-append-version="true" style="width:30%" />
+            </div>
+        </div>
+
+        <h4>Youtube Video</h4>
+        <iframe width="560" height="315" src="@Model.VideoLink" title="YouTube video player">
+        </iframe>
+
+
+
+        <div>
+            <form>
+                <div class="form-group">
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+

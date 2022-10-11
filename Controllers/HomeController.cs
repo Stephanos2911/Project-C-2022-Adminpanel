@@ -23,6 +23,11 @@ namespace AdminApplication.Controllers
             hostingEnvironment = hostingenvironment;
         }
 
+        public IActionResult HomePage()
+        {
+            return View();
+        }
+
         public IActionResult Index()
         {
             var listOfAllProducts = _productRepository.GetAllProducts();

@@ -59,11 +59,20 @@ namespace AdminApplication.Controllers
         }
 
 
-        //shows detail.cshtml of product
-        public ViewResult Details(int? id)
+        public IActionResult Details(int? id)
         {
-            Product selectedProduct = _productRepository.GetProduct(id ?? 1);
-            return View(selectedProduct);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var product = _productRepository.GetProduct(id?? 1);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
         }
 
 
@@ -136,6 +145,7 @@ namespace AdminApplication.Controllers
                 string correctVideoLink = product.VideoLink;
                 Product newProduct = new Product
                 {
+                    Id = product.Id,
                     Name = product.Name,
                     Description = product.Description,
                     Price = product.Price,
@@ -143,11 +153,10 @@ namespace AdminApplication.Controllers
                     PhotoPath = uniqueFileName,
                     VideoLink = correctVideoLink
                 };
-                _productRepository.AddProduct(newProduct);
-                return RedirectToAction("Details", new { id = newProduct.Id });
+                Product X = _productRepository.AddProduct(newProduct);
             }
 
-            return View();
+            return RedirectToAction("Index");
         }
 
         private string ProcessUploadedFile(ProductCreateViewModel product)
@@ -162,6 +171,7 @@ namespace AdminApplication.Controllers
                 {
                     product.Photo.CopyTo(fileStream);
                 }
+
             }
 
             return uniqueFileName;

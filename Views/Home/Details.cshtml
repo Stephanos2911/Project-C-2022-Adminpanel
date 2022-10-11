@@ -2,10 +2,7 @@
 
 @{
     ViewData["Title"] = "Details";
-    var photoPath = "";
-    if(Model.PhotoPath != null){
-        photoPath = "~/images/" + (Model.PhotoPath ?? "noimage");
-    }
+    var photoPath = "~/images/" + Model.PhotoPath;
 }
 
 

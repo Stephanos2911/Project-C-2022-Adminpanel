@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using AdminApplication.Models;
+using Project_C.Models.StoreModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ builder.Services.AddDbContextPool<AppDbContext>(
     options => options.UseSqlServer(employeeConnectionString));
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IProductRepository, SQLProductRepository>();
+builder.Services.AddScoped<IStoreRepository, SQLStoreRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

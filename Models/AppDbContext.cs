@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Project_C.Models.StoreModels;
 
 namespace AdminApplication.Models
 {
@@ -11,5 +12,8 @@ namespace AdminApplication.Models
         }
 
         public DbSet<Product> Products { get; set; }
+
+        public DbSet<Store> Stores { get; set; }
     }
+
 }

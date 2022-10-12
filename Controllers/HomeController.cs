@@ -5,6 +5,7 @@ using AdminApplication.Models;
 using AdminApplication.ViewModels;
 using System.Diagnostics;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+using Project_C.Models.StoreModels;
 
 namespace AdminApplication.Controllers
 {
@@ -12,15 +13,66 @@ namespace AdminApplication.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IProductRepository _productRepository;
+        private readonly IStoreRepository _storeRepository;
         private readonly IHostingEnvironment hostingEnvironment;
         
 
-        public HomeController(ILogger<HomeController> logger, IHostingEnvironment hostingenvironment, IProductRepository productRepository)
+        public HomeController(ILogger<HomeController> logger, IHostingEnvironment hostingenvironment, IProductRepository productRepository, 
+            IStoreRepository storerepository)
         {
 
             _logger = logger;
             _productRepository = productRepository;
             hostingEnvironment = hostingenvironment;
+            _storeRepository = storerepository;
+        }
+
+        [HttpGet]
+        public IActionResult AddStore()
+        {
+            return View();
+        }
+        public IActionResult StoreIndex()
+        {
+            var listOfAllStores = _storeRepository.GetAllStores();
+            return View(listOfAllStores);
+        }
+
+
+
+        [HttpPost]
+        public IActionResult AddStore(StoreCreateViewModel store)
+        {
+            if (ModelState.IsValid)
+            {
+                string uniqueFileName = ProcessUploadedFile(store.LogoFile);
+                Store newStore = new Store
+                {
+                    Id = store.Id,
+                    Name = store.Name,
+                    SiteLink = store.SiteLink,
+                    LogoPath = uniqueFileName,
+                };
+                Store X = _storeRepository.AddStore(newStore);
+            }
+
+            return RedirectToAction("StoreIndex");
+        }
+
+        public IActionResult StoreDetails(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var store = _storeRepository.GetStore(id ?? 1);
+            if (store == null)
+            {
+                return NotFound();
+            }
+
+            return View(store);
         }
 
         public IActionResult HomePage()
@@ -35,11 +87,38 @@ namespace AdminApplication.Controllers
         }
 
         [HttpGet]
+        public ViewResult DeleteStore(int? id)
+        {
+            Store selectedStore = _storeRepository.GetStore(id ?? 1);
+            return View(selectedStore);
+        }
+
+
+
+        [HttpGet]
         public ViewResult Delete(int? id)
         {
             Product selectedProduct = _productRepository.GetProduct(id ?? 1);
             return View(selectedProduct);
         }
+
+        //Deletes the product and redirects to index after confirmation has been asked
+        [HttpPost, ActionName("DeleteStore")]
+        public IActionResult DeleteStore(int id)
+        {
+            Store selectedStore = _storeRepository.GetStore(id);
+            if (selectedStore != null)
+            {
+                if (selectedStore.LogoPath != null)
+                {
+                    DeletePicture(selectedStore.LogoPath);
+                }
+                _storeRepository.DeleteStore(selectedStore.Id);
+            }
+            return RedirectToAction("StoreIndex");
+        }
+
+
 
 
         //Deletes the product and redirects to index after confirmation has been asked
@@ -111,7 +190,7 @@ namespace AdminApplication.Controllers
                     {
                         DeletePicture(productChanges.ExistingPhotoPath);
                     }
-                    product.PhotoPath = ProcessUploadedFile(productChanges);
+                    product.PhotoPath = ProcessUploadedFile(productChanges.Photo);
                 }
 
                 _productRepository.UpdateProduct(product);
@@ -141,7 +220,7 @@ namespace AdminApplication.Controllers
         {
             if (ModelState.IsValid)
             {
-                string uniqueFileName = ProcessUploadedFile(product);
+                string uniqueFileName = ProcessUploadedFile(product.Photo);
                 string correctVideoLink = product.VideoLink;
                 Product newProduct = new Product
                 {
@@ -159,23 +238,25 @@ namespace AdminApplication.Controllers
             return RedirectToAction("Index");
         }
 
-        private string ProcessUploadedFile(ProductCreateViewModel product)
+        private string ProcessUploadedFile(IFormFile image)
         {
             string uniqueFileName = null;
-            if (product.Photo != null)
+            if (image != null)
             {
                 string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + product.Photo.FileName;
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    product.Photo.CopyTo(fileStream);
+                    image.CopyTo(fileStream);
                 }
 
             }
 
             return uniqueFileName;
         }
+
+
 
         private void DeletePicture(string uniqueName)
         {

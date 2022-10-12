@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Project_C.Models.StoreModels.Store>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>All Stores</h1>
+
+
+<a asp-controller="Home" asp-action="AddStore"><input class="btn btn-primary" value="Add new Store" /></a>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <form asp-action="View">
+                        <div class="form-group">
+                            <a class="btn btn-primary" asp-action="StoreDetails" asp-route-id="@item.Id">View</a>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@*                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+@*                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>*@

@@ -7,7 +7,7 @@
 <h1>All Stores</h1>
 
 
-<a asp-controller="Home" asp-action="AddStore"><input class="btn btn-primary" value="Add new Store" /></a>
+<a asp-controller="Store" asp-action="AddStore"><input class="btn btn-success" value="Add new Store" /></a>
 
 
 <table class="table">
@@ -15,6 +15,9 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                Logo
             </th>
             <th></th>
         </tr>
@@ -27,9 +30,17 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
+                    @{
+                        var photoPath = "~/images/StoreLogos/" + item.LogoPath;
+                    }
+                    <img class="img-fluid" src="@photoPath"  asp-append-version="true" style="width:7.5%" />
+                </td>
+                <td>
                     <form asp-action="View">
-                        <div class="form-group">
+                        <div class="btn-group">
                             <a class="btn btn-primary" asp-action="StoreDetails" asp-route-id="@item.Id">View</a>
+                             <a class="btn btn-primary" asp-action="EditStore" asp-route-id="@item.Id">Edit</a>
+                            <a class="btn btn-danger" asp-action="DeleteStore" asp-route-id="@item.Id">Delete</a>
                         </div>
                     </form>
                 </td>

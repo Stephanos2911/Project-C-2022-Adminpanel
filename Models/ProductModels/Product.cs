@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
-namespace AdminApplication.Models
+namespace Project_C.Models.ProductModels
 {
     public class Product
     {
@@ -12,7 +12,7 @@ namespace AdminApplication.Models
         [Required]
         public string Description { get; set; }
         [Required]
-        public double Price { get; set; }
+        public float Price { get; set; }
         public string Place { get; set; }
 
         public string? PhotoPath { get; set; }

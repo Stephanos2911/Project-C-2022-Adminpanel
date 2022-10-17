@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AdminApplication.Models.Product>
+﻿@model IEnumerable<Project_C.Models.ProductModels.Product>
 
 @{
     ViewData["Title"] = "Index";
@@ -7,7 +7,7 @@
 <h1>All Products</h1>
 
 
-<a asp-controller="Home" asp-action="Create"><input class="btn btn-primary" value="Add new Product" /></a>
+<a asp-controller="Product" asp-action="AddProduct"><input class="btn btn-success" value="Add new Product" /></a>
 
 
 <table class="table">
@@ -40,8 +40,10 @@
                 </td>
                 <td>
                     <form asp-action="View">
-                        <div class="form-group">
-                            <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">View</a>
+                        <div class="btn-group">
+                            <a class="btn btn-primary" asp-action="ProductDetails" asp-route-id="@item.Id">View</a>
+                            <a class="btn btn-primary" asp-action="EditProduct" asp-route-id="@item.Id">Edit</a>
+                            <a class="btn btn-danger" asp-action="DeleteProduct" asp-route-id="@item.Id">Delete</a>
                         </div>
                     </form>
                 </td>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Project_C.Models.ProductModels;
 using Project_C.Models.StoreModels;
 
 namespace AdminApplication.Models

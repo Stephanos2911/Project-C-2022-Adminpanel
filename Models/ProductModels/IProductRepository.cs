@@ -1,4 +1,4 @@
-﻿namespace AdminApplication.Models
+﻿namespace Project_C.Models.ProductModels
 {
     public interface IProductRepository
     {

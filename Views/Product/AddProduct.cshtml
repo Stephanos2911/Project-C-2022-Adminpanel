@@ -9,7 +9,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post" enctype="multipart/form-data" asp-action="Create" asp-controller="Home">
+        <form method="post" enctype="multipart/form-data" asp-action="AddProduct" asp-controller="Product">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -57,7 +57,7 @@
 
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
-                <a class="btn btn-primary" asp-controller="Home" asp-action="Index">Back </a>
+                <a class="btn btn-primary" asp-controller="Product" asp-action="ProductIndex">Back </a>
             </div>
 
 

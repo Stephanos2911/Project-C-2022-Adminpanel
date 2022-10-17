@@ -1,11 +1,13 @@
-﻿namespace AdminApplication.Models
+﻿using AdminApplication.Models;
+
+namespace Project_C.Models.ProductModels
 {
     public class SQLProductRepository : IProductRepository
     {
         private readonly AppDbContext _context;
         public SQLProductRepository(AppDbContext context)
         {
-            this._context = context;
+            _context = context;
         }
 
 
@@ -19,7 +21,7 @@
         public void DeleteProduct(int id)
         {
             Product product = _context.Products.Find(id);
-            if(product != null)
+            if (product != null)
             {
                 _context.Products.Remove(product);
                 _context.SaveChanges();

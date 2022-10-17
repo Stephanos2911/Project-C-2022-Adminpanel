@@ -10,7 +10,7 @@
 
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit" asp-controller="Home" method="post">
+        <form asp-action="EditProduct" asp-controller="Product" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="ExistingPhotoPath" />
@@ -47,10 +47,20 @@
                 <span asp-validation-for="Place" class="text-danger"></span>
             </div>
 
+
+            <label class="control-label">Upload Product Picture</label>
+            <div class="input-group mb-1">
+                <div class="custom-file">
+                    <input asp-for="Photo" class="form-control custom-file-input" />
+                </div>
+            </div>
+
+
             <div class="form-group">
-                <input type="submit" value="Update" class="btn btn-primary" />
-                <a class="btn btn-primary" asp-controller="Home" asp-action="Index">Back </a>
+                <input type="submit" value="Update" class="btn btn-success" />
+                <a class="btn btn-primary" asp-controller="Product" asp-action="ProductIndex">Back </a>
             </div>
         </form>
+
     </div>
 </div>

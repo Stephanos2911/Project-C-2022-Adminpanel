@@ -9,16 +9,16 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post" enctype="multipart/form-data" asp-action="AddStore" asp-controller="Home">
+        <form method="post" enctype="multipart/form-data" asp-action="AddStore" asp-controller="Store">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" placeholder="name of Store" />
+                <input asp-for="Name" class="form-control" placeholder="for example: Amazon" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SiteLink" class="control-label"></label>
-                <input asp-for="SiteLink" class="form-control" />
+                <label asp-for="SiteLink" class="control-label">Link to Store website</label>
+                <input asp-for="SiteLink" class="form-control" placeholder="Link to Store Website (www.Amazon.nl)" />
                 <span asp-validation-for="SiteLink" class="text-danger"></span>
             </div>
 
@@ -32,7 +32,7 @@
 
             <div class="form-group">
                 <input type="submit" value="Add Store" class="btn btn-primary" />
-                <a class="btn btn-primary" asp-controller="Home" asp-action="StoreIndex">Back </a>
+                <a class="btn btn-primary" asp-controller="Store" asp-action="StoreIndex">Back </a>
             </div>
 
         </form>

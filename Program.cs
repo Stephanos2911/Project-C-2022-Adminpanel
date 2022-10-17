@@ -1,13 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using AdminApplication.Models;
 using Project_C.Models.StoreModels;
+using Project_C.Models.ProductModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var employeeConnectionString = builder.Configuration.GetConnectionString("ProductDBConnection");
+var DatabaseConnectionString = builder.Configuration.GetConnectionString("ProjectCDBConnection");
 builder.Services.AddDbContextPool<AppDbContext>(
-    options => options.UseSqlServer(employeeConnectionString));
+    options => options.UseSqlServer(DatabaseConnectionString));
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IProductRepository, SQLProductRepository>();
 builder.Services.AddScoped<IStoreRepository, SQLStoreRepository>();
@@ -30,6 +31,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=HomePage}/{id?}");
 
 app.Run();

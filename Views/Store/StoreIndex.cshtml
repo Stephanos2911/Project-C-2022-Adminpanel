@@ -1,20 +1,32 @@
 ﻿@model IEnumerable<Project_C.Models.StoreModels.Store>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "StoreIndex";
 }
 
 <h1>All Stores</h1>
 
 
 <a asp-controller="Store" asp-action="AddStore"><input class="btn btn-success" value="Add new Store" /></a>
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
 
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
 
 <table class="table">
     <thead>
         <tr>
-            <th>
+            <th style="width:20%">
                 @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th style="width:25%">
+                @Html.DisplayNameFor(model => model.SiteLink)
             </th>
             <th>
                 Logo
@@ -30,10 +42,13 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.SiteLink)
+                </td>
+                <td>
                     @{
                         var photoPath = "~/images/StoreLogos/" + item.LogoPath;
                     }
-                    <img class="img-fluid" src="@photoPath"  asp-append-version="true" style="width:7.5%" />
+                    <img class="img-fluid" src="@photoPath"  asp-append-version="true" style="width:12%" />
                 </td>
                 <td>
                     <form asp-action="View">
@@ -48,5 +63,3 @@
         }
     </tbody>
 </table>
-@*                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
-@*                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>*@

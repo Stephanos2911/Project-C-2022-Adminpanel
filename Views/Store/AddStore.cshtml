@@ -1,10 +1,10 @@
 ﻿@model AdminApplication.ViewModels.StoreCreateViewModel
 
 @{
-    ViewData["Title"] = "Create Product";
+    ViewData["Title"] = "Create Store";
 }
 
-<h1>Create new product for Database</h1>
+<h1>Create new Store for Database</h1>
 
 <hr />
 <div class="row">
@@ -18,15 +18,15 @@
             </div>
             <div class="form-group">
                 <label asp-for="SiteLink" class="control-label">Link to Store website</label>
-                <input asp-for="SiteLink" class="form-control" placeholder="Link to Store Website (www.Amazon.nl)" />
+                <input asp-for="SiteLink" class="form-control" placeholder="Link to store website (www.Amazon.nl)" />
                 <span asp-validation-for="SiteLink" class="text-danger"></span>
             </div>
 
-
-            <label class="control-label">Upload Store Logo</label>
+            <label class="control-label">upload store logo</label>
             <div class="input-group mb-1">
                 <div class="custom-file">
                     <input asp-for="LogoFile" class="form-control custom-file-input" />
+                    <span asp-validation-for="LogoFile" class="text-danger"></span>
                 </div>
             </div>
 

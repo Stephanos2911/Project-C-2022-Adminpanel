@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AdminApplication.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(ApplicatieDbContext))]
     [Migration("20221016214839_switchdoubletoFloat")]
     partial class switchdoubletoFloat
     {

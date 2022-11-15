@@ -10,7 +10,7 @@ using AdminApplication.Models;
 
 namespace AdminApplication.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(ApplicatieDbContext))]
     [Migration("20221007164257_PhotoPathColumn")]
     partial class PhotoPathColumn
     {

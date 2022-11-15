@@ -134,24 +134,19 @@ namespace Project_C.Controllers
         [HttpPost]
         public IActionResult AddProduct(ProductCreateViewModel product)
         {
-            if (ModelState.IsValid)
+            string uniqueFileName = ProcessUploadedFile(product.Photo, "ProductImages");
+            string correctVideoLink = product.VideoLink;
+            Product newProduct = new Product
             {
-                string uniqueFileName = ProcessUploadedFile(product.Photo, "ProductImages");
-                string correctVideoLink = product.VideoLink;
-                Product newProduct = new Product
-                {
-                    Id = product.Id,
-                    Name = product.Name,
-                    Description = product.Description,
-                    Price = product.Price,
-                    Place = product.Place,
-                    PhotoPath = uniqueFileName,
-                    VideoLink = correctVideoLink
-                };
-                _productRepository.AddProduct(newProduct);
-                return RedirectToAction("ProductDetails", new { id = newProduct.Id });
-            }
-
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                Price = product.Price,
+                Place = product.Place,
+                PhotoPath = uniqueFileName,
+                VideoLink = correctVideoLink
+            };
+            _productRepository.AddProduct(newProduct);
             return RedirectToAction("ProductIndex");
         }
 

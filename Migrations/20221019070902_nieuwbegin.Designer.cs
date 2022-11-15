@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AdminApplication.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(ApplicatieDbContext))]
     [Migration("20221019070902_nieuwbegin")]
     partial class nieuwbegin
     {

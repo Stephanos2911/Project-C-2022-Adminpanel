@@ -10,7 +10,7 @@ using AdminApplication.Models;
 
 namespace AdminApplication.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(ApplicatieDbContext))]
     [Migration("20221009221402_nullable photoandvideo")]
     partial class nullablephotoandvideo
     {

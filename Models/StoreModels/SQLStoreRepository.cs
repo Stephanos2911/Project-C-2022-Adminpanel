@@ -4,8 +4,8 @@ namespace Project_C.Models.StoreModels
 {
     public class SQLStoreRepository : IStoreRepository
     {
-        private readonly AppDbContext _context;
-        public SQLStoreRepository(AppDbContext context)
+        private readonly ApplicatieDbContext _context;
+        public SQLStoreRepository(ApplicatieDbContext context)
         {
             this._context = context;
         }

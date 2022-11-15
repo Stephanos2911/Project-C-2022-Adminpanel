@@ -4,8 +4,8 @@ namespace Project_C.Models.ProductModels
 {
     public class SQLProductRepository : IProductRepository
     {
-        private readonly AppDbContext _context;
-        public SQLProductRepository(AppDbContext context)
+        private ApplicatieDbContext _context;
+        public SQLProductRepository(ApplicatieDbContext context)
         {
             _context = context;
         }

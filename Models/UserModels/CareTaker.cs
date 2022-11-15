@@ -1,7 +1,16 @@
-﻿namespace Project_C.Models.UserModels
+﻿using Microsoft.Build.Framework;
+
+namespace Project_C.Models.UserModels
 {
-    public class CareTaker : User
+    public class CareTaker
     {
-        public Guid SeniorId { get; set; }
+        [Required]
+        public Guid Id { get; set; }
+        [Required]
+        public string Password { get; set; }
+        [Required]
+        public string Email { get; set; }
+        public List<Guid> SeniorId { get; set; }
+
     }
 }

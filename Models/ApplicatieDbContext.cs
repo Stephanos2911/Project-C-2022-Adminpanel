@@ -4,9 +4,9 @@ using Project_C.Models.StoreModels;
 
 namespace AdminApplication.Models
 {
-    public class AppDbContext : DbContext
+    public class ApplicatieDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) 
+        public ApplicatieDbContext(DbContextOptions<ApplicatieDbContext> options) 
             : base(options)
         {
 

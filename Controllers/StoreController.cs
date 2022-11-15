@@ -15,7 +15,6 @@ namespace Project_C.Controllers
 
         public StoreController(ILogger<HomeController> logger, IWebHostEnvironment hostingenvironment, IStoreRepository storeRepository)
         {
-
             _logger = logger;
             _storeRepository = storeRepository;
             hostingEnvironment = hostingenvironment;
@@ -146,7 +145,7 @@ namespace Project_C.Controllers
         }
 
         //Deletes the product and redirects to index after confirmation has been asked
-        [HttpPost, ActionName("DeleteStore")]
+        [HttpPost,ActionName("DeleteStore")]
         public IActionResult DeleteStore(int id)
         {
             Store selectedStore = _storeRepository.GetStore(id);
@@ -169,7 +168,5 @@ namespace Project_C.Controllers
                 System.IO.File.Delete(filePath);
             }
         }
-
-
     }
 }

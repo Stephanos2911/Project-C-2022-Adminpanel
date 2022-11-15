@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var DatabaseConnectionString = builder.Configuration.GetConnectionString("ProjectCDBConnection");
-builder.Services.AddDbContextPool<ApplicatieDbContext>(
+builder.Services.AddDbContextPool<ApplicationDbContext>(
     options => options.UseSqlServer(DatabaseConnectionString));
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IProductRepository, SQLProductRepository>();

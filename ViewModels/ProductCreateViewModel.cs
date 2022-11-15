@@ -4,7 +4,7 @@ namespace AdminApplication.ViewModels
 {
     public class ProductCreateViewModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Required(ErrorMessage = "product name is required")]
         [MinLength(1, ErrorMessage = "name is too short or too long")]
         public string Name { get; set; }

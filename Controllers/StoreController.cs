@@ -28,9 +28,9 @@ namespace Project_C.Controllers
 
 
         [HttpGet]
-        public ViewResult EditStore(int? id)
+        public ViewResult EditStore(Guid id)
         {
-            Store selectedStore = _storeRepository.GetStore(id ?? 1);
+            Store selectedStore = _storeRepository.GetStore(id);
             StoreEditViewModel storeEditViewModel = new StoreEditViewModel
             {
                 Id = selectedStore.Id,
@@ -121,14 +121,14 @@ namespace Project_C.Controllers
             return RedirectToAction("StoreIndex");
         }
 
-        public IActionResult StoreDetails(int? id)
+        public IActionResult StoreDetails(Guid id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var store = _storeRepository.GetStore(id ?? 1);
+            var store = _storeRepository.GetStore(id);
             if (store == null)
             {
                 return NotFound();
@@ -138,15 +138,15 @@ namespace Project_C.Controllers
         }
 
         [HttpGet]
-        public ViewResult DeleteStore(int? id)
+        public ViewResult DeleteStore(Guid id)
         {
-            Store selectedStore = _storeRepository.GetStore(id ?? 1);
+            Store selectedStore = _storeRepository.GetStore(id);
             return View(selectedStore);
         }
 
         //Deletes the product and redirects to index after confirmation has been asked
         [HttpPost,ActionName("DeleteStore")]
-        public IActionResult DeleteStore(int id)
+        public IActionResult ConfirmDeleteStore(Guid id)
         {
             Store selectedStore = _storeRepository.GetStore(id);
             if (selectedStore != null)

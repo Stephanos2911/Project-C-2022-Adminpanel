@@ -2,11 +2,11 @@
 {
     public interface IProductRepository
     {
-        Product GetProduct(int id);
+        Product GetProduct(Guid id);
         IEnumerable<Product> GetAllProducts();
 
         Product AddProduct(Product product);
         Product UpdateProduct(Product product);
-        void DeleteProduct(int id);
+        void DeleteProduct(Guid id);
     }
 }

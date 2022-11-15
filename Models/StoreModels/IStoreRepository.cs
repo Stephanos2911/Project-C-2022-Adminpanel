@@ -4,12 +4,12 @@ namespace Project_C.Models.StoreModels
 {
     public interface IStoreRepository
     {
-        Store GetStore(int id);
+        Store GetStore(Guid id);
         IEnumerable<Store> GetAllStores();
 
         Store AddStore(Store store);
         Store UpdateStore(Store store);
-        void DeleteStore(int id);
+        void DeleteStore(Guid id);
 
     }
 }

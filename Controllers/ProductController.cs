@@ -30,9 +30,9 @@ namespace Project_C.Controllers
         }
 
         [HttpGet]
-        public ViewResult EditProduct(int? id)
+        public ViewResult EditProduct(Guid id)
         {
-            Product selectedProduct = _productRepository.GetProduct(id ?? 1);
+            Product selectedProduct = _productRepository.GetProduct(id);
             ProductEditViewModel productEditViewModel = new ProductEditViewModel
             {
                 Id = selectedProduct.Id,
@@ -86,15 +86,15 @@ namespace Project_C.Controllers
 
 
         [HttpGet]
-        public ViewResult DeleteProduct(int? id)
+        public ViewResult DeleteProduct(Guid id)
         {
-            Product selectedProduct = _productRepository.GetProduct(id ?? 1);
+            Product selectedProduct = _productRepository.GetProduct(id);
             return View(selectedProduct);
         }
 
         //Deletes the product and redirects to index after confirmation has been asked
         [HttpPost, ActionName("DeleteProduct")]
-        public IActionResult DeleteProduct(int id)
+        public IActionResult ConfirmDeleteProduct(Guid id)
         {
             Product selectedProduct = _productRepository.GetProduct(id);
             if (selectedProduct != null)
@@ -108,14 +108,14 @@ namespace Project_C.Controllers
             return RedirectToAction("ProductIndex");
         }
 
-        public IActionResult ProductDetails(int? id)
+        public IActionResult ProductDetails(Guid id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var product = _productRepository.GetProduct(id ?? 1);
+            var product = _productRepository.GetProduct(id);
             if (product == null)
             {
                 return NotFound();

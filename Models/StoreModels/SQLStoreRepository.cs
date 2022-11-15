@@ -4,8 +4,8 @@ namespace Project_C.Models.StoreModels
 {
     public class SQLStoreRepository : IStoreRepository
     {
-        private readonly ApplicatieDbContext _context;
-        public SQLStoreRepository(ApplicatieDbContext context)
+        private readonly ApplicationDbContext _context;
+        public SQLStoreRepository(ApplicationDbContext context)
         {
             this._context = context;
         }
@@ -18,7 +18,7 @@ namespace Project_C.Models.StoreModels
             return store;
         }
 
-        public void DeleteStore(int id)
+        public void DeleteStore(Guid id)
         {
             Store store = _context.Stores.Find(id);
             if (store != null)
@@ -33,7 +33,7 @@ namespace Project_C.Models.StoreModels
             return _context.Stores;
         }
 
-        public Store GetStore(int id)
+        public Store GetStore(Guid id)
         {
             return _context.Stores.Find(id);
         }

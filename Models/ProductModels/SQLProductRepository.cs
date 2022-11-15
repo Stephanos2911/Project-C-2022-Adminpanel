@@ -4,8 +4,8 @@ namespace Project_C.Models.ProductModels
 {
     public class SQLProductRepository : IProductRepository
     {
-        private ApplicatieDbContext _context;
-        public SQLProductRepository(ApplicatieDbContext context)
+        private ApplicationDbContext _context;
+        public SQLProductRepository(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -18,7 +18,7 @@ namespace Project_C.Models.ProductModels
             return product;
         }
 
-        public void DeleteProduct(int id)
+        public void DeleteProduct(Guid id)
         {
             Product product = _context.Products.Find(id);
             if (product != null)
@@ -33,7 +33,7 @@ namespace Project_C.Models.ProductModels
             return _context.Products;
         }
 
-        public Product GetProduct(int id)
+        public Product GetProduct(Guid id)
         {
             return _context.Products.Find(id);
         }

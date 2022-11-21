@@ -21,16 +21,30 @@
                 <input asp-for="Description" class="form-control" placeholder="small description of the product" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" placeholder="example: 49.95" />
-                <span asp-validation-for="Price" class="text-danger"></span>
+
+             <div class="form-group">
+                <label asp-for="Stores" class="control-label">Stores</label>
+                <select asp-for=Stores type="text" class="form-control" size="3"/>
+                @foreach (var item in Model.AllStores)
+                {
+                            <option value="@item.Id">
+                        @item.Name <img src="~/images/StoreLogos/@item.LogoPath" asp-append-version="true" height="10" width="10" />
+                                </option>
+                }
+                <span asp-validation-for="Stores" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="VideoLink" class="control-label"></label>
                 <input asp-for="VideoLink" class="form-control" placeholder="link to video of product" />
                 <span asp-validation-for="VideoLink" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" placeholder="example: 49.95" />
+                <span asp-validation-for="Price" class="text-danger"></span>
             </div>
 
             <label class="control-label">Upload Product Picture</label>
@@ -54,6 +68,7 @@
                 <span asp-validation-for="Place" class="text-danger"></span>
             </div>
 
+            
 
 
             <div class="form-group">

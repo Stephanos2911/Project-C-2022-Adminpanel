@@ -2,23 +2,25 @@
 using AdminApplication.Models;
 using AdminApplication.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting.Internal;
 using Project_C.Models.ProductModels;
 using Project_C.Models.StoreModels;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 
 namespace Project_C.Controllers
 {
     public class ProductController : Controller
     {
-
+        private ApplicationDbContext _context;
         private readonly ILogger<HomeController> _logger;
         private readonly IProductRepository _productRepository;
         private readonly IWebHostEnvironment hostingEnvironment;
 
-        public ProductController(ILogger<HomeController> logger, IWebHostEnvironment hostingenvironment, IProductRepository productRepository)
+        public ProductController(ILogger<HomeController> logger, IWebHostEnvironment hostingenvironment, IProductRepository productRepository, ApplicationDbContext context)
         {
-
+            _context = context;
             _logger = logger;
             _productRepository = productRepository;
             hostingEnvironment = hostingenvironment;
@@ -127,7 +129,11 @@ namespace Project_C.Controllers
         [HttpGet]
         public ViewResult AddProduct()
         {
-            return View();
+            ProductCreateViewModel model = new ProductCreateViewModel()
+            {
+                AllStores = _context.Stores.ToList()
+            };
+            return View(model);
         }
 
         //creates the product and adds to database 
@@ -144,11 +150,31 @@ namespace Project_C.Controllers
                 Price = product.Price,
                 Place = product.Place,
                 PhotoPath = uniqueFileName,
-                VideoLink = correctVideoLink
+                VideoLink = correctVideoLink,
+                Stores = ProcessChosenStores(product.Stores)
+
             };
-            _productRepository.AddProduct(newProduct);
+
+            _context.Products.Add(newProduct);
+            _context.SaveChanges();
             return RedirectToAction("ProductIndex");
         }
+
+
+        //returns an Icollection of stores, based on the Ids (GUID) from the dropdown menu in AddProduct.CSHTML
+        private ICollection<Store> ProcessChosenStores(List<Guid> selectedStores)
+        { 
+            ICollection<Store> stores = new Collection<Store>();
+            foreach (var storeId in selectedStores)
+            {
+                stores.Add(_context.Stores.Find(storeId));
+            }
+            return stores;
+        }
+
+
+
+
 
         private string ProcessUploadedFile(IFormFile image, string subfolder)
         {

@@ -1,0 +1,14 @@
+﻿@model Project_C.Models.UserModels.Employee
+
+@{
+
+    ViewData["Title"] = "Delete Employee";
+}
+<h4>Are you sure you want to delete "@Model.Username"? (ID: @Model.Id)</h4>
+
+
+<form asp-action="DeleteEmployee">
+    <input type="hidden" asp-for="Id" />
+    <input type="submit" value="Delete" class="btn btn-danger" />
+    <a class="btn btn-primary" asp-action="EmployeeDetails" asp-route-id="@Model.Id">Back</a>
+</form>

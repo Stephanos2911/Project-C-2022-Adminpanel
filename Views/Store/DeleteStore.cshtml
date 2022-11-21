@@ -7,11 +7,9 @@
 
 <h4>Are you sure you want to delete "@Html.DisplayFor(model => model.Name)"?</h4>
 
-    </dl>
 
-    <form asp-action="DeleteStore">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" />
-        <a class="btn btn-primary" asp-action="StoreDetails" asp-route-id="@Model.Id">Back</a>
-    </form>
-</div>
+<form asp-action="DeleteStore">
+    <input type="hidden" asp-for="Id" />
+    <input type="submit" value="Delete" class="btn btn-danger" />
+    <a class="btn btn-primary" asp-action="StoreDetails" asp-route-id="@Model.Id">Back</a>
+</form>

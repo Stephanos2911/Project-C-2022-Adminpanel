@@ -5,37 +5,117 @@
     var photoPath = "~/images/StoreLogos/" + Model.LogoPath;
 }
 
+<style>
+    * {
+        box-sizing: border-box;
+    }
 
-<h1>Details</h1>
-<div class="navbar-nav-scroll">
-    <div class="divTableBody">
-        <div class="divTableRow">
-            <h4>Name</h4>
-            <div class="divTableCell">&nbsp;  @Html.DisplayFor(model => model.Name)</div>
-        </div>
-        <div class="divTableRow">
-            <h4>Link to Website</h4>
-            <div class="divTableCell">&nbsp; @Html.DisplayFor(model => model.SiteLink)</div>
-        </div>
+    .row {
+        margin-left: -5px;
+        margin-right: -5px;
+    }
 
-        <div class="divTableRow">
-            <h4>Logo</h4>
-            <div class="divTableCell">
-                &nbsp;
-                <img class="img-fluid" src="@photoPath" asp-append-version="true" style="width:25%" />
-            </div>
-        </div>
+    .column {
+        float: left;
+        width: 50%;
+        padding: 5px;
+    }
 
-        <div>
-            <form>
-                <div class="form-group">
-                    <a class="btn btn-danger" asp-action="DeleteStore" asp-route-id="@Model.Id">Delete</a>
-                    <a class="btn btn-primary" asp-action="EditStore" asp-route-id="@Model.Id">Edit</a>
-                </div>
-            </form>
+    .row::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
 
-        </div>
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        border: 1px solid #ddd;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 16px;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    .PropertyName{
+        font-family: Arial;
+        font-size: 25px;
+    }
+    .DetailInfo{
+        font-family: Arial;
+        font-size: 18px;
+    }
+</style>
+
+<div class="row">
+    <div class="column">
+        <table class="GeneratedTable">
+            <thead>
+                <tr>
+                    <th><h2>Details</h2></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="PropertyName">Name</td>
+                </tr>
+                <tr>
+                    <td class="DetailInfo">@Model.Name</td>
+                </tr>
+                <tr>
+                    <td class="PropertyName">Id</td>
+                </tr>
+                <tr>
+                    <td class="DetailInfo">@Model.Id</td>
+                </tr>
+                <tr>
+                    <td class="PropertyName">Website Link</td>
+                </tr>
+                <tr>
+                    <td class="DetailInfo">@Model.SiteLink</td>
+                </tr>
+                <tr>
+                    <td>
+                        <a class="btn btn-primary" asp-action="EditStore" asp-route-id="@Model.Id">Edit</a>
+                        <a class="btn btn-danger" asp-action="DeleteStore" asp-route-id="@Model.Id">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
     </div>
+
+    <div class="column">
+        <table class="GeneratedTable">
+            <thead>
+                <tr>
+                    <th><h2>Media</h2></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="PropertyName">Logo</td>
+                </tr>
+                <tr>
+                    <td class="DetailInfo">
+                        <img src="@photoPath" asp-append-version="true" height="353" align="middle" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
 </div>
+
 
 

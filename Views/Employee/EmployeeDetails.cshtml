@@ -1,1 +1,103 @@
 ﻿@model Project_C.Models.UserModels.Employee
+@{
+    string isadmin = Model.IsAdmin == true ? "Administrator" : "Medewerker";
+}
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .row {
+        margin-left: -5px;
+        margin-right: -5px;
+    }
+
+    .column {
+        float: left;
+        width: 50%;
+        padding: 5px;
+    }
+
+    .row::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        border: 1px solid #ddd;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 16px;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .PropertyName {
+        font-family: Arial;
+        font-size: 25px;
+    }
+
+    .DetailInfo {
+        font-family: Arial;
+        font-size: 18px;
+    }
+</style>
+
+
+<table class="GeneratedTable">
+    <thead>
+        <tr>
+            <th><h2>Details</h2></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="PropertyName">Id</td>
+        </tr>
+        <tr>
+            <td class="DetailInfo">@Model.Id</td>
+        </tr>
+        <tr>
+            <td class="PropertyName">Gebruikersnaam</td>
+        </tr>
+        <tr>
+            <td class="DetailInfo">@Model.Username</td>
+        </tr>
+        <tr>
+            <td class="PropertyName">Password</td>
+        </tr>
+        <tr>
+            <td class="DetailInfo">@Model.Password</td>
+        </tr>
+        <tr>
+            <td class="PropertyName">E-mail</td>
+        </tr>
+        <tr>
+            <td class="DetailInfo">@Model.Email</td>
+        </tr>
+        <tr>
+            <td class="PropertyName">Bevoegheden</td>
+        </tr>
+        <tr>
+            <td class="DetailInfo">@isadmin</td>
+        </tr>
+        <tr>
+            <td>
+                <a class="btn btn-primary" asp-action="EditEmployee" asp-route-id="@Model.Id">Bewerk</a>
+                <a class="btn btn-danger" asp-action="DeleteEmployee" asp-route-id="@Model.Id">Verwijder</a>
+            </td>
+        </tr>
+    </tbody>
+</table>

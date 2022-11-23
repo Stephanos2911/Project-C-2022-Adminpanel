@@ -4,7 +4,7 @@
     ViewData["Title"] = "Edit Employee";
 }
 
-<h1>Edit "@Model.Username"</h1>
+<h1>Bewerk "@Model.Username"</h1>
 
 <div class="row">
     <div class="col-md-4">
@@ -12,26 +12,26 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Username" class="control-label">Username</label>
+                <label asp-for="Username" class="control-label">Gebruikersnaam</label>
                 <input asp-for="Username" class="form-control" />
                 <span asp-validation-for="Username" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Password" class="control-label">Password</label>
+                <label asp-for="Password" class="control-label">Wachtwoord</label>
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label">Email</label>
+                <label asp-for="Email" class="control-label">E-mail</label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="IsAdmin" class="control-label"></label>
+                <label asp-for="IsAdmin" class="control-label">Rol</label>
                 <select asp-for=IsAdmin type="text" class="form-control" />
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option value="Administrator">Administrator</option>
+                <option value="Medewerker">Medewerker</option>
                 <span asp-validation-for="IsAdmin" class="text-danger"></span>
             </div>
 

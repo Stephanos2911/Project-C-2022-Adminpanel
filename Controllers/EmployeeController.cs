@@ -40,7 +40,7 @@ namespace Project_C.Controllers
                     Username = newEmployeemodel.Username,
                     Password = newEmployeemodel.Password,
                     Email = newEmployeemodel.Email,
-                    IsAdmin = newEmployeemodel.IsAdmin == "Yes" ? true : false
+                    IsAdmin = newEmployeemodel.IsAdmin == "Administrator" ? true : false
                 };
 
                 _context.Employees.Add(newEmployee);
@@ -55,9 +55,10 @@ namespace Project_C.Controllers
         }
 
         //Details page for employee
-        public IActionResult EmployeeDetails(Guid employeeId)
+        public IActionResult EmployeeDetails(Guid id)
         {
-            var currentEmployee = _context.Employees.Find(employeeId);
+
+            var currentEmployee = _context.Employees.Find(id);
             if (currentEmployee == null)
             {
                 return NotFound();
@@ -68,9 +69,9 @@ namespace Project_C.Controllers
 
         //directs to delete page
         [HttpGet]
-        public ViewResult DeleteEmployee(Guid employeeId)
+        public ViewResult DeleteEmployee(Guid id)
         {
-            var employee = _context.Employees.Find(employeeId);
+            var employee = _context.Employees.Find(id);
             return View(employee);
         }
 
@@ -87,34 +88,41 @@ namespace Project_C.Controllers
 
         //finds employee and converts it to an employeecreatemodel for modifying.
         [HttpGet]
-        public ViewResult EditEmployee(Guid employeeId)
+        public ViewResult EditEmployee(Guid id)
         {
-            Employee currentEmployee = _context.Employees.Find(employeeId);
+            Employee currentEmployee = _context.Employees.Find(id);
             EmployeeCreateModel employeeCreateModel = new EmployeeCreateModel()
             {
                 Id = currentEmployee.Id,
                 Username = currentEmployee.Username,
                 Password = currentEmployee.Password,
                 Email = currentEmployee.Email,
-                IsAdmin = currentEmployee.IsAdmin == true ? "Yes" : "No"
+                IsAdmin = currentEmployee.IsAdmin == true ? "Administrator" : "Medewerker"
             };
             return View(employeeCreateModel);
         }
 
+
+        //updates the employee
         [HttpPost]
         public IActionResult EditEmployee(EmployeeCreateModel employeechanges)
         {
-            //find employee in database
-            Employee employeeToBeUpdated = _context.Employees.Find(employeechanges.Id);
-            //modify it here 
-            employeeToBeUpdated.Username = employeechanges.Username;
-            employeeToBeUpdated.Password = employeechanges.Password;    
-            employeeToBeUpdated.Email= employeechanges.Email;
-            employeeToBeUpdated.IsAdmin = employeechanges.IsAdmin == "Yes" ? true : false;
+            if (ModelState.IsValid)
+            {
+                //find employee in database
+                Employee employeeToBeUpdated = _context.Employees.Find(employeechanges.Id);
+                //modify it here 
+                employeeToBeUpdated.Username = employeechanges.Username;
+                employeeToBeUpdated.Password = employeechanges.Password;
+                employeeToBeUpdated.Email = employeechanges.Email;
+                employeeToBeUpdated.IsAdmin = employeechanges.IsAdmin == "Administrator" ? true : false;
 
-            _context.SaveChanges();
+                _context.SaveChanges();
 
-            return RedirectToAction("EmployeeIndex");
+                return RedirectToAction("EmployeeIndex");
+            }
+
+            return RedirectToAction("EditEmployee", employeechanges.Id);
         }
     }
 }

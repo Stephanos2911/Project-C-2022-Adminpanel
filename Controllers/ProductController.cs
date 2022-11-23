@@ -151,7 +151,7 @@ namespace Project_C.Controllers
                 Place = product.Place,
                 PhotoPath = uniqueFileName,
                 VideoLink = correctVideoLink,
-                Stores = ProcessChosenStores(product.Stores)
+                Stores = product.Stores != null ? ProcessChosenStores(product.Stores) : null
 
             };
 

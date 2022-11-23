@@ -1,5 +1,6 @@
 ﻿using Project_C.Models.StoreModels;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AdminApplication.ViewModels
 {
@@ -12,9 +13,7 @@ namespace AdminApplication.ViewModels
         [MinLength(10, ErrorMessage = "description is too short")]
         public string Description { get; set; }
         [Required(ErrorMessage = "price is required")]
-        [Range(0.0, 1000.0,
-            ErrorMessage = "invalid price, try using a '.' instead of a ','")]
-        public Decimal Price { get; set; }
+        public double Price { get; set; }
         [Required]
         public string Place { get; set; }
 

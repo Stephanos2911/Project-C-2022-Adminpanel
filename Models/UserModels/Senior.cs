@@ -17,8 +17,8 @@ namespace Project_C.Models.UserModels
         public ICollection<Product>? Products { get; set; }
 
         //iedere senior heeft 1 mantelzorger (one to many)
-        public Guid? CareTakerId { get; set; }
-        public CareTaker? CareTaker { get; set; }
+        //public Guid? CareTakerId { get; set; }
+        //public CareTaker? CareTaker { get; set; }
 
     }
 }

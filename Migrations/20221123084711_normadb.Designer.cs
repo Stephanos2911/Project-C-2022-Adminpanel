@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ProjectC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221115172152_CreatedbTest")]
-    partial class CreatedbTest
+    [Migration("20221123084711_normadb")]
+    partial class normadb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,8 +61,8 @@ namespace ProjectC.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("Price")
-                        .HasColumnType("real");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid?>("SeniorId")
                         .HasColumnType("uniqueidentifier");
@@ -116,7 +116,7 @@ namespace ProjectC.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CareTakers");
+                    b.ToTable("CareTaker");
                 });
 
             modelBuilder.Entity("Project_C.Models.UserModels.Employee", b =>
@@ -165,7 +165,7 @@ namespace ProjectC.Migrations
 
                     b.HasIndex("CareTakerId");
 
-                    b.ToTable("Seniors");
+                    b.ToTable("Senior");
                 });
 
             modelBuilder.Entity("ProductStore", b =>

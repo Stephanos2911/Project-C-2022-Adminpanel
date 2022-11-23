@@ -20,7 +20,7 @@ namespace Project_C.Models.ProductModels
         public ICollection<Store>? Stores { get; set; }
 
         //Een senior heeft (mogelijk) meerdere producten in zijn cart
-        public Guid? SeniorId { get; set; }
-        public Senior? Senior { get; set; }
+        //public Guid? SeniorId { get; set; }
+        //public Senior? Senior { get; set; }
     }
 }

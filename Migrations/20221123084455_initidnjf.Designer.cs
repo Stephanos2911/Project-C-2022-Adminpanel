@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ProjectC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221117235913_decimalthing")]
-    partial class decimalthing
+    [Migration("20221123084455_initidnjf")]
+    partial class initidnjf
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

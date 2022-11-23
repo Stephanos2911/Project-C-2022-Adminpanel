@@ -61,15 +61,10 @@ namespace ProjectC.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid?>("SeniorId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("VideoLink")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("SeniorId");
 
                     b.ToTable("Products");
                 });
@@ -95,25 +90,6 @@ namespace ProjectC.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Stores");
-                });
-
-            modelBuilder.Entity("Project_C.Models.UserModels.CareTaker", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CareTakers");
                 });
 
             modelBuilder.Entity("Project_C.Models.UserModels.Employee", b =>
@@ -142,29 +118,6 @@ namespace ProjectC.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("Project_C.Models.UserModels.Senior", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CareTakerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("HouseNr")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PostCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CareTakerId");
-
-                    b.ToTable("Seniors");
-                });
-
             modelBuilder.Entity("ProductStore", b =>
                 {
                     b.HasOne("Project_C.Models.ProductModels.Product", null)
@@ -178,34 +131,6 @@ namespace ProjectC.Migrations
                         .HasForeignKey("StoresId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Project_C.Models.ProductModels.Product", b =>
-                {
-                    b.HasOne("Project_C.Models.UserModels.Senior", "Senior")
-                        .WithMany("Products")
-                        .HasForeignKey("SeniorId");
-
-                    b.Navigation("Senior");
-                });
-
-            modelBuilder.Entity("Project_C.Models.UserModels.Senior", b =>
-                {
-                    b.HasOne("Project_C.Models.UserModels.CareTaker", "CareTaker")
-                        .WithMany("Seniors")
-                        .HasForeignKey("CareTakerId");
-
-                    b.Navigation("CareTaker");
-                });
-
-            modelBuilder.Entity("Project_C.Models.UserModels.CareTaker", b =>
-                {
-                    b.Navigation("Seniors");
-                });
-
-            modelBuilder.Entity("Project_C.Models.UserModels.Senior", b =>
-                {
-                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

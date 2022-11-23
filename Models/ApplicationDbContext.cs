@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Project_C.Models;
 using Project_C.Models.ProductModels;
 using Project_C.Models.StoreModels;
 using Project_C.Models.UserModels;
@@ -22,13 +21,8 @@ namespace AdminApplication.Models
 
         public DbSet<Employee> Employees { get; set; }
 
-        //[Finished] every senior has 1 caretaker and multiple products
-        public DbSet<Senior> Seniors { get; set; }
-
-        //[Finished]every caretaker can have multiple seniors (One to Many)
-        public DbSet<CareTaker> CareTakers { get; set; }
-
-
+        ////[Finished] every senior has 1 caretaker and multiple products
+        //public DbSet<Senior> Seniors { get; set; }
     }
 
 }

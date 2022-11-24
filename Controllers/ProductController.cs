@@ -8,6 +8,7 @@ using Project_C.Models.ProductModels;
 using Project_C.Models.StoreModels;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Project_C.Controllers
 {
@@ -65,7 +66,7 @@ namespace Project_C.Controllers
                 //is there an already existing photo? if yes then delete the old photo and assign the new path to the updated product object.
                 if (productChanges.ExistingPhotoPath != null)
                 {
-                    DeletePicture(productChanges.ExistingPhotoPath, "ProductImages");
+                    DeletePicture(productChanges.ExistingPhotoPath);
                 }
                 productToBeUpdated.PhotoPath = ProcessUploadedFile(productChanges.Photo, "ProductImages");
             }
@@ -103,7 +104,7 @@ namespace Project_C.Controllers
             {
                 if (selectedProduct.PhotoPath != null)
                 {
-                    DeletePicture(selectedProduct.PhotoPath, "ProductImages");
+                    DeletePicture(selectedProduct.PhotoPath);
                 }
                 _productRepository.DeleteProduct(selectedProduct.Id);
             }
@@ -173,9 +174,6 @@ namespace Project_C.Controllers
         }
 
 
-
-
-
         private string ProcessUploadedFile(IFormFile image, string subfolder)
         {
             string uniqueFileName = null;
@@ -194,15 +192,13 @@ namespace Project_C.Controllers
             return uniqueFileName;
         }
 
-        private void DeletePicture(string uniqueImageName, string subfolder)
-        {
-            string filePath = $"{hostingEnvironment.WebRootPath}/images/{subfolder}/{uniqueImageName}";
+        private void DeletePicture(string uniqueImageName)
+        {      
+            string filePath = Path.Combine($"{hostingEnvironment.WebRootPath}/images/ProductImages/", uniqueImageName);
             if (System.IO.File.Exists(filePath))
             {
                 System.IO.File.Delete(filePath);
             }
         }
-
-
     }
 }

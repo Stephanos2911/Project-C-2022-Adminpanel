@@ -1,10 +1,18 @@
 ﻿@model Project_C.Models.ProductModels.Product
+@using Project_C.Models.StoreModels
 @{
-    ViewData["Title"] = "Details";
-    var photoPath = "~/images/ProductImages/" + Model.PhotoPath;
     //loads db context into this page
-    var data = ViewBag.Context as ApplicationDbContext;
-
+    var _context = ViewBag.Context as ApplicationDbContext;
+    //query for all stores which have been selected for this product
+    var storesOfProduct =
+      from store in _context.Stores
+      where store.Products.Any(x => x.Id == Model.Id)
+      select store;
+    ViewData["Title"] = "Details";
+    //product image path
+    var photoPath = "~/images/ProductImages/" + Model.PhotoPath;
+    
+ 
 }
 
 <style>
@@ -68,7 +76,7 @@
     </thead>
     <tbody>
         <tr>
-            <td class="PropertyName">Name</td>
+            <td class="PropertyName">Naam</td>
         </tr>
         <tr>
             <td class="DetailInfo">@Model.Name</td>
@@ -80,38 +88,39 @@
             <td class="DetailInfo">@Model.Id</td>
         </tr>
         <tr>
-            <td class="PropertyName" >Description</td>
+            <td class="PropertyName" >Beschrijving</td>
         </tr>
         <tr>
             <td class="DetailInfo">@Model.Description</td>
         </tr>
         <tr>
-            <td class="PropertyName" >Price</td>
+            <td class="PropertyName" >Prijs</td>
         </tr>
         <tr>
             <td class="DetailInfo">€@Model.Price</td>
         </tr>
         <tr>
-            <td class="PropertyName">Place</td>
+            <td class="PropertyName">Plaats</td>
         </tr>
         <tr>
             <td class="DetailInfo">@Model.Place</td>
         <tr>
-@*                <tr>
-                    <td class="PropertyName">Stores</td>
-                </tr>
-                <tr>
-                    <td class="DetailInfo">
-                                @foreach (var item in data.Stores.)
-                                {
-                                   <img src="~/images/StoreLogos/@item.LogoPath" asp-append-version="true" height="10" width="10" />
-                                }
-                            </td>
-                <tr>*@
+        <tr>
+              <td class="PropertyName">Winkels</td>
+         </tr>
+        <tr>
+             <td class="DetailInfo">
+                  @{
+                      foreach (var item in storesOfProduct)
+                           {
+                                   <img src="~/images/StoreLogos/@item.LogoPath" asp-append-version="true" height="80" width="80" />
+                           }
+                   }
+             </td>
+        <tr>
             <td>
                         <a class="btn btn-primary" asp-action="EditProduct" asp-route-id="@Model.Id">Edit</a>
                         <a class="btn btn-danger" asp-action="DeleteProduct" asp-route-id="@Model.Id">Delete</a>
-
             </td>
         </tr>
     </tbody>
@@ -128,7 +137,7 @@
      </thead>
     <tbody>
            <tr>
-            <td class="PropertyName">Picture</td>
+            <td class="PropertyName">Afbeelding</td>
         </tr>
         <tr>
              <td class="DetailInfo">

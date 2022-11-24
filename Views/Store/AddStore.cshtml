@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create Store";
 }
 
-<h1>Add new store</h1>
+<h1>Nieuwe Winkel</h1>
 
 <hr />
 <div class="row">
@@ -12,17 +12,17 @@
         <form method="post" enctype="multipart/form-data" asp-action="AddStore" asp-controller="Store">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" placeholder="for example: Amazon" />
+                <label asp-for="Name" class="control-label">Naam</label>
+                <input asp-for="Name" class="form-control" placeholder="voorbeeld: Hema" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SiteLink" class="control-label">Link to Store website</label>
-                <input asp-for="SiteLink" class="form-control" placeholder="Link to store website (www.Amazon.nl)" />
+                <label asp-for="SiteLink" class="control-label">Website van winkel</label>
+                <input asp-for="SiteLink" class="form-control" placeholder="voorbeeld: www.Amazon.nl" />
                 <span asp-validation-for="SiteLink" class="text-danger"></span>
             </div>
 
-            <label class="control-label">upload store logo</label>
+            <label class="control-label">Upload winkel logo</label>
             <div class="input-group mb-1">
                 <div class="custom-file">
                     <input asp-for="LogoFile" class="form-control custom-file-input" />
@@ -31,8 +31,8 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Add Store" class="btn btn-success" />
-                <a class="btn btn-primary" asp-controller="Store" asp-action="StoreIndex">Back </a>
+                <input type="submit" value="Toevoegen" class="btn btn-success" />
+                <a class="btn btn-primary" asp-controller="Store" asp-action="StoreIndex">Terug</a>
             </div>
 
         </form>

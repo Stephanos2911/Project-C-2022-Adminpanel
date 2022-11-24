@@ -4,10 +4,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Products</h1>
+<h1>Producten</h1>
 
 
-<a asp-controller="Product" asp-action="AddProduct"><input class="btn btn-success" value="Add new Product" /></a>
+<a asp-controller="Product" asp-action="AddProduct"><input class="btn btn-success" value="Nieuw Product" /></a>
 <style>
     table {
         border-collapse: collapse;
@@ -50,9 +50,9 @@
                 <td>
                     <form asp-action="View">
                         <div class="btn-group">
-                            <a class="btn btn-primary" asp-action="ProductDetails" asp-route-id="@item.Id">View</a>
-                            <a class="btn btn-primary" asp-action="EditProduct" asp-route-id="@item.Id">Edit</a>
-                            <a class="btn btn-danger" asp-action="DeleteProduct" asp-route-id="@item.Id">Delete</a>
+                            <a class="btn btn-primary" asp-action="ProductDetails" asp-route-id="@item.Id">Details</a>
+                            <a class="btn btn-primary" asp-action="EditProduct" asp-route-id="@item.Id">Bewerk</a>
+                            <a class="btn btn-danger" asp-action="DeleteProduct" asp-route-id="@item.Id">Verwijder</a>
                         </div>
                     </form>
                 </td>

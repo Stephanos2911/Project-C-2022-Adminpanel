@@ -4,6 +4,7 @@ using AdminApplication.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Project_C.Models.StoreModels;
 using System.Diagnostics;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Project_C.Controllers
 {
@@ -55,7 +56,7 @@ namespace Project_C.Controllers
                 //is there an already existing photo? if yes then delete the old photo and assign the new path to the updated product object.
                 if (storeChanges.ExistingPhotoPath != null)
                 {
-                    DeletePicture(storeChanges.ExistingPhotoPath, "ProductImages");
+                    DeletePicture(storeChanges.ExistingPhotoPath);
                 }
                 storeToBeUpdated.LogoPath = ProcessUploadedFile(storeChanges.LogoFile, "ProductImages");
             }
@@ -153,16 +154,17 @@ namespace Project_C.Controllers
             {
                 if (selectedStore.LogoPath != null)
                 {
-                    DeletePicture(selectedStore.LogoPath, "StoreLogos");
+                    DeletePicture(selectedStore.LogoPath);
                 }
                 _storeRepository.DeleteStore(selectedStore.Id);
             }
             return RedirectToAction("StoreIndex");
         }
 
-        private void DeletePicture(string uniqueImageName, string subfolder)
+        private void DeletePicture(string uniqueImageName)
         {
-            string filePath = $"{hostingEnvironment.WebRootPath}/images/{subfolder}/{uniqueImageName}";
+            string uploadsFolder = $"{hostingEnvironment.WebRootPath}/images/StoreLogos/";
+            string filePath = Path.Combine(uploadsFolder, uniqueImageName);
             if (System.IO.File.Exists(filePath))
             {
                 System.IO.File.Delete(filePath);

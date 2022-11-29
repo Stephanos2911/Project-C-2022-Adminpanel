@@ -4,41 +4,121 @@
     ViewData["Title"] = "Edit Store";
 }
 
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .row {
+        margin-left: -5px;
+        margin-right: -5px;
+    }
+
+    .column {
+        float: left;
+        width: 50%;
+        padding: 5px;
+    }
+
+    .row::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        border: 1px solid #ddd;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 16px;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .PropertyName {
+        font-family: Arial;
+        font-size: 25px;
+    }
+
+    .DetailInfo {
+        font-family: Arial;
+        font-size: 18px;
+    }
+</style>
+
 <h1>Bewerken</h1>
 
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="EditStore" asp-controller="Store" method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="ExistingPhotoPath" />
-            <div class="form-group">
-                <label asp-for="Name" class="control-label">Naam</label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
+    <form method="post" enctype="multipart/form-data" asp-action="EditStore" asp-controller="Store">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="column">
+            <table class="CostumMadeTable">
+                <thead>
+                    <tr>
+                        <th><h2>Details</h2></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="PropertyName">Naam</td>
+                    </tr>
+                    <tr>
+                        <td class="DetailInfo">
+                            <input asp-for="Name" class="form-control" placeholder="voorbeeld: Hema" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PropertyName">
+                            Website van winkel
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input asp-for="SiteLink" class="form-control" placeholder="voorbeeld: www.Amazon.nl" />
+                            <span asp-validation-for="SiteLink" class="text-danger"></span>
+                        </td>
+                    </tr>
 
-            <div class="form-group">
-                <label asp-for="SiteLink" class="control-label">Website link</label>
-                <input asp-for="SiteLink" class="form-control" placeholder="Link naar website van de winkel" />
-                <span asp-validation-for="SiteLink" class="text-danger"></span>
-            </div>
+
+                </tbody>
+            </table>
+            <input type="submit" value="Bijwerken" class="btn btn-success" />
+            <a class="btn btn-primary" asp-controller="Store" asp-action="StoreIndex">Terug</a>
+        </div>
+
+        <div class="column">
+            <table class="CostumMadeTable">
+                <thead>
+                    <tr>
+                        <th><h2>Media</h2></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="PropertyName">Upload winkel logo</td>
+                    </tr>
+                    <tr>
+                        <td class="DetailInfo">
+                            <input asp-for="LogoFile" class="form-control custom-file-input" />
+                            <span asp-validation-for="LogoFile" class="text-danger"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
 
-            <label class="control-label">Upload winkel logo</label>
-            <div class="input-group mb-1">
-                <div class="custom-file">
-                    <input asp-for="LogoFile" class="form-control custom-file-input" />
-                    <span asp-validation-for="LogoFile" class="text-danger"></span>
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                <input type="submit" value="Opslaan" class="btn btn-success" />
-                <a class="btn btn-primary" asp-action="StoreDetails" asp-route-id="@Model.Id">Terug</a>
-            </div>
-        </form>
-
-    </div>
+    </form>
 </div>

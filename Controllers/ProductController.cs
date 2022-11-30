@@ -1,4 +1,4 @@
-﻿using AdminApplication.Controllers;
+﻿
 using AdminApplication.Models;
 using AdminApplication.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -14,14 +14,12 @@ namespace Project_C.Controllers
     public class ProductController : Controller
     {
         private ApplicationDbContext _context;
-        private readonly ILogger<HomeController> _logger;
         private readonly IProductRepository _productRepository;
         private readonly IWebHostEnvironment hostingEnvironment;
 
-        public ProductController(ILogger<HomeController> logger, IWebHostEnvironment hostingenvironment, IProductRepository productRepository, ApplicationDbContext context)
+        public ProductController( IWebHostEnvironment hostingenvironment, IProductRepository productRepository, ApplicationDbContext context)
         {
             _context = context;
-            _logger = logger;
             _productRepository = productRepository;
             hostingEnvironment = hostingenvironment;
         }

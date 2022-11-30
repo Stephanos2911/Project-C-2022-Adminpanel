@@ -1,0 +1,54 @@
+﻿@model Project_C.Models.UserModels.LoginCredentials
+
+@*@<head>
+    <meta charset="utf-8" />
+    <title>Login Form</title>
+    <link rel="stylesheet" href="~/css/style.css">
+</head>
+<body>
+    <div class="center">
+        <h1>Login</h1>
+        <form method="post">
+            <div class="txt_field">
+                <input type="text" required>
+                <label>Email-adres</label>
+            </div>
+            <div class="txt_field">
+                <input type="password" required>
+                <label>Wachwoord</label>
+            </div>
+            <div class="pass">Wachtwoord vergeten?</div>
+            <input type="submit" value="Login">
+            <div class="signup_link">
+                Geen werknemer account? <a href="~/css/">Maak een account aan</a>
+            </div>
+        </form>
+    </div>
+</body> *@
+
+<body> 
+<div class="row">
+    <div class="col-md-4">
+        <link rel="stylesheet" href="~/css/loginstyle.css">
+        <form method="post" enctype="multipart/form-data" asp-action="LoginPage" asp-controller="Access">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="email-group">
+                <label asp-for="Email" class="control-label">E-mail</label>
+                <input asp-for="Email"  class="form-control" />
+                <span asp-validation-for="Email"  class="text-danger"></span>
+            </div>
+            <div class="password-group">
+                <label asp-for="Password" class="control-label">Wachtwoord</label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+                <div class="sol-logo">
+                    <img src="~/images/Sol.png" width="500" height="300" />
+                </div>
+                <a class="LogIn">
+                    <input type="submit" value="Inloggen" class="btn btn-success" />
+                </a>
+        </form>
+    </div>
+</div>
+</body>

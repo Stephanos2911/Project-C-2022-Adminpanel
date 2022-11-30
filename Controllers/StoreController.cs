@@ -1,4 +1,4 @@
-﻿using AdminApplication.Controllers;
+﻿
 using AdminApplication.Models;
 using AdminApplication.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -9,13 +9,13 @@ namespace Project_C.Controllers
 {
     public class StoreController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        
         private readonly IStoreRepository _storeRepository;
         private readonly IWebHostEnvironment hostingEnvironment;
 
-        public StoreController(ILogger<HomeController> logger, IWebHostEnvironment hostingenvironment, IStoreRepository storeRepository)
+        public StoreController(IWebHostEnvironment hostingenvironment, IStoreRepository storeRepository)
         {
-            _logger = logger;
+           
             _storeRepository = storeRepository;
             hostingEnvironment = hostingenvironment;
         }

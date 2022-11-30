@@ -15,16 +15,42 @@ namespace Project_C.Controllers
             _context= context;
         }
 
+        public IActionResult DirectToLogin()
+        {
+            return RedirectToAction("LoginPage", "Access");
+        }
+
+        public IActionResult DirectToHome()
+        {
+            return RedirectToAction("HomePage", "Access");
+        }
+
         //Employee index page
         public IActionResult EmployeeIndex()
         {
+            if (!CurrentEmployee.IsLoggedIn())
+            {
+                return DirectToLogin();
+            }
+            if (!CurrentEmployee.IsAdmin())
+            {
+                 return DirectToHome();
+            }
             var AllEmployees = _context.Employees;
             return View(AllEmployees);
         }
 
         //Add Employee Page
         [HttpGet]
-        public ViewResult AddEmployee() {
+        public IActionResult AddEmployee() {
+            if (!CurrentEmployee.IsLoggedIn())
+            {
+                 return DirectToLogin();
+            }
+            if (!CurrentEmployee.IsAdmin())
+            {
+                 return DirectToHome();
+            }
             return View();
         }
 
@@ -32,6 +58,14 @@ namespace Project_C.Controllers
         [HttpPost]
         public IActionResult AddEmployee(EmployeeCreateModel newEmployeemodel)
         {
+            if (!CurrentEmployee.IsLoggedIn())
+            {
+                 return DirectToLogin();
+            }
+            if (!CurrentEmployee.IsAdmin())
+            {
+                 return DirectToHome();
+            }
             if (ModelState.IsValid)
             {
                 Employee newEmployee = new Employee()
@@ -57,7 +91,14 @@ namespace Project_C.Controllers
         //Details page for employee
         public IActionResult EmployeeDetails(Guid id)
         {
-
+            if (!CurrentEmployee.IsLoggedIn())
+            {
+                 return DirectToLogin();
+            }
+            if (!CurrentEmployee.IsAdmin())
+            {
+                 return DirectToHome();
+            }
             var currentEmployee = _context.Employees.Find(id);
             if (currentEmployee == null)
             {
@@ -69,8 +110,16 @@ namespace Project_C.Controllers
 
         //directs to delete page
         [HttpGet]
-        public ViewResult DeleteEmployee(Guid id)
+        public IActionResult DeleteEmployee(Guid id)
         {
+            if (!CurrentEmployee.IsLoggedIn())
+            {
+                 return DirectToLogin();
+            }
+            if (!CurrentEmployee.IsAdmin())
+            {
+                 return DirectToHome();
+            }
             var employee = _context.Employees.Find(id);
             return View(employee);
         }
@@ -79,6 +128,14 @@ namespace Project_C.Controllers
         [HttpPost, ActionName("DeleteEmployee")]
         public IActionResult ConfirmDeleteEmployee(Guid id)
         {
+            if (!CurrentEmployee.IsLoggedIn())
+            {
+                 return DirectToLogin();
+            }
+            if (!CurrentEmployee.IsAdmin())
+            {
+                 return DirectToHome();
+            }
             var employeeToDelete = _context.Employees.Find(id);
             _context.Employees.Remove(employeeToDelete);
             _context.SaveChanges();
@@ -88,8 +145,16 @@ namespace Project_C.Controllers
 
         //finds employee and converts it to an employeecreatemodel for modifying.
         [HttpGet]
-        public ViewResult EditEmployee(Guid id)
+        public IActionResult EditEmployee(Guid id)
         {
+            if (!CurrentEmployee.IsLoggedIn())
+            {
+                 return DirectToLogin();
+            }
+            if (!CurrentEmployee.IsAdmin())
+            {
+                 return DirectToHome();
+            }
             Employee currentEmployee = _context.Employees.Find(id);
             EmployeeCreateModel employeeCreateModel = new EmployeeCreateModel()
             {
@@ -107,6 +172,14 @@ namespace Project_C.Controllers
         [HttpPost]
         public IActionResult EditEmployee(EmployeeCreateModel employeechanges)
         {
+            if (!CurrentEmployee.IsLoggedIn())
+            {
+                 return DirectToLogin();
+            }
+            if (!CurrentEmployee.IsAdmin())
+            {
+                 return DirectToHome();
+            }
             if (ModelState.IsValid)
             {
                 //find employee in database

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting.Internal;
 using Project_C.Models.ProductModels;
 using Project_C.Models.StoreModels;
+using Project_C.Models.UserModels;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using static System.Net.Mime.MediaTypeNames;
@@ -24,58 +25,78 @@ namespace Project_C.Controllers
             _productRepository = productRepository;
             hostingEnvironment = hostingenvironment;
         }
+
+        public IActionResult DirectToLogin()
+        {
+            return RedirectToAction("LoginPage", "Access");
+        }
         public IActionResult ProductIndex()
         {
+            if (!CurrentEmployee.IsLoggedIn())
+            {
+                 return DirectToLogin();
+            }
             var listOfAllProducts = _productRepository.GetAllProducts();
             return View(listOfAllProducts);
+            
         }
 
         [HttpGet]
-        public ViewResult EditProduct(Guid id)
+        public IActionResult EditProduct(Guid id)
         {
-            Product selectedProduct = _productRepository.GetProduct(id);
-            ProductEditViewModel productEditViewModel = new ProductEditViewModel
+            if (!CurrentEmployee.IsLoggedIn())
             {
-                Id = selectedProduct.Id,
-                Name = selectedProduct.Name,
-                Description = selectedProduct.Description,
-                Price = selectedProduct.Price,
-                Place = selectedProduct.Place,
-                ExistingPhotoPath = selectedProduct.PhotoPath,
-                VideoLink = selectedProduct.VideoLink
-            };
-            return View(productEditViewModel);
+                 return DirectToLogin();
+            }
+            Product selectedProduct = _productRepository.GetProduct(id);
+                ProductEditViewModel productEditViewModel = new ProductEditViewModel
+                {
+                    Id = selectedProduct.Id,
+                    Name = selectedProduct.Name,
+                    Description = selectedProduct.Description,
+                    Price = selectedProduct.Price,
+                    Place = selectedProduct.Place,
+                    ExistingPhotoPath = selectedProduct.PhotoPath,
+                    VideoLink = selectedProduct.VideoLink
+                };
+                return View(productEditViewModel);
+            
         }
 
         [HttpPost]
         public IActionResult EditProduct(ProductEditViewModel productChanges)
         {
+            if (!CurrentEmployee.IsLoggedIn())
+            {
+                 return DirectToLogin();
+            }
             //get product to be updated
             Product productToBeUpdated = _productRepository.GetProduct(productChanges.Id);
-            productToBeUpdated.Description = productChanges.Description;
-            productToBeUpdated.Price = productChanges.Price;
-            productToBeUpdated.Place = productChanges.Place;
-            productToBeUpdated.Name = productChanges.Name;
-            productToBeUpdated.VideoLink = productChanges.VideoLink;
+                productToBeUpdated.Description = productChanges.Description;
+                productToBeUpdated.Price = productChanges.Price;
+                productToBeUpdated.Place = productChanges.Place;
+                productToBeUpdated.Name = productChanges.Name;
+                productToBeUpdated.VideoLink = productChanges.VideoLink;
 
-            //is there a file uploaded?
-            if (productChanges.Photo != null)
-            {
-                //is there an already existing photo? if yes then delete the old photo and assign the new path to the updated product object.
-                if (productChanges.ExistingPhotoPath != null)
+                //is there a file uploaded?
+                if (productChanges.Photo != null)
                 {
-                    DeletePicture(productChanges.ExistingPhotoPath);
+                    //is there an already existing photo? if yes then delete the old photo and assign the new path to the updated product object.
+                    if (productChanges.ExistingPhotoPath != null)
+                    {
+                        DeletePicture(productChanges.ExistingPhotoPath);
+                    }
+                    productToBeUpdated.PhotoPath = ProcessUploadedFile(productChanges.Photo, "ProductImages");
                 }
-                productToBeUpdated.PhotoPath = ProcessUploadedFile(productChanges.Photo, "ProductImages");
-            }
-            //no file uploaded means use the old photo
-            else
-            {
-                productToBeUpdated.PhotoPath = productChanges.ExistingPhotoPath;
-            }
+                //no file uploaded means use the old photo
+                else
+                {
+                    productToBeUpdated.PhotoPath = productChanges.ExistingPhotoPath;
+                }
 
-            _productRepository.UpdateProduct(productToBeUpdated);
-            return RedirectToAction("ProductIndex");
+                _productRepository.UpdateProduct(productToBeUpdated);
+                return RedirectToAction("ProductIndex");
+            
         }
 
 
@@ -87,16 +108,25 @@ namespace Project_C.Controllers
 
 
         [HttpGet]
-        public ViewResult DeleteProduct(Guid id)
+        public IActionResult DeleteProduct(Guid id)
         {
+            if (!CurrentEmployee.IsLoggedIn())
+            {
+                 return DirectToLogin();
+            }
             Product selectedProduct = _productRepository.GetProduct(id);
             return View(selectedProduct);
+
         }
 
         //Deletes the product and redirects to index after confirmation has been asked
         [HttpPost, ActionName("DeleteProduct")]
         public IActionResult ConfirmDeleteProduct(Guid id)
         {
+            if (!CurrentEmployee.IsLoggedIn())
+            {
+                 return DirectToLogin();
+            }
             Product selectedProduct = _productRepository.GetProduct(id);
             if (selectedProduct != null)
             {
@@ -111,6 +141,10 @@ namespace Project_C.Controllers
 
         public IActionResult ProductDetails(Guid id)
         {
+            if (!CurrentEmployee.IsLoggedIn())
+            {
+                 return DirectToLogin();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -126,37 +160,49 @@ namespace Project_C.Controllers
         }
 
         [HttpGet]
-        public ViewResult AddProduct()
+        public IActionResult AddProduct()
         {
-            ProductCreateViewModel model = new ProductCreateViewModel()
+            if (!CurrentEmployee.IsLoggedIn())
             {
-                AllStores = _context.Stores.ToList()
-            };
-            return View(model);
+                 return DirectToLogin();
+            }
+            ProductCreateViewModel model = new ProductCreateViewModel()
+                {
+                    AllStores = _context.Stores.ToList()
+                };
+                return View(model);
+            
+           
         }
 
         //creates the product and adds to database 
         [HttpPost]
         public IActionResult AddProduct(ProductCreateViewModel product)
         {
-            string uniqueFileName = ProcessUploadedFile(product.Photo, "ProductImages");
-            string correctVideoLink = product.VideoLink;
-            Product newProduct = new Product
+            if (!CurrentEmployee.IsLoggedIn())
             {
-                Id = product.Id,
-                Name = product.Name,
-                Description = product.Description,
-                Price = product.Price,
-                Place = product.Place,
-                PhotoPath = uniqueFileName,
-                VideoLink = correctVideoLink,
-                Stores = product.Stores != null ? ProcessChosenStores(product.Stores) : null
+                 return DirectToLogin();
+            }
+            string uniqueFileName = ProcessUploadedFile(product.Photo, "ProductImages");
+                string correctVideoLink = product.VideoLink;
+                Product newProduct = new Product
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    Description = product.Description,
+                    Price = product.Price,
+                    Place = product.Place,
+                    PhotoPath = uniqueFileName,
+                    VideoLink = correctVideoLink,
+                    Stores = product.Stores != null ? ProcessChosenStores(product.Stores) : null
 
-            };
+                };
 
-            _context.Products.Add(newProduct);
-            _context.SaveChanges();
-            return RedirectToAction("ProductIndex");
+                _context.Products.Add(newProduct);
+                _context.SaveChanges();
+                return RedirectToAction("ProductIndex");
+            
+
         }
 
 

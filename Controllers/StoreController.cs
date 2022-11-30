@@ -3,6 +3,7 @@ using AdminApplication.Models;
 using AdminApplication.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Project_C.Models.StoreModels;
+using Project_C.Models.UserModels;
 using System.Diagnostics;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -21,16 +22,30 @@ namespace Project_C.Controllers
             hostingEnvironment = hostingenvironment;
         }
 
+        public IActionResult DirectToLogin()
+        {
+            return RedirectToAction("LoginPage", "Access");
+
+        }
+
         public IActionResult StoreIndex()
         {
+            if (!CurrentEmployee.IsLoggedIn())
+            {
+                 return DirectToLogin();
+            }
             var listOfAllProducts = _storeRepository.GetAllStores();
             return View(listOfAllProducts);
         }
 
 
         [HttpGet]
-        public ViewResult EditStore(Guid id)
+        public IActionResult EditStore(Guid id)
         {
+            if (!CurrentEmployee.IsLoggedIn())
+            {
+                 return DirectToLogin();
+            }
             Store selectedStore = _storeRepository.GetStore(id);
             StoreEditViewModel storeEditViewModel = new StoreEditViewModel
             {
@@ -40,11 +55,17 @@ namespace Project_C.Controllers
                 SiteLink = selectedStore.SiteLink,
             };
             return View(storeEditViewModel);
+
+
         }
 
         [HttpPost]
         public IActionResult EditStore(StoreEditViewModel storeChanges)
         {
+            if (!CurrentEmployee.IsLoggedIn())
+            {
+                 return DirectToLogin();
+            }
             //get product to be updated
             Store storeToBeUpdated = _storeRepository.GetStore(storeChanges.Id);
             storeToBeUpdated.SiteLink = storeChanges.SiteLink;
@@ -68,6 +89,7 @@ namespace Project_C.Controllers
 
             _storeRepository.UpdateStore(storeToBeUpdated);
             return RedirectToAction("StoreIndex");
+
         }
 
 
@@ -99,13 +121,23 @@ namespace Project_C.Controllers
         [HttpGet]
         public IActionResult AddStore()
         {
+            if (!CurrentEmployee.IsLoggedIn())
+            {
+                 return DirectToLogin();
+            }
             return View();
+
         }
+
 
 
         [HttpPost]
         public IActionResult AddStore(StoreCreateViewModel store)
         {
+            if (!CurrentEmployee.IsLoggedIn())
+            {
+                 return DirectToLogin();
+            }
             if (ModelState.IsValid)
             {
                 string uniqueFileName = ProcessUploadedFile(store.LogoFile, "StoreLogos");
@@ -118,12 +150,16 @@ namespace Project_C.Controllers
                 };
                 _storeRepository.AddStore(newStore);
             }
-
             return RedirectToAction("StoreIndex");
+
         }
 
         public IActionResult StoreDetails(Guid id)
         {
+            if (!CurrentEmployee.IsLoggedIn())
+            {
+                 return DirectToLogin();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -136,19 +172,29 @@ namespace Project_C.Controllers
             }
 
             return View(store);
+
         }
 
         [HttpGet]
-        public ViewResult DeleteStore(Guid id)
+        public IActionResult DeleteStore(Guid id)
         {
+            if (!CurrentEmployee.IsLoggedIn())
+            {
+                 return DirectToLogin();
+            }
             Store selectedStore = _storeRepository.GetStore(id);
             return View(selectedStore);
+
         }
 
         //Deletes the product and redirects to index after confirmation has been asked
         [HttpPost,ActionName("DeleteStore")]
         public IActionResult ConfirmDeleteStore(Guid id)
         {
+            if (!CurrentEmployee.IsLoggedIn())
+            {
+                 return DirectToLogin();
+            }
             Store selectedStore = _storeRepository.GetStore(id);
             if (selectedStore != null)
             {

@@ -5,11 +5,11 @@
 }
 
 
-<h4>Are you sure you want to delete "@Html.DisplayFor(model => model.Name)"?</h4>
+<h4>Weet u zeker dat u "@Html.DisplayFor(model => model.Name)" wilt verwijderen?</h4>
 
 
 <form asp-action="DeleteStore">
     <input type="hidden" asp-for="Id" />
     <input type="submit" value="Delete" class="btn btn-danger" />
-    <a class="btn btn-primary" asp-action="StoreDetails" asp-route-id="@Model.Id">Back</a>
+    <a class="btn btn-primary" asp-action="StoreDetails" asp-route-id="@Model.Id">Terug</a>
 </form>

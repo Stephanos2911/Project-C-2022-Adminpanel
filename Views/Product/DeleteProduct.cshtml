@@ -4,11 +4,11 @@
     ViewData["Title"] = "Delete Product";
 }
 
-<h4>Are you sure you want to delete "@Html.DisplayFor(model => model.Name)"?</h4>
+<h4>Weet je zeker dat je "@Html.DisplayFor(model => model.Name)" wilt verwijderen?</h4>
 
 
 <form asp-action="DeleteProduct">
     <input type="hidden" asp-for="Id" />
-    <input type="submit" value="Delete" class="btn btn-danger" />
-    <a class="btn btn-primary" asp-action="ProductDetails" asp-route-id="@Model.Id">Back</a>
+    <input type="submit" value="Verwijder" class="btn btn-danger" />
+    <a class="btn btn-primary" asp-action="ProductDetails" asp-route-id="@Model.Id">Terug</a>
 </form>

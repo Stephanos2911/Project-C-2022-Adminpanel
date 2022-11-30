@@ -4,10 +4,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Employees</h1>
+<h1>Werknemers</h1>
 
 
-<a asp-controller="Employee" asp-action="AddEmployee"><input class="btn btn-success" value="Add new Employee" /></a>
+<a asp-controller="Employee" asp-action="AddEmployee"><input class="btn btn-success" value="Nieuwe werknemer" /></a>
 <style>
     table {
         border-collapse: collapse;
@@ -23,16 +23,16 @@
     <thead>
         <tr>
             <th style="width:20%">
-                @Html.DisplayNameFor(model => model.Username)
+                Gebruikersnaam
             </th>
             <th style="width:25%">
-                @Html.DisplayNameFor(model => model.Email)
+                E-mail
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                Id
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsAdmin)
+                Rol
             </th>
             <th></th>
         </tr>
@@ -40,18 +40,19 @@
     <tbody>
         @foreach (var item in Model)
         {
+            string rol = item.IsAdmin == true ? "Administrator" : "Medewerker";
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Username)
+                    @item.Username
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Email)
+                    @item.Email
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Id)
+                    @item.Id
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.IsAdmin)
+                    @rol
                 </td>
                 <td>
                     <form asp-action="View">

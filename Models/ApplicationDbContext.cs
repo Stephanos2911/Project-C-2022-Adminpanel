@@ -13,7 +13,7 @@ namespace AdminApplication.Models
 
         }
 
-        //[Finished]one product has multiple stores, multiple products are owned by Seniors
+        //[Finished]one product has multiple stores, (multiple products are owned by Seniors(not confirmed))
         public DbSet<Product> Products { get; set; }
 
         //[Finished] a store can be used by multiple products

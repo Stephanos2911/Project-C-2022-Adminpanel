@@ -2,8 +2,9 @@
 using AdminApplication.Models;
 using AdminApplication.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Project_C.Models.StoreModels;
+using Project_C.Models;
 using Project_C.Models.UserModels;
+using Project_C.ViewModels;
 using System.Diagnostics;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -11,14 +12,12 @@ namespace Project_C.Controllers
 {
     public class StoreController : Controller
     {
-        
-        private readonly IStoreRepository _storeRepository;
+        private ApplicationDbContext _context;
         private readonly IWebHostEnvironment hostingEnvironment;
 
-        public StoreController(IWebHostEnvironment hostingenvironment, IStoreRepository storeRepository)
+        public StoreController(IWebHostEnvironment hostingenvironment, ApplicationDbContext context)
         {
-           
-            _storeRepository = storeRepository;
+            _context = context;
             hostingEnvironment = hostingenvironment;
         }
 
@@ -34,8 +33,8 @@ namespace Project_C.Controllers
             {
                  return DirectToLogin();
             }
-            var listOfAllProducts = _storeRepository.GetAllStores();
-            return View(listOfAllProducts);
+            
+            return View(_context.Stores);
         }
 
 
@@ -46,32 +45,30 @@ namespace Project_C.Controllers
             {
                  return DirectToLogin();
             }
-            Store selectedStore = _storeRepository.GetStore(id);
-            StoreEditViewModel storeEditViewModel = new StoreEditViewModel
+            Store selectedStore = _context.Stores.Find(id);
+            StoreEditModel StoreViewModel = new StoreEditModel
             {
-                Id = selectedStore.Id,
+                Id = id,
                 Name = selectedStore.Name,
                 ExistingPhotoPath = selectedStore.LogoPath,
                 SiteLink = selectedStore.SiteLink,
             };
-            return View(storeEditViewModel);
-
-
+            return View(StoreViewModel);
         }
 
         [HttpPost]
-        public IActionResult EditStore(StoreEditViewModel storeChanges)
+        public IActionResult EditStore(StoreEditModel storeChanges)
         {
             if (!CurrentEmployee.IsLoggedIn())
             {
                  return DirectToLogin();
             }
             //get product to be updated
-            Store storeToBeUpdated = _storeRepository.GetStore(storeChanges.Id);
+            Store storeToBeUpdated = _context.Stores.Find(storeChanges.Id);
             storeToBeUpdated.SiteLink = storeChanges.SiteLink;
             storeToBeUpdated.Name = storeChanges.Name;
 
-            //is there a file uploaded?
+            //is there a file uploaded? if yes then continue
             if (storeChanges.LogoFile != null)
             {
                 //is there an already existing photo? if yes then delete the old photo and assign the new path to the updated product object.
@@ -79,7 +76,7 @@ namespace Project_C.Controllers
                 {
                     DeletePicture(storeChanges.ExistingPhotoPath);
                 }
-                storeToBeUpdated.LogoPath = ProcessUploadedFile(storeChanges.LogoFile, "ProductImages");
+                storeToBeUpdated.LogoPath = ProductController.ProcessUploadedFile(storeChanges.LogoFile, "StoreLogos", hostingEnvironment);
             }
             //no file uploaded means use the old photo
             else
@@ -87,7 +84,7 @@ namespace Project_C.Controllers
                 storeToBeUpdated.LogoPath = storeChanges.ExistingPhotoPath;
             }
 
-            _storeRepository.UpdateStore(storeToBeUpdated);
+            _context.SaveChanges();
             return RedirectToAction("StoreIndex");
 
         }
@@ -100,23 +97,6 @@ namespace Project_C.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        private string ProcessUploadedFile(IFormFile image, string subfolder)
-        {
-            string uniqueFileName = null;
-            if (image != null)
-            {
-                string uploadsFolder = $"{hostingEnvironment.WebRootPath}/images/{subfolder}/";
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    image.CopyTo(fileStream);
-                }
-
-            }
-
-            return uniqueFileName;
-        }
 
         [HttpGet]
         public IActionResult AddStore()
@@ -126,32 +106,28 @@ namespace Project_C.Controllers
                  return DirectToLogin();
             }
             return View();
-
         }
 
 
 
         [HttpPost]
-        public IActionResult AddStore(StoreCreateViewModel store)
+        public IActionResult AddStore(StoreViewModel store)
         {
             if (!CurrentEmployee.IsLoggedIn())
             {
                  return DirectToLogin();
             }
-            if (ModelState.IsValid)
+            string uniqueFileName = ProductController.ProcessUploadedFile(store.LogoFile, "StoreLogos", hostingEnvironment);
+            Store newStore = new Store
             {
-                string uniqueFileName = ProcessUploadedFile(store.LogoFile, "StoreLogos");
-                Store newStore = new Store
-                {
-                    Id = store.Id,
-                    Name = store.Name,
-                    SiteLink = store.SiteLink,
-                    LogoPath = uniqueFileName,
-                };
-                _storeRepository.AddStore(newStore);
-            }
+                Id = store.Id,
+                Name = store.Name,
+                SiteLink = store.SiteLink,
+                LogoPath = uniqueFileName,
+            };
+            _context.Stores.Add(newStore);
+            _context.SaveChanges();
             return RedirectToAction("StoreIndex");
-
         }
 
         public IActionResult StoreDetails(Guid id)
@@ -165,7 +141,7 @@ namespace Project_C.Controllers
                 return NotFound();
             }
 
-            var store = _storeRepository.GetStore(id);
+            var store = _context.Stores.Find(id);
             if (store == null)
             {
                 return NotFound();
@@ -182,7 +158,7 @@ namespace Project_C.Controllers
             {
                  return DirectToLogin();
             }
-            Store selectedStore = _storeRepository.GetStore(id);
+            Store selectedStore = _context.Stores.Find(id);
             return View(selectedStore);
 
         }
@@ -195,14 +171,15 @@ namespace Project_C.Controllers
             {
                  return DirectToLogin();
             }
-            Store selectedStore = _storeRepository.GetStore(id);
+            Store selectedStore = _context.Stores.Find(id);
             if (selectedStore != null)
             {
                 if (selectedStore.LogoPath != null)
                 {
                     DeletePicture(selectedStore.LogoPath);
                 }
-                _storeRepository.DeleteStore(selectedStore.Id);
+                _context.Stores.Remove(selectedStore);
+                _context.SaveChanges();
             }
             return RedirectToAction("StoreIndex");
         }

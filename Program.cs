@@ -1,17 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using AdminApplication.Models;
-using Project_C.Models.StoreModels;
-using Project_C.Models.ProductModels;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var DatabaseConnectionString = builder.Configuration.GetConnectionString("ProjectCDBConnection");
-builder.Services.AddDbContextPool<ApplicationDbContext>(
-    options => options.UseSqlServer(DatabaseConnectionString));
+builder.Services.AddDbContext<ApplicationDbContext>(
+    options => options.UseMySql(DatabaseConnectionString, ServerVersion.AutoDetect(DatabaseConnectionString)));
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<IProductRepository, SQLProductRepository>();
-builder.Services.AddScoped<IStoreRepository, SQLStoreRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

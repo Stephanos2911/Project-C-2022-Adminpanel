@@ -1,4 +1,4 @@
-﻿@model AdminApplication.ViewModels.StoreCreateViewModel
+﻿@model AdminApplication.ViewModels.StoreViewModel
 
 @{
     ViewData["Title"] = "Create Store";
@@ -125,4 +125,8 @@
 </div>
 
 
-
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

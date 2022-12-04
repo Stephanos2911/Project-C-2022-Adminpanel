@@ -1,9 +1,4 @@
-﻿using Project_C.Models.StoreModels;
-using Project_C.Models.UserModels;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
-
-namespace Project_C.Models.ProductModels
+﻿namespace Project_C.Models
 {
     public class Product
     {

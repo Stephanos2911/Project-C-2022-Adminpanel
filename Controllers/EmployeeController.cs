@@ -1,8 +1,5 @@
 ﻿using AdminApplication.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Project_C.Models.ProductModels;
-using Project_C.Models.StoreModels;
 using Project_C.Models.UserModels;
 using Project_C.ViewModels;
 
@@ -36,21 +33,20 @@ namespace Project_C.Controllers
             {
                  return DirectToHome();
             }
-            var AllEmployees = _context.Employees;
-            return View(AllEmployees);
+            return View(_context.Employees);
         }
 
         //Add Employee Page
         [HttpGet]
         public IActionResult AddEmployee() {
-            if (!CurrentEmployee.IsLoggedIn())
-            {
-                 return DirectToLogin();
-            }
-            if (!CurrentEmployee.IsAdmin())
-            {
-                 return DirectToHome();
-            }
+            //if (!CurrentEmployee.IsLoggedIn())
+            //{
+            //    return DirectToLogin();
+            //}
+            //if (!CurrentEmployee.IsAdmin())
+            //{
+            //    return DirectToHome();
+            //}
             return View();
         }
 
@@ -58,14 +54,14 @@ namespace Project_C.Controllers
         [HttpPost]
         public IActionResult AddEmployee(EmployeeCreateModel newEmployeemodel)
         {
-            if (!CurrentEmployee.IsLoggedIn())
-            {
-                 return DirectToLogin();
-            }
-            if (!CurrentEmployee.IsAdmin())
-            {
-                 return DirectToHome();
-            }
+            //if (!CurrentEmployee.IsLoggedIn())
+            //{
+            //    return DirectToLogin();
+            //}
+            //if (!CurrentEmployee.IsAdmin())
+            //{
+            //    return DirectToHome();
+            //}
             if (ModelState.IsValid)
             {
                 Employee newEmployee = new Employee()
@@ -79,10 +75,6 @@ namespace Project_C.Controllers
 
                 _context.Employees.Add(newEmployee);
                 _context.SaveChanges();
-            }
-            else
-            {
-                return RedirectToAction("AddEmployee");
             }
 
             return RedirectToAction("EmployeeIndex");
@@ -120,8 +112,7 @@ namespace Project_C.Controllers
             {
                  return DirectToHome();
             }
-            var employee = _context.Employees.Find(id);
-            return View(employee);
+            return View(_context.Employees.Find(id));
         }
 
         //actually removes employee from database then redirects to index
@@ -136,8 +127,7 @@ namespace Project_C.Controllers
             {
                  return DirectToHome();
             }
-            var employeeToDelete = _context.Employees.Find(id);
-            _context.Employees.Remove(employeeToDelete);
+            _context.Employees.Remove(_context.Employees.Find(id));
             _context.SaveChanges();
             return RedirectToAction("EmployeeIndex");
         }
@@ -189,13 +179,12 @@ namespace Project_C.Controllers
                 employeeToBeUpdated.Password = employeechanges.Password;
                 employeeToBeUpdated.Email = employeechanges.Email;
                 employeeToBeUpdated.IsAdmin = employeechanges.IsAdmin == "Administrator" ? true : false;
-
+                //saves changes made to record in database
                 _context.SaveChanges();
 
                 return RedirectToAction("EmployeeIndex");
             }
-
-            return RedirectToAction("EditEmployee", employeechanges.Id);
+            return RedirectToAction("EmployeeIndex");
         }
     }
 }

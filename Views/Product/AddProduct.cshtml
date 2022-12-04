@@ -1,7 +1,11 @@
-﻿@model AdminApplication.ViewModels.ProductCreateViewModel
+﻿@model AdminApplication.ViewModels.ProductViewModel
 
 @{
     ViewData["Title"] = "Create Product";
+    //loads db context into this page
+    var _context = ViewBag.Context as ApplicationDbContext;
+    //List of all stores
+    var allstores = _context.Stores.ToList();
 }
 
 <style>
@@ -158,7 +162,7 @@
                     <tr>
                         <td>
                             <select asp-for=Stores type="text" class="form-control" size="3" />
-                            @foreach (var item in Model.AllStores)
+                            @foreach (var item in allstores)
                             {
                                 <option value="@item.Id">@item.Name  </option>
                             }

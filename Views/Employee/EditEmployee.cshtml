@@ -86,7 +86,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td class="DetailInfo">
                             <input asp-for="Password" class="form-control" />
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </td>
@@ -97,7 +97,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td class="DetailInfo">
                             <input asp-for="Email" class="form-control" />
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </td>
@@ -108,7 +108,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td class="DetailInfo">
                             <select asp-for=IsAdmin type="text" class="form-control" />
                             <option value="Administrator">Administrator</option>
                             <option value="Medewerker">Medewerker</option>
@@ -123,8 +123,12 @@
             <a class="btn btn-primary" asp-controller="Employee" asp-action="EmployeeIndex">Terug</a>
         </div>
 
-
-
-
     </form>
 </div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

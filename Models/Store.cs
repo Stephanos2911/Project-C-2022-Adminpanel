@@ -1,7 +1,6 @@
-﻿using Project_C.Models.ProductModels;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Project_C.Models.StoreModels
+namespace Project_C.Models
 {
     public class Store
     {

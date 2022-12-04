@@ -1,4 +1,4 @@
-﻿@model AdminApplication.ViewModels.StoreEditViewModel
+﻿@model Project_C.ViewModels.StoreEditModel
 @{
 
     ViewData["Title"] = "Edit Store";
@@ -62,6 +62,7 @@
 <div class="row">
     <form method="post" enctype="multipart/form-data" asp-action="EditStore" asp-controller="Store">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="ExistingPhotoPath"/>
         <div class="column">
             <table class="CostumMadeTable">
                 <thead>
@@ -112,7 +113,6 @@
                     <tr>
                         <td class="DetailInfo">
                             <input asp-for="LogoFile" class="form-control custom-file-input" />
-                            <span asp-validation-for="LogoFile" class="text-danger"></span>
                         </td>
                     </tr>
                 </tbody>
@@ -122,3 +122,9 @@
 
     </form>
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

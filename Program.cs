@@ -7,7 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var DatabaseConnectionString = builder.Configuration.GetConnectionString("ProjectCDBConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(
-    options => options.UseMySql(DatabaseConnectionString, ServerVersion.AutoDetect(DatabaseConnectionString)));
+    options => options.UseSqlServer(DatabaseConnectionString));
+//options.UseMySql(DatabaseConnectionString, ServerVersion.AutoDetect(DatabaseConnectionString)));
 builder.Services.AddControllersWithViews();
 var app = builder.Build();
 

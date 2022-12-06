@@ -1,8 +1,16 @@
-﻿@model Project_C.Models.Store
+﻿@using Project_C.Models;
+@model Project_C.Models.Store
 
 @{
+    //loads db context into this page
+    var _context = ViewBag.Context as ApplicationDbContext;
+
     ViewData["Title"] = "Details";
-    var photoPath = "~/images/StoreLogos/" + Model.LogoPath;
+    //finds the image data (ImageData[]) from database and loads it into a string
+    string imageDataURL =
+            string.Format("data:image/jpg;base64,{0}",
+            Convert.ToBase64String(_context.Images.Where(x => x.StoreId == Model.Id).ToList()[0].ImageData));
+
 }
 
 <style>
@@ -106,7 +114,7 @@
                 </tr>
                 <tr>
                     <td class="DetailInfo">
-                        <img src="@photoPath" asp-append-version="true" height="353" align="middle" />
+                        <img src="@imageDataURL" asp-append-version="true" height="353" align="middle" />
                     </td>
                 </tr>
             </tbody>

@@ -39,6 +39,5 @@ namespace Project_C.ViewModels
         // https://www.learnentityframeworkcore.com/configuration/many-to-many-relationship-configuration
         public List<Guid>? Stores { get; set; }
 
-        public string ExistingPhotoPath { get; set; }
     }
 }

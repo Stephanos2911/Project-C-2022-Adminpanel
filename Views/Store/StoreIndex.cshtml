@@ -2,6 +2,15 @@
 
 @{
     ViewData["Title"] = "StoreIndex";
+    //loads db context into this page
+    var _context = ViewBag.Context as ApplicationDbContext;
+
+    var AllStoreLogos = _context.Images.Where(x => x.ProductId == null).ToList();
+    List<string> imageDataURL = new List<string>();
+    for(int i = 0; i <AllStoreLogos.Count; i++)
+    {
+        imageDataURL.Add(string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(AllStoreLogos[i].ImageData)));
+    }
 }
 
 <h1>Winkels</h1>
@@ -35,31 +44,31 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @{
+        var ModeltoList = Model.ToList();
+        for (int i =0; i < ModeltoList.Count; i++)
         {
             <tr>
                 <td>
-                    @item.Name
+                        @ModeltoList[i].Name
                 </td>
                 <td>
-                    @item.SiteLink
+                        @ModeltoList[i].SiteLink
                 </td>
                 <td>
-                    @{
-                        var photoPath = "~/images/StoreLogos/" + item.LogoPath;
-                    }
-                    <img class="img-fluid" src="@photoPath"  asp-append-version="true" style="width:12%" />
+                    <img class="img-fluid" src="@imageDataURL[i]"  asp-append-version="true" style="width:12%" />
                 </td>
                 <td>
                     <form asp-action="View">
                         <div class="btn-group">
-                            <a class="btn btn-primary" asp-action="StoreDetails" asp-route-id="@item.Id">Details</a>
-                            <a class="btn btn-primary" asp-action="EditStore" asp-route-id="@item.Id">Bewerk</a>
-                            <a class="btn btn-danger" asp-action="DeleteStore" asp-route-id="@item.Id">Verwijder</a>
+                                <a class="btn btn-primary" asp-action="StoreDetails" asp-route-id="@ModeltoList[i].Id">Details</a>
+                                <a class="btn btn-primary" asp-action="EditStore" asp-route-id="@ModeltoList[i].Id">Bewerk</a>
+                                <a class="btn btn-danger" asp-action="DeleteStore" asp-route-id="@ModeltoList[i].Id">Verwijder</a>
                         </div>
                     </form>
                 </td>
             </tr>
+        }
         }
     </tbody>
 </table>

@@ -17,7 +17,5 @@ namespace Project_C.ViewModels
         [StringLength(300, MinimumLength = 5, ErrorMessage = "link is too short")]
 
         public string SiteLink { get; set; }
-
-        public string ExistingPhotoPath { get; set; }
     }
 }

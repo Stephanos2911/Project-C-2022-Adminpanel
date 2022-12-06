@@ -50,7 +50,6 @@ namespace Project_C.Controllers
             {
                 Id = id,
                 Name = selectedStore.Name,
-                ExistingPhotoPath = selectedStore.LogoPath,
                 SiteLink = selectedStore.SiteLink,
             };
             return View(StoreViewModel);
@@ -68,25 +67,14 @@ namespace Project_C.Controllers
             storeToBeUpdated.SiteLink = storeChanges.SiteLink;
             storeToBeUpdated.Name = storeChanges.Name;
 
-            //is there a file uploaded? if yes then continue
+            //is there a file uploaded? if yes then change the current image
             if (storeChanges.LogoFile != null)
             {
-                //is there an already existing photo? if yes then delete the old photo and assign the new path to the updated product object.
-                if (storeChanges.ExistingPhotoPath != null)
-                {
-                    DeletePicture(storeChanges.ExistingPhotoPath);
-                }
-                storeToBeUpdated.LogoPath = ProductController.ProcessUploadedFile(storeChanges.LogoFile, "StoreLogos", hostingEnvironment);
+                _context.Images.Remove(_context.Images.SingleOrDefault(x => x.StoreId == storeChanges.Id));
+                storeToBeUpdated.StoreLogo = ImagetoByte(storeChanges.LogoFile);
             }
-            //no file uploaded means use the old photo
-            else
-            {
-                storeToBeUpdated.LogoPath = storeChanges.ExistingPhotoPath;
-            }
-
             _context.SaveChanges();
             return RedirectToAction("StoreIndex");
-
         }
 
 
@@ -117,17 +105,27 @@ namespace Project_C.Controllers
             {
                  return DirectToLogin();
             }
-            string uniqueFileName = ProductController.ProcessUploadedFile(store.LogoFile, "StoreLogos", hostingEnvironment);
             Store newStore = new Store
             {
                 Id = store.Id,
                 Name = store.Name,
                 SiteLink = store.SiteLink,
-                LogoPath = uniqueFileName,
+                StoreLogo = ImagetoByte(store.LogoFile)
             };
             _context.Stores.Add(newStore);
             _context.SaveChanges();
             return RedirectToAction("StoreIndex");
+        }
+
+        public static Models.Image ImagetoByte(IFormFile logoFile)
+        {
+            Models.Image newImage = new Models.Image();
+            newImage.ImageTitle = logoFile.FileName;
+
+            MemoryStream ms = new MemoryStream();
+            logoFile.CopyTo(ms);
+            newImage.ImageData = ms.ToArray();
+            return newImage;
         }
 
         public IActionResult StoreDetails(Guid id)
@@ -174,10 +172,7 @@ namespace Project_C.Controllers
             Store selectedStore = _context.Stores.Find(id);
             if (selectedStore != null)
             {
-                if (selectedStore.LogoPath != null)
-                {
-                    DeletePicture(selectedStore.LogoPath);
-                }
+                _context.Images.Remove(_context.Images.SingleOrDefault(x => x.StoreId == selectedStore.Id));
                 _context.Stores.Remove(selectedStore);
                 _context.SaveChanges();
             }

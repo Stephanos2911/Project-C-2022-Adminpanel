@@ -3,16 +3,17 @@
 @{
     //loads db context into this page
     var _context = ViewBag.Context as ApplicationDbContext;
+
     //query for all stores which have been selected for this product
-    var storesOfProduct =
-      from store in _context.Stores
-      where store.Products.Any(x => x.Id == Model.Id)
-      select store;
+    var AllStoreLogos = _context.Images.Where(x => x.ProductId == Model.Id).ToList();
+    List<string> imageDataURL = new List<string>();
+    for (int i = 0; i < AllStoreLogos.Count; i++)
+    {
+        imageDataURL.Add(string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(AllStoreLogos[i].ImageData)));
+    }
+    var ProductImage = _context.Images.SingleOrDefault(x => x.ProductId == Model.Id);
+    string ProductimageDataURL = string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(ProductImage.ImageData));
     ViewData["Title"] = "Details";
-    //product image path
-    var photoPath = "~/images/ProductImages/" + Model.PhotoPath;
-    
- 
 }
 
 <style>
@@ -111,9 +112,9 @@
         <tr>
              <td class="DetailInfo">
                   @{
-                      foreach (var item in storesOfProduct)
+                           for (int i =0; i < imageDataURL.Count; i++)
                            {
-                                   <img src="~/images/StoreLogos/@item.LogoPath" asp-append-version="true" height="80" width="80" />
+                                   <img src="@imageDataURL[i]" asp-append-version="true" height="80" width="80" />
                            }
                    }
              </td>
@@ -141,7 +142,7 @@
         </tr>
         <tr>
              <td class="DetailInfo">
-                 <img src="@photoPath" asp-append-version="true" height="450" align="middle"/>
+                 <img src="@ProductimageDataURL" asp-append-version="true" height="450" align="middle"/>
              </td>               
         </tr>
         <tr>

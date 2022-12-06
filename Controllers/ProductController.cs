@@ -53,7 +53,6 @@ namespace Project_C.Controllers
                 Description = selectedProduct.Description,
                 Price = selectedProduct.Price,
                 Place = selectedProduct.Place,
-                ExistingPhotoPath = selectedProduct.PhotoPath,
                 VideoLink = selectedProduct.VideoLink
             };
             return View(productEditViewModel);
@@ -85,17 +84,9 @@ namespace Project_C.Controllers
             //is there a file uploaded?
             if (productChanges.Photo != null)
             {
-                //is there an already existing photo? if yes then delete the old photo and assign the new path to the updated product object.
-                if (productChanges.ExistingPhotoPath != null)
-                {
-                    DeletePicture(productChanges.ExistingPhotoPath);
-                }
-                productToBeUpdated.PhotoPath = ProcessUploadedFile(productChanges.Photo, "ProductImages", hostingEnvironment);
-            }
-            //no file uploaded means use the old photo
-            else
-            {
-                productToBeUpdated.PhotoPath = productChanges.ExistingPhotoPath;
+                //delete the old photo and assign the new path to the updated product object.
+                _context.Images.Remove(_context.Images.SingleOrDefault(x => x.ProductId == productToBeUpdated.Id));
+                productToBeUpdated.ProductImage = StoreController.ImagetoByte(productChanges.Photo);
             }
 
             _context.SaveChanges();
@@ -131,15 +122,11 @@ namespace Project_C.Controllers
                  return DirectToLogin();
             }
             Product selectedProduct = _context.Products.Find(id);
-            if (selectedProduct != null)
-            {
-                if (selectedProduct.PhotoPath != null)
-                {
-                    DeletePicture(selectedProduct.PhotoPath);
-                }
-                _context.Products.Remove(selectedProduct);
-                _context.SaveChanges();
-            }
+
+            _context.Images.Remove(_context.Images.SingleOrDefault(x => x.ProductId == selectedProduct.Id));
+            _context.Products.Remove(selectedProduct);
+            _context.SaveChanges();
+
             return RedirectToAction("ProductIndex");
         }
 
@@ -185,7 +172,6 @@ namespace Project_C.Controllers
                  return DirectToLogin();
             }
 
-            string uniqueFileName = ProcessUploadedFile(product.Photo, "ProductImages", hostingEnvironment);
             Product newProduct = new Product
             {
                 Id = product.Id,
@@ -193,12 +179,11 @@ namespace Project_C.Controllers
                 Description = product.Description,
                 Price = product.Price,
                 Place = product.Place,
-                PhotoPath = uniqueFileName,
-                //voor een Iframe is een embed link nodig. we verwachten dat de gebruiker de normale link in de url balk boven in kopieren en plakken. 
+                ProductImage = StoreController.ImagetoByte(product.Photo),
+                //voor een Iframe is een embed link nodig. we verwachten dat de gebruiker de normale link in de url balk bovenin zal kopieren en plakken. 
                 //hierom converten we de link zelf naar een echte embed link. Dit doen we door het ID van de video eruit te slicen.
                 VideoLink = $"https://www.youtube.com/embed/{product.VideoLink.Substring(32, 11)}",
                 Stores = product.Stores != null ? ProcessChosenStores(product.Stores) : null
-
             };
 
             _context.Products.Add(newProduct);
@@ -220,42 +205,23 @@ namespace Project_C.Controllers
         }
 
 
-        public static string ProcessUploadedFile(IFormFile image, string subfolder, IWebHostEnvironment hostingenvironment)
-        {
-            string uniqueFileName = null;
-            if (image != null)
-            {
-                string uploadsFolder = $"{hostingenvironment.WebRootPath}/images/{subfolder}/";
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    image.CopyTo(fileStream);
-                }
+        //public static string ProcessUploadedFile(IFormFile image, string subfolder, IWebHostEnvironment hostingenvironment)
+        //{
+        //    string uniqueFileName = null;
+        //    if (image != null)
+        //    {
+        //        string uploadsFolder = $"{hostingenvironment.WebRootPath}/images/{subfolder}/";
+        //        uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
+        //        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+        //        using (var fileStream = new FileStream(filePath, FileMode.Create))
+        //        {
+        //            image.CopyTo(fileStream);
+        //        }
 
-            }
+        //    }
 
-            return uniqueFileName;
-        }
+        //    return uniqueFileName;
+        //}
 
-        public string ProcessYoutubeLink(string normalLink)
-        {
-            //input string example: https://www.youtube.com/watch?v=VTkrVTjekqI&ab_channel=BarryHarris-Topic
-            //VTkrVTjekqI after watch?v= is needed for using in an embed link to present the link in an IFrame Html tag (Iframe only works with embed links).
-            //asking for an embed link from youtube is too complex to ask, thus the link conversion
-            string CorrectLink = normalLink.Substring(32, 11);
-
-
-            return CorrectLink;
-        }
-
-        private void DeletePicture(string uniqueImageName)
-        {      
-            string filePath = Path.Combine($"{hostingEnvironment.WebRootPath}/images/ProductImages/", uniqueImageName);
-            if (System.IO.File.Exists(filePath))
-            {
-                System.IO.File.Delete(filePath);
-            }
-        }
     }
 }

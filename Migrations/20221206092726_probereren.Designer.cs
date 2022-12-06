@@ -4,6 +4,7 @@ using AdminApplication.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Project_C.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221206092726_probereren")]
+    partial class probereren
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,39 +39,6 @@ namespace Project_C.Migrations
                     b.ToTable("ProductStore");
                 });
 
-            modelBuilder.Entity("Project_C.Models.Image", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<byte[]>("ImageData")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("ImageTitle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("StoreId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId")
-                        .IsUnique()
-                        .HasFilter("[ProductId] IS NOT NULL");
-
-                    b.HasIndex("StoreId")
-                        .IsUnique()
-                        .HasFilter("[StoreId] IS NOT NULL");
-
-                    b.ToTable("Images");
-                });
-
             modelBuilder.Entity("Project_C.Models.Product", b =>
                 {
                     b.Property<Guid>("Id")
@@ -82,6 +51,9 @@ namespace Project_C.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhotoPath")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Place")
@@ -104,6 +76,10 @@ namespace Project_C.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("LogoPath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -156,33 +132,6 @@ namespace Project_C.Migrations
                         .WithMany()
                         .HasForeignKey("StoresId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Project_C.Models.Image", b =>
-                {
-                    b.HasOne("Project_C.Models.Product", "Product")
-                        .WithOne("ProductImage")
-                        .HasForeignKey("Project_C.Models.Image", "ProductId");
-
-                    b.HasOne("Project_C.Models.Store", "Store")
-                        .WithOne("StoreLogo")
-                        .HasForeignKey("Project_C.Models.Image", "StoreId");
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Store");
-                });
-
-            modelBuilder.Entity("Project_C.Models.Product", b =>
-                {
-                    b.Navigation("ProductImage")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Project_C.Models.Store", b =>
-                {
-                    b.Navigation("StoreLogo")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

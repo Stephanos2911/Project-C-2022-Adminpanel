@@ -13,5 +13,7 @@
 
         public Guid? StoreId { get; set; }
         public Store? Store { get; set; }
+
+        public string Type { get; set; }
     }
 }

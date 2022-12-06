@@ -5,7 +5,13 @@
     var _context = ViewBag.Context as ApplicationDbContext;
 
     //query for all stores which have been selected for this product
-    var AllStoreLogos = _context.Images.Where(x => x.ProductId == Model.Id).ToList();
+    var AllStoreLogos =
+      (from store in _context.Stores
+       from image in _context.Images
+       where store.Products.Any(x => x.Id == Model.Id)
+       select image).Where(x => x.Type == "Store").ToList();
+
+
     List<string> imageDataURL = new List<string>();
     for (int i = 0; i < AllStoreLogos.Count; i++)
     {
@@ -142,7 +148,7 @@
         </tr>
         <tr>
              <td class="DetailInfo">
-                 <img src="@ProductimageDataURL" asp-append-version="true" height="450" align="middle"/>
+                 <img src="@ProductimageDataURL" asp-append-version="true" height="425" align="middle"/>
              </td>               
         </tr>
         <tr>
@@ -151,7 +157,7 @@
 
       </tbody>
         </table>
-        <iframe width="642" height="315"
+        <iframe width="642" height="275"
                 src=@Model.VideoLink>
         </iframe>
     </div>

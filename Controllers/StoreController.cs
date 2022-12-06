@@ -71,7 +71,7 @@ namespace Project_C.Controllers
             if (storeChanges.LogoFile != null)
             {
                 _context.Images.Remove(_context.Images.SingleOrDefault(x => x.StoreId == storeChanges.Id));
-                storeToBeUpdated.StoreLogo = ImagetoByte(storeChanges.LogoFile);
+                storeToBeUpdated.StoreLogo = ImagetoByte(storeChanges.LogoFile, "Store");
             }
             _context.SaveChanges();
             return RedirectToAction("StoreIndex");
@@ -110,18 +110,18 @@ namespace Project_C.Controllers
                 Id = store.Id,
                 Name = store.Name,
                 SiteLink = store.SiteLink,
-                StoreLogo = ImagetoByte(store.LogoFile)
+                StoreLogo = ImagetoByte(store.LogoFile, "Store")
             };
             _context.Stores.Add(newStore);
             _context.SaveChanges();
             return RedirectToAction("StoreIndex");
         }
 
-        public static Models.Image ImagetoByte(IFormFile logoFile)
+        public static Models.Image ImagetoByte(IFormFile logoFile, string type)
         {
             Models.Image newImage = new Models.Image();
             newImage.ImageTitle = logoFile.FileName;
-
+            newImage.Type = type;
             MemoryStream ms = new MemoryStream();
             logoFile.CopyTo(ms);
             newImage.ImageData = ms.ToArray();

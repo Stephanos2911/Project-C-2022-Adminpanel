@@ -9,7 +9,7 @@
     //finds the image data (ImageData[]) from database and loads it into a string
     string imageDataURL =
             string.Format("data:image/jpg;base64,{0}",
-            Convert.ToBase64String(_context.Images.Where(x => x.StoreId == Model.Id).ToList()[0].ImageData));
+            Convert.ToBase64String(Model.StoreLogo));
 
 }
 

@@ -5,11 +5,11 @@
     //loads db context into this page
     var _context = ViewBag.Context as ApplicationDbContext;
 
-    var AllStoreLogos = _context.Images.Where(x => x.ProductId == null).ToList();
+
     List<string> imageDataURL = new List<string>();
-    for(int i = 0; i <AllStoreLogos.Count; i++)
+    for(int i = 0; i <Model.ToList().Count; i++)
     {
-        imageDataURL.Add(string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(AllStoreLogos[i].ImageData)));
+        imageDataURL.Add(string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(Model.ToList()[i].StoreLogo)));
     }
 }
 

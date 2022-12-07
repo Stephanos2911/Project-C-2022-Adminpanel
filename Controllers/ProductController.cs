@@ -16,12 +16,11 @@ namespace Project_C.Controllers
     public class ProductController : Controller
     {
         private ApplicationDbContext _context;
-        private readonly IWebHostEnvironment hostingEnvironment;
+  
 
-        public ProductController( IWebHostEnvironment hostingenvironment, ApplicationDbContext context)
+        public ProductController( ApplicationDbContext context)
         {
             _context = context;
-            hostingEnvironment = hostingenvironment;
         }
 
         public IActionResult DirectToLogin()
@@ -85,8 +84,7 @@ namespace Project_C.Controllers
             if (productChanges.Photo != null)
             {
                 //delete the old photo and assign the new path to the updated product object.
-                _context.Images.Remove(_context.Images.SingleOrDefault(x => x.ProductId == productToBeUpdated.Id));
-                productToBeUpdated.ProductImage = StoreController.ImagetoByte(productChanges.Photo, "Product");
+                productToBeUpdated.ProductImage = StoreController.ImagetoByte(productChanges.Photo);
             }
 
             _context.SaveChanges();
@@ -122,8 +120,6 @@ namespace Project_C.Controllers
                  return DirectToLogin();
             }
             Product selectedProduct = _context.Products.Find(id);
-
-            _context.Images.Remove(_context.Images.SingleOrDefault(x => x.ProductId == selectedProduct.Id));
             _context.Products.Remove(selectedProduct);
             _context.SaveChanges();
 
@@ -179,7 +175,7 @@ namespace Project_C.Controllers
                 Description = product.Description,
                 Price = product.Price,
                 Place = product.Place,
-                ProductImage = StoreController.ImagetoByte(product.Photo, "Product"),
+                ProductImage = StoreController.ImagetoByte(product.Photo),
                 //voor een Iframe is een embed link nodig. we verwachten dat de gebruiker de normale link in de url balk bovenin zal kopieren en plakken. 
                 //hierom converten we de link zelf naar een echte embed link. Dit doen we door het ID van de video eruit te slicen.
                 VideoLink = $"https://www.youtube.com/embed/{product.VideoLink.Substring(32, 11)}",

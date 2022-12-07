@@ -13,12 +13,10 @@ namespace Project_C.Controllers
     public class StoreController : Controller
     {
         private ApplicationDbContext _context;
-        private readonly IWebHostEnvironment hostingEnvironment;
 
-        public StoreController(IWebHostEnvironment hostingenvironment, ApplicationDbContext context)
+        public StoreController(ApplicationDbContext context)
         {
             _context = context;
-            hostingEnvironment = hostingenvironment;
         }
 
         public IActionResult DirectToLogin()
@@ -70,8 +68,8 @@ namespace Project_C.Controllers
             //is there a file uploaded? if yes then change the current image
             if (storeChanges.LogoFile != null)
             {
-                _context.Images.Remove(_context.Images.SingleOrDefault(x => x.StoreId == storeChanges.Id));
-                storeToBeUpdated.StoreLogo = ImagetoByte(storeChanges.LogoFile, "Store");
+                
+                storeToBeUpdated.StoreLogo = ImagetoByte(storeChanges.LogoFile);
             }
             _context.SaveChanges();
             return RedirectToAction("StoreIndex");
@@ -110,22 +108,19 @@ namespace Project_C.Controllers
                 Id = store.Id,
                 Name = store.Name,
                 SiteLink = store.SiteLink,
-                StoreLogo = ImagetoByte(store.LogoFile, "Store")
+                StoreLogo = ImagetoByte(store.LogoFile)
             };
             _context.Stores.Add(newStore);
             _context.SaveChanges();
             return RedirectToAction("StoreIndex");
         }
 
-        public static Models.Image ImagetoByte(IFormFile logoFile, string type)
+        public static byte[] ImagetoByte(IFormFile logoFile)
         {
-            Models.Image newImage = new Models.Image();
-            newImage.ImageTitle = logoFile.FileName;
-            newImage.Type = type;
             MemoryStream ms = new MemoryStream();
             logoFile.CopyTo(ms);
-            newImage.ImageData = ms.ToArray();
-            return newImage;
+            return ms.ToArray();
+         
         }
 
         public IActionResult StoreDetails(Guid id)
@@ -172,21 +167,11 @@ namespace Project_C.Controllers
             Store selectedStore = _context.Stores.Find(id);
             if (selectedStore != null)
             {
-                _context.Images.Remove(_context.Images.SingleOrDefault(x => x.StoreId == selectedStore.Id));
                 _context.Stores.Remove(selectedStore);
                 _context.SaveChanges();
             }
             return RedirectToAction("StoreIndex");
         }
 
-        private void DeletePicture(string uniqueImageName)
-        {
-            string uploadsFolder = $"{hostingEnvironment.WebRootPath}/images/StoreLogos/";
-            string filePath = Path.Combine(uploadsFolder, uniqueImageName);
-            if (System.IO.File.Exists(filePath))
-            {
-                System.IO.File.Delete(filePath);
-            }
-        }
     }
 }

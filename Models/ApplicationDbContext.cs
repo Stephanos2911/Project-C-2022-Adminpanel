@@ -18,8 +18,6 @@ namespace AdminApplication.Models
         //[Finished] a store can be used by multiple products
         public DbSet<Store> Stores { get; set; }
 
-        public DbSet<Image> Images { get; set; }
-
         public DbSet<Employee> Employees { get; set; }
 
 

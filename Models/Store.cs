@@ -11,7 +11,7 @@ namespace Project_C.Models
         public ICollection<Product>? Products { get; set; }
 
         //every image is related to one product (One To One)
-        public Image StoreLogo { get; set; }
+        public byte[] StoreLogo { get; set; }
 
     }
 }

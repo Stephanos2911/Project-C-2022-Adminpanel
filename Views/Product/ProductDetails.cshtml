@@ -5,20 +5,18 @@
     var _context = ViewBag.Context as ApplicationDbContext;
 
     //query for all stores which have been selected for this product
-    var AllStoreLogos =
+    var StoreLogosofProduct =
       (from store in _context.Stores
-       from image in _context.Images
-       where store.Products.Any(x => x.Id == Model.Id)
-       select image).Where(x => x.Type == "Store").ToList();
+      where store.Products.Any(x => x.Id == Model.Id)
+      select store.StoreLogo).ToList();
 
 
     List<string> imageDataURL = new List<string>();
-    for (int i = 0; i < AllStoreLogos.Count; i++)
+    for (int i = 0; i < StoreLogosofProduct.Count; i++)
     {
-        imageDataURL.Add(string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(AllStoreLogos[i].ImageData)));
+        imageDataURL.Add(string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(StoreLogosofProduct[i])));
     }
-    var ProductImage = _context.Images.SingleOrDefault(x => x.ProductId == Model.Id);
-    string ProductimageDataURL = string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(ProductImage.ImageData));
+    string ProductimageDataURL = string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(Model.ProductImage));
     ViewData["Title"] = "Details";
 }
 

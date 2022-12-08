@@ -20,6 +20,7 @@ namespace AdminApplication.Models
 
         public DbSet<Employee> Employees { get; set; }
 
+        public DbSet<Message> Messages { get; set; }
 
         ////[Finished] every senior has 1 caretaker and multiple products
         //public DbSet<Senior> Seniors { get; set; }

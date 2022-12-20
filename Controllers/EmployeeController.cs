@@ -39,14 +39,14 @@ namespace Project_C.Controllers
         //Add Employee Page
         [HttpGet]
         public IActionResult AddEmployee() {
-            //if (!CurrentEmployee.IsLoggedIn())
-            //{
-            //    return DirectToLogin();
-            //}
-            //if (!CurrentEmployee.IsAdmin())
-            //{
-            //    return DirectToHome();
-            //}
+            if (!CurrentEmployee.IsLoggedIn())
+            {
+                return DirectToLogin();
+            }
+            if (!CurrentEmployee.IsAdmin())
+            {
+                return DirectToHome();
+            }
             return View();
         }
 
@@ -54,14 +54,14 @@ namespace Project_C.Controllers
         [HttpPost]
         public IActionResult AddEmployee(EmployeeCreateModel newEmployeemodel)
         {
-            //if (!CurrentEmployee.IsLoggedIn())
-            //{
-            //    return DirectToLogin();
-            //}
-            //if (!CurrentEmployee.IsAdmin())
-            //{
-            //    return DirectToHome();
-            //}
+            if (!CurrentEmployee.IsLoggedIn())
+            {
+                return DirectToLogin();
+            }
+            if (!CurrentEmployee.IsAdmin())
+            {
+                return DirectToHome();
+            }
             if (ModelState.IsValid)
             {
                 Employee newEmployee = new Employee()

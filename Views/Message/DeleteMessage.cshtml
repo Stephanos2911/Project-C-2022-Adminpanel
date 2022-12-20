@@ -1,0 +1,9 @@
+﻿@model Guid
+
+<h4>Weet u zeker dat u dit bericht wilt afronden?</h4>
+<form asp-action="DeleteMessage">
+    <input type="submit" value="Afronden" class="btn btn-success"/>
+    <a class="btn btn-primary" asp-action="MessageDetails" asp-route-id="@Model">Terug</a>
+</form>
+
+

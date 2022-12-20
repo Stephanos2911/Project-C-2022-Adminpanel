@@ -21,7 +21,7 @@ namespace AdminApplication.ViewModels
 
 
         [Required]
-        public string Place { get; set; }
+        public int Place { get; set; }
 
         [Required(ErrorMessage = "product moet een foto hebben")]
         public virtual IFormFile Photo { get; set; }

@@ -1,0 +1,116 @@
+﻿@model Project_C.Models.Message
+
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .row {
+        margin-left: -5px;
+        margin-right: -5px;
+    }
+
+    .column {
+        float: left;
+        width: 50%;
+        padding: 5px;
+    }
+
+    .row::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        border: 1px solid #ddd;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 16px;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .PropertyName {
+        font-family: Arial;
+        font-size: 25px;
+    }
+
+    .DetailInfo {
+        font-family: Arial;
+        font-size: 18px;
+    }
+</style>
+
+<div class="row">
+    <div class="column">
+        <table class="CostumMadeTable">
+            <thead>
+                <tr>
+                    <th><h2>Gegevens</h2></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="PropertyName">Bericht-Id</td>
+                </tr>
+                <tr>
+                    <td class="DetailInfo">@Model.Id</td>
+                </tr>
+                <tr>
+                    <td class="PropertyName">Naam</td>
+                </tr>
+                <tr>
+                    <td class="DetailInfo">@Model.NameOfSender</td>
+                </tr>
+                <tr>
+                    <td class="PropertyName">Telefoonnummer</td>
+                </tr>
+                <tr>
+                    <td class="DetailInfo">@Model.PhoneNumber</td>
+                </tr>
+                <tr>
+                    <td>
+                        <a class="btn btn-success" asp-action="DeleteMessage" asp-route-id="@Model.Id">Afronden</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="column">
+        <table class="CostumMadeTable">
+            <thead>
+                <tr>
+                    <th><h2>Inhoud</h2></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="PropertyName">Bericht</td>
+                </tr>
+                <tr>
+                    <td class="DetailInfo">@Model.MessageBody</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+</div>
+
+

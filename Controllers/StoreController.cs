@@ -19,19 +19,20 @@ namespace Project_C.Controllers
             _context = context;
         }
 
-        public IActionResult DirectToLogin()
+        public RedirectToActionResult CheckLogin()
         {
-            return RedirectToAction("LoginPage", "Access");
-
+            if (!CurrentEmployee.IsLoggedIn())
+            {
+                return RedirectToAction("LoginPage", "Access");
+            }
+            return null;
         }
 
         public IActionResult StoreIndex()
         {
-            if (!CurrentEmployee.IsLoggedIn())
-            {
-                 return DirectToLogin();
-            }
-            
+            CheckLogin();
+
+
             return View(_context.Stores);
         }
 
@@ -39,10 +40,7 @@ namespace Project_C.Controllers
         [HttpGet]
         public IActionResult EditStore(Guid id)
         {
-            if (!CurrentEmployee.IsLoggedIn())
-            {
-                 return DirectToLogin();
-            }
+            CheckLogin();
             Store selectedStore = _context.Stores.Find(id);
             StoreEditModel StoreViewModel = new StoreEditModel
             {
@@ -56,10 +54,7 @@ namespace Project_C.Controllers
         [HttpPost]
         public IActionResult EditStore(StoreEditModel storeChanges)
         {
-            if (!CurrentEmployee.IsLoggedIn())
-            {
-                 return DirectToLogin();
-            }
+            CheckLogin();
             //get product to be updated
             Store storeToBeUpdated = _context.Stores.Find(storeChanges.Id);
             storeToBeUpdated.SiteLink = storeChanges.SiteLink;
@@ -87,10 +82,7 @@ namespace Project_C.Controllers
         [HttpGet]
         public IActionResult AddStore()
         {
-            if (!CurrentEmployee.IsLoggedIn())
-            {
-                 return DirectToLogin();
-            }
+            CheckLogin();
             return View();
         }
 
@@ -99,10 +91,7 @@ namespace Project_C.Controllers
         [HttpPost]
         public IActionResult AddStore(StoreViewModel store)
         {
-            if (!CurrentEmployee.IsLoggedIn())
-            {
-                 return DirectToLogin();
-            }
+            CheckLogin();
             Store newStore = new Store
             {
                 Id = store.Id,
@@ -125,10 +114,7 @@ namespace Project_C.Controllers
 
         public IActionResult StoreDetails(Guid id)
         {
-            if (!CurrentEmployee.IsLoggedIn())
-            {
-                 return DirectToLogin();
-            }
+            CheckLogin();   
             if (id == null)
             {
                 return NotFound();
@@ -147,10 +133,7 @@ namespace Project_C.Controllers
         [HttpGet]
         public IActionResult DeleteStore(Guid id)
         {
-            if (!CurrentEmployee.IsLoggedIn())
-            {
-                 return DirectToLogin();
-            }
+            CheckLogin();
             Store selectedStore = _context.Stores.Find(id);
             return View(selectedStore);
 
@@ -160,10 +143,7 @@ namespace Project_C.Controllers
         [HttpPost,ActionName("DeleteStore")]
         public IActionResult ConfirmDeleteStore(Guid id)
         {
-            if (!CurrentEmployee.IsLoggedIn())
-            {
-                 return DirectToLogin();
-            }
+            CheckLogin();
             Store selectedStore = _context.Stores.Find(id);
             if (selectedStore != null)
             {

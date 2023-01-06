@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Project_C.Models.UserModels;
+using System.ComponentModel.DataAnnotations;
 
 namespace Project_C.Models
 {
@@ -15,7 +16,13 @@ namespace Project_C.Models
         [Required(ErrorMessage = "veld is verplicht")]
         [DataType(DataType.PhoneNumber)]
         [Phone]
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
+
+        public bool IsAnswered { get; set; }
+
+        //each employee can answer multiple messages 
+        public Guid? EmployeeId { get; set; }
+        public Employee? Employee { get; set; }
     }
 
 }

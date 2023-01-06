@@ -1,0 +1,9 @@
+﻿@model Guid
+
+<h4>Weet u zeker dat u dit bericht wilt verwijderen (dit kan niet ongedaan worden)?</h4>
+<form asp-action="DeleteMessage">
+    <input type="submit" value="Verwijderen" class="btn btn-danger"/>
+    <a class="btn btn-primary" asp-action="MessageDetails" asp-route-id="@Model">Terug</a>
+</form>
+
+

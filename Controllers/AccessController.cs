@@ -40,6 +40,5 @@ namespace Project_C.Controllers
             CurrentEmployee.currentEmployee = null;
             return RedirectToAction("LoginPage");
         }
-
     }
 }

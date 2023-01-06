@@ -22,7 +22,7 @@ namespace Project_C.ViewModels
 
 
         [Required]
-        public string Place { get; set; }
+        public int Place { get; set; }
 
 
         //foto is hier nullable, anders moet de gebruiker altijd een bestand uploaden bij het bewerken.

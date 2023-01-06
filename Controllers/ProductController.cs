@@ -23,16 +23,18 @@ namespace Project_C.Controllers
             _context = context;
         }
 
-        public IActionResult DirectToLogin()
-        {
-            return RedirectToAction("LoginPage", "Access");
-        }
-        public IActionResult ProductIndex()
+        public RedirectToActionResult CheckLogin()
         {
             if (!CurrentEmployee.IsLoggedIn())
             {
-                 return DirectToLogin();
+                return RedirectToAction("LoginPage", "Access");
             }
+            return null;
+        }
+
+        public IActionResult ProductIndex()
+        {
+            CheckLogin();
             return View(_context.Products);
             
         }
@@ -40,10 +42,7 @@ namespace Project_C.Controllers
         [HttpGet]
         public IActionResult EditProduct(Guid id)
         {
-            if (!CurrentEmployee.IsLoggedIn())
-            {
-                 return DirectToLogin();
-            }
+            CheckLogin();
             Product selectedProduct = _context.Products.Find(id);
             ProductEditModel productEditViewModel = new ProductEditModel
             {
@@ -61,11 +60,8 @@ namespace Project_C.Controllers
         [HttpPost]
         public IActionResult EditProduct(ProductEditModel productChanges)
         {
-            if (!CurrentEmployee.IsLoggedIn())
-            {
-                 return DirectToLogin();
-            }                
-            
+            CheckLogin();
+
             //get product to be updated
             Product productToBeUpdated = _context.Products.Find(productChanges.Id);
             productToBeUpdated.Description = productChanges.Description;
@@ -102,10 +98,7 @@ namespace Project_C.Controllers
         [HttpGet]
         public IActionResult DeleteProduct(Guid id)
         {
-            if (!CurrentEmployee.IsLoggedIn())
-            {
-                 return DirectToLogin();
-            }
+            CheckLogin();
             Product selectedProduct = _context.Products.Find(id);
             return View(selectedProduct);
 
@@ -115,10 +108,7 @@ namespace Project_C.Controllers
         [HttpPost, ActionName("DeleteProduct")]
         public IActionResult ConfirmDeleteProduct(Guid id)
         {
-            if (!CurrentEmployee.IsLoggedIn())
-            {
-                 return DirectToLogin();
-            }
+            CheckLogin();
             Product selectedProduct = _context.Products.Find(id);
             _context.Products.Remove(selectedProduct);
             _context.SaveChanges();
@@ -128,10 +118,7 @@ namespace Project_C.Controllers
 
         public IActionResult ProductDetails(Guid id)
         {
-            if (!CurrentEmployee.IsLoggedIn())
-            {
-                 return DirectToLogin();
-            }
+            CheckLogin();
             if (id == null)
             {
                 return NotFound();
@@ -149,10 +136,7 @@ namespace Project_C.Controllers
         [HttpGet]
         public IActionResult AddProduct()
         {
-            if (!CurrentEmployee.IsLoggedIn())
-            {
-                 return DirectToLogin();
-            }
+            CheckLogin();
             ProductViewModel model = new ProductViewModel();
             return View(model);
             
@@ -163,10 +147,7 @@ namespace Project_C.Controllers
         [HttpPost]
         public IActionResult AddProduct(ProductViewModel product)
         {
-            if (!CurrentEmployee.IsLoggedIn())
-            {
-                 return DirectToLogin();
-            }
+            CheckLogin();
 
             Product newProduct = new Product
             {

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Project_C.Models.Message>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Berichten</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th style="width:20%">
+                Zender
+            </th>
+            <th style="width:25%">
+                Telefoon-Nummer
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var ModeltoList = Model.ToList();
+            for (int i = 0; i < ModeltoList.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @ModeltoList[i].NameOfSender
+                    </td>
+                    <td>
+                        @ModeltoList[i].PhoneNumber
+                    </td>
+                    <td>
+                        <form asp-action="View">
+                            <div class="btn-group">
+                                <a class="btn btn-primary" asp-action="MessageDetails" asp-route-id="@ModeltoList[i].Id">Bekijk</a>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

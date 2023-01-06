@@ -1,6 +1,16 @@
 ﻿@model Project_C.Models.Message
-
-
+@using Project_C.Models.UserModels
+@{
+    //loads db context into this page
+    var _context = ViewBag.Context as ApplicationDbContext;
+    Employee employee = null;
+    string text = "Dit bericht is nog niet beantwoord";
+    string checkmarklocation = "~/images/redcheckmark.png";
+    if(Model.EmployeeId != null)
+    {
+        employee = _context.Employees.Find(Model.EmployeeId);
+    }
+}
 <style>
     * {
         box-sizing: border-box;
@@ -83,7 +93,18 @@
                 </tr>
                 <tr>
                     <td>
-                        <a class="btn btn-success" asp-action="DeleteMessage" asp-route-id="@Model.Id">Afronden</a>
+                        @{
+                            if(Model.IsAnswered)
+                            {
+                                        <a class="btn btn-danger" asp-action="DeleteMessage" asp-route-id="@Model.Id">Verwijderen</a>
+                            }
+                            else
+                            {
+                                        <a class="btn btn-success" asp-action="AnswerMessage" asp-route-id="@Model.Id">Voltooien</a>
+                            }
+                        }
+                        
+
                     </td>
                 </tr>
             </tbody>
@@ -104,6 +125,28 @@
                 </tr>
                 <tr>
                     <td class="DetailInfo">@Model.MessageBody</td>
+                </tr>
+                <tr>
+                    <td class="PropertyName">Status</td>
+                </tr>
+                <tr>
+                    <td class="DetailInfo">
+                        @{
+                            //if model is answered, use a green checkmark (otherwise red)
+                            if(Model.IsAnswered)
+                            {
+                                text = $"Dit bericht is beantwoord door {employee.Username}";
+                                checkmarklocation = "~/images/greencheckmark.png"; 
+                            }
+                       }
+
+                        <img align="middle" src="@checkmarklocation" asp-append-version="true" height="100" width="100" />
+                       @text
+
+                   
+
+                    
+                </td>
                 </tr>
             </tbody>
         </table>

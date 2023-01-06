@@ -35,6 +35,17 @@ namespace Project_C.Controllers
             return View(_context.Messages.Find(id));
         }
 
+        //sets the IsAnswered property of the message to true.
+        public IActionResult AnswerMessage(Guid id)
+        {
+            var Message = _context.Messages.Find(id);
+            Message.IsAnswered = true;
+            Message.EmployeeId = CurrentEmployee.currentEmployee.Id;
+            _context.SaveChanges();
+            return RedirectToAction("MessageDetails", new { id = id });
+        }
+
+
         [HttpGet]
         public IActionResult DeleteMessage(Guid id) 
         {

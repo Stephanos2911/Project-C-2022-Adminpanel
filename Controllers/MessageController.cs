@@ -22,13 +22,12 @@ namespace Project_C.Controllers
             return null;
         }
 
-        //loads all messages into MessageIndex.html
+        //loads all messages in order of unanswered first into MessageIndex.html
         public IActionResult MessageIndex()
         {
             CheckLogin();
-
-            //load list of all Messages into Index view
-            return View(_context.Messages);
+            var allMessages = _context.Messages;
+            return View(allMessages.OrderBy(x => x.IsAnswered));
         }
 
         //sends message object to MessageDetails.html
@@ -45,6 +44,7 @@ namespace Project_C.Controllers
             var Message = _context.Messages.Find(id);
             Message.IsAnswered = true;
             Message.EmployeeId = CurrentEmployee.currentEmployee.Id;
+            Message.EmployeeName = CurrentEmployee.currentEmployee.Username;
             _context.SaveChanges();
             return RedirectToAction("MessageDetails", new { id = id });
         }
@@ -57,6 +57,7 @@ namespace Project_C.Controllers
             return View(id);
         }
 
+        //deletes message from database
         [HttpPost, ActionName("DeleteMessage")]
         public IActionResult ConfirmDeleteMessage(Guid id)
         {

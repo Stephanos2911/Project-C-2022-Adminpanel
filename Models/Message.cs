@@ -22,7 +22,7 @@ namespace Project_C.Models
 
         //each employee can answer multiple messages 
         public Guid? EmployeeId { get; set; }
-        public Employee? Employee { get; set; }
+        public string? EmployeeName { get; set; }
     }
 
 }

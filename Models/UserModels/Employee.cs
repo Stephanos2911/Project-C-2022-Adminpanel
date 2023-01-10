@@ -10,6 +10,5 @@ namespace Project_C.Models.UserModels
         public string Email { get; set; }
         public bool IsAdmin { get; set; }
 
-        public ICollection<Message>? Messages { get; set; }
     }
 }

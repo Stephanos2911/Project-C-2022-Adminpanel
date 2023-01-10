@@ -7,6 +7,9 @@ namespace Project_C.Controllers
     public class AccessController : Controller
     {
         private ApplicationDbContext _context;
+
+        //username: admin
+        //password: AdminGroep62022
         public AccessController(ApplicationDbContext context)
         {
             _context = context;

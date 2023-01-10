@@ -3,13 +3,8 @@
 @{
     //loads db context into this page
     var _context = ViewBag.Context as ApplicationDbContext;
-    Employee employee = null;
     string text = "Dit bericht is nog niet beantwoord";
     string checkmarklocation = "~/images/redcheckmark.png";
-    if(Model.EmployeeId != null)
-    {
-        employee = _context.Employees.Find(Model.EmployeeId);
-    }
 }
 <style>
     * {
@@ -74,12 +69,6 @@
             </thead>
             <tbody>
                 <tr>
-                    <td class="PropertyName">Bericht-Id</td>
-                </tr>
-                <tr>
-                    <td class="DetailInfo">@Model.Id</td>
-                </tr>
-                <tr>
                     <td class="PropertyName">Naam</td>
                 </tr>
                 <tr>
@@ -135,7 +124,7 @@
                             //if model is answered, use a green checkmark (otherwise red)
                             if(Model.IsAnswered)
                             {
-                                text = $"Dit bericht is beantwoord door {employee.Username}";
+                                text = $"Dit bericht is beantwoord door {Model.EmployeeName}";
                                 checkmarklocation = "~/images/greencheckmark.png"; 
                             }
                        }

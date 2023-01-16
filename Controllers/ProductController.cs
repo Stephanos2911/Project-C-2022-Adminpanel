@@ -2,6 +2,7 @@
 using AdminApplication.Models;
 using AdminApplication.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting.Internal;
 using Project_C.Models;
@@ -16,11 +17,12 @@ namespace Project_C.Controllers
     public class ProductController : Controller
     {
         private ApplicationDbContext _context;
-  
+        public List<string> places;
 
         public ProductController( ApplicationDbContext context)
         {
             _context = context;
+            places = new List<string> { "Keuken", "Badkamer", "Woonkamer", "Slaapkamer", "Gezondheid", "Buiten" };
         }
 
         public RedirectToActionResult CheckLogin()
@@ -55,6 +57,7 @@ namespace Project_C.Controllers
                 VideoLink = selectedProduct.VideoLink
             };
 
+            ViewBag.Places = new SelectList(places, selectedProduct.PlaceAsString);
             return View(productEditViewModel);
 
         }
@@ -70,28 +73,33 @@ namespace Project_C.Controllers
             productToBeUpdated.Price = productChanges.Price;
 
             //Parse int to room name with Switch case
-            productToBeUpdated.PlaceAsString = productChanges.PlaceAsString;
-            switch (productChanges.Place)
+            if(productToBeUpdated.PlaceAsString != productChanges.PlaceAsString)
             {
-                case 1:
-                    productToBeUpdated.PlaceAsString = "Keuken";
-                    break;
-                case 2:
-                    productToBeUpdated.PlaceAsString = "Badkamer";
-                    break;
-                case 3:
-                    productToBeUpdated.PlaceAsString = "Woonkamer";
-                    break;
-                case 4:
-                    productToBeUpdated.PlaceAsString = "Slaapkamer";
-                    break;
-                case 5:
-                    productToBeUpdated.PlaceAsString = "Gezondheid";
-                    break;
-                case 6:
-                    productToBeUpdated.PlaceAsString = "Buiten";
-                    break;
+                productToBeUpdated.PlaceAsString = productChanges.PlaceAsString;
+
+                switch (productChanges.Place)
+                {
+                    case 1:
+                        productToBeUpdated.PlaceAsString = "Keuken";
+                        break;
+                    case 2:
+                        productToBeUpdated.PlaceAsString = "Badkamer";
+                        break;
+                    case 3:
+                        productToBeUpdated.PlaceAsString = "Woonkamer";
+                        break;
+                    case 4:
+                        productToBeUpdated.PlaceAsString = "Slaapkamer";
+                        break;
+                    case 5:
+                        productToBeUpdated.PlaceAsString = "Gezondheid";
+                        break;
+                    case 6:
+                        productToBeUpdated.PlaceAsString = "Buiten";
+                        break;
+                }
             }
+
             productToBeUpdated.Place = productChanges.Place;
             productToBeUpdated.Name = productChanges.Name;
 
@@ -187,6 +195,7 @@ namespace Project_C.Controllers
                 Stores = product.Stores != null ? ProcessChosenStores(product.Stores) : null
             };
 
+            //set Product.Place to an Int, this int will be used in UserApplication for routing of pages.
             switch (product.Place)
             {
                 case 1:

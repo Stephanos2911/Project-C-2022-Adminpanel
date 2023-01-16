@@ -116,19 +116,9 @@
                     </tr>
                     <tr>
                         <td>
-
-
-
-
-                            <select name="PlaceAsString" asp-for=PlaceAsString type="text" class="form-control" />
-                            <option value="Badkamer">Badkamer</option>
-                            <option value="Woonkamer">Woonkamer</option>
-                            <option value="Slaapkamer">Slaapkamer</option>
-                            <option value="Gezondheid">Gezondheid</option>
-                            <option value="Buiten">Buiten</option>
+                            <select asp-for="PlaceAsString" asp-items="@ViewBag.Places"></select>
                             <span asp-validation-for="Place" class="text-danger"></span>
                         </td>
-                        <a href="c:\users\ioann\source\repos\adminapplication\views\product\editproduct.cshtml">c:\users\ioann\source\repos\adminapplication\views\product\editproduct.cshtml</a>
 
                     </tr>
 

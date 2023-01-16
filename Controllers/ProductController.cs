@@ -51,8 +51,10 @@ namespace Project_C.Controllers
                 Description = selectedProduct.Description,
                 Price = selectedProduct.Price,
                 Place = selectedProduct.Place,
+                PlaceAsString = selectedProduct.PlaceAsString,
                 VideoLink = selectedProduct.VideoLink
             };
+
             return View(productEditViewModel);
 
         }
@@ -66,6 +68,30 @@ namespace Project_C.Controllers
             Product productToBeUpdated = _context.Products.Find(productChanges.Id);
             productToBeUpdated.Description = productChanges.Description;
             productToBeUpdated.Price = productChanges.Price;
+
+            //Parse int to room name with Switch case
+            productToBeUpdated.PlaceAsString = productChanges.PlaceAsString;
+            switch (productChanges.Place)
+            {
+                case 1:
+                    productToBeUpdated.PlaceAsString = "Keuken";
+                    break;
+                case 2:
+                    productToBeUpdated.PlaceAsString = "Badkamer";
+                    break;
+                case 3:
+                    productToBeUpdated.PlaceAsString = "Woonkamer";
+                    break;
+                case 4:
+                    productToBeUpdated.PlaceAsString = "Slaapkamer";
+                    break;
+                case 5:
+                    productToBeUpdated.PlaceAsString = "Gezondheid";
+                    break;
+                case 6:
+                    productToBeUpdated.PlaceAsString = "Buiten";
+                    break;
+            }
             productToBeUpdated.Place = productChanges.Place;
             productToBeUpdated.Name = productChanges.Name;
 
@@ -138,9 +164,7 @@ namespace Project_C.Controllers
         {
             CheckLogin();
             ProductViewModel model = new ProductViewModel();
-            return View(model);
-            
-           
+            return View(model);           
         }
 
         //creates the product and adds to database 
@@ -162,6 +186,28 @@ namespace Project_C.Controllers
                 VideoLink = $"https://www.youtube.com/embed/{product.VideoLink.Substring(32, 11)}",
                 Stores = product.Stores != null ? ProcessChosenStores(product.Stores) : null
             };
+
+            switch (product.Place)
+            {
+                case 1:
+                    newProduct.PlaceAsString = "Keuken";
+                    break;
+                case 2:
+                    newProduct.PlaceAsString = "Badkamer";
+                    break;
+                case 3:
+                    newProduct.PlaceAsString = "Woonkamer";
+                    break;
+                case 4:
+                    newProduct.PlaceAsString = "Slaapkamer";
+                    break;
+                case 5:
+                    newProduct.PlaceAsString = "Gezondheid";
+                    break;
+                case 6:
+                    newProduct.PlaceAsString = "Buiten";
+                    break;
+            }
 
             _context.Products.Add(newProduct);
             _context.SaveChanges();

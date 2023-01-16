@@ -14,14 +14,14 @@ namespace Project_C.Controllers
 
         public RedirectToActionResult CheckLogin()
         {
-            if (!CurrentEmployee.IsLoggedIn())
-            {
-                return RedirectToAction("LoginPage", "Access");
-            }
-            if (!CurrentEmployee.IsAdmin())
-            {
-                return RedirectToAction("HomePage", "Access");
-            }
+            //if (!CurrentEmployee.IsLoggedIn())
+            //{
+            //    return RedirectToAction("LoginPage", "Access");
+            //}
+            //if (!CurrentEmployee.IsAdmin())
+            //{
+            //    return RedirectToAction("HomePage", "Access");
+            //}
             return null;
         }
 

@@ -116,15 +116,19 @@
                     </tr>
                     <tr>
                         <td>
-                            <select asp-for=Place type="text" class="form-control" />
-                            <option value=2>Badkamer</option>
-                            <option value=4>Slaapkamer</option>
-                            <option value=1>Keuken</option>
-                            <option value=3>Woonkamer</option>
-                            <option value=6>Buiten</option>
-                            <option value=5>Gezondheid</option>
+
+
+
+
+                            <select name="PlaceAsString" asp-for=PlaceAsString type="text" class="form-control" />
+                            <option value="Badkamer">Badkamer</option>
+                            <option value="Woonkamer">Woonkamer</option>
+                            <option value="Slaapkamer">Slaapkamer</option>
+                            <option value="Gezondheid">Gezondheid</option>
+                            <option value="Buiten">Buiten</option>
                             <span asp-validation-for="Place" class="text-danger"></span>
                         </td>
+                        <a href="c:\users\ioann\source\repos\adminapplication\views\product\editproduct.cshtml">c:\users\ioann\source\repos\adminapplication\views\product\editproduct.cshtml</a>
 
                     </tr>
 

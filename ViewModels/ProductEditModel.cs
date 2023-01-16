@@ -22,9 +22,9 @@ namespace Project_C.ViewModels
 
 
         [Required]
+        public string PlaceAsString { get; set; }
+
         public int Place { get; set; }
-
-
         //foto is hier nullable, anders moet de gebruiker altijd een bestand uploaden bij het bewerken.
         //Inheretance en het overriden van de IformFile property zonder [Required] was niet succesvol op meerdere manieren, daarom een aparte class.
         public IFormFile? Photo { get; set; }

@@ -7,6 +7,7 @@
         public string Description { get; set; }
         public double Price { get; set; }
         public int Place { get; set; }
+        public string PlaceAsString { get; set; }
         public string VideoLink { get; set; }
 
         //elk product heeft een lijst met meerdere leveranciers, voor nu kan die ook leeg zijn (Many to many)

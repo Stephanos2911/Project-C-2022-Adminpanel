@@ -10,17 +10,11 @@
         public string PlaceAsString { get; set; }
         public string VideoLink { get; set; }
 
-        //elk product heeft een lijst met meerdere leveranciers, voor nu kan die ook leeg zijn (Many to many)
+        //Every product has a list of Stores it can be bought at, it can be empty. (Many to many)
         // https://www.learnentityframeworkcore.com/configuration/many-to-many-relationship-configuration
         public ICollection<Store>? Stores { get; set; }
 
-        ////every product has one image
+        //every product has one image
         public byte[] ProductImage { get; set; }
-
-
-
-        //Een senior heeft (mogelijk) meerdere producten in zijn cart
-        //public Guid? SeniorId { get; set; }
-        //public Senior? Senior { get; set; }
     }
 }

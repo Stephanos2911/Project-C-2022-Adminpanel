@@ -37,6 +37,7 @@ namespace Project_C.Controllers
             return View(_context.Messages.Find(id));
         }
 
+        //
         //sets the IsAnswered property of the message to true, then saves it to database.
         public IActionResult AnswerMessage(Guid id)
         {

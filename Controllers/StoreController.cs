@@ -31,8 +31,6 @@ namespace Project_C.Controllers
         public IActionResult StoreIndex()
         {
             CheckLogin();
-
-
             return View(_context.Stores);
         }
 
@@ -70,15 +68,6 @@ namespace Project_C.Controllers
             return RedirectToAction("StoreIndex");
         }
 
-
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-
         [HttpGet]
         public IActionResult AddStore()
         {
@@ -104,12 +93,13 @@ namespace Project_C.Controllers
             return RedirectToAction("StoreIndex");
         }
 
+        //here an IformFile object (a file that is uploaded) is converted into a Byte array using a MemoryStream. 
+        //this array is saved into the database as a Blob and converted into an image in the Views.
         public static byte[] ImagetoByte(IFormFile logoFile)
         {
             MemoryStream ms = new MemoryStream();
             logoFile.CopyTo(ms);
             return ms.ToArray();
-         
         }
 
         public IActionResult StoreDetails(Guid id)

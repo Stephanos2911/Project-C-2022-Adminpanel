@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Project_C.ViewModels
 {
-    //geprobeerd 
+    //This Model is the same as the Product class, except it has validation and an IformFile property to upload a picture
     public class ProductEditModel
     {
         public Guid Id { get; set; }

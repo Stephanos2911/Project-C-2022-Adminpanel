@@ -72,11 +72,14 @@ namespace Project_C.Controllers
             productToBeUpdated.Description = productChanges.Description;
             productToBeUpdated.Price = productChanges.Price;
 
-            //Parse int to room name with Switch case
+            //check if the PlaceAsString is different, meaning a different option has been chosen for Place in the form.
             if(productToBeUpdated.PlaceAsString != productChanges.PlaceAsString)
             {
+                //replace the string with the new string
                 productToBeUpdated.PlaceAsString = productChanges.PlaceAsString;
 
+                //Every room (as string) corresponds to an Integer, which is used as a RoomID in the UserApplication to query all Products of a certain room.
+                //here we use a switch to set the Place(int) property to the correct integer of the room.
                 switch (productChanges.Place)
                 {
                     case 1:
@@ -120,14 +123,6 @@ namespace Project_C.Controllers
             _context.SaveChanges();
             return RedirectToAction("ProductIndex");
         }
-
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
 
         [HttpGet]
         public IActionResult DeleteProduct(Guid id)
@@ -181,6 +176,7 @@ namespace Project_C.Controllers
         {
             CheckLogin();
 
+            //populate empty Product object with the data from the ViewModel
             Product newProduct = new Product
             {
                 Id = product.Id,
@@ -189,13 +185,13 @@ namespace Project_C.Controllers
                 Price = product.Price,
                 Place = product.Place,
                 ProductImage = StoreController.ImagetoByte(product.Photo),
-                //voor een Iframe is een embed link nodig. we verwachten dat de gebruiker de normale link in de url balk bovenin zal kopieren en plakken. 
-                //hierom converten we de link zelf naar een echte embed link. Dit doen we door het ID van de video eruit te slicen.
+                //to use an Iframe in html, an embedded link from youtube is needed. To get this link, the user has to under go a couple steps on youtube.
+                //To simplify the process, we slice the video-ID at the correct position to create the correct embed link.
                 VideoLink = $"https://www.youtube.com/embed/{product.VideoLink.Substring(32, 11)}",
                 Stores = product.Stores != null ? ProcessChosenStores(product.Stores) : null
             };
 
-            //set Product.Place to an Int, this int will be used in UserApplication for routing of pages.
+            //set Product.PlaceAsString to the corresponding name, so we can print the name of the room instead of the roomID.
             switch (product.Place)
             {
                 case 1:
@@ -237,23 +233,26 @@ namespace Project_C.Controllers
         }
 
 
-        //public static string ProcessUploadedFile(IFormFile image, string subfolder, IWebHostEnvironment hostingenvironment)
-        //{
-        //    string uniqueFileName = null;
-        //    if (image != null)
-        //    {
-        //        string uploadsFolder = $"{hostingenvironment.WebRootPath}/images/{subfolder}/";
-        //        uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
-        //        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-        //        using (var fileStream = new FileStream(filePath, FileMode.Create))
-        //        {
-        //            image.CopyTo(fileStream);
-        //        }
+        //[DISCONTINUED]
+        //uploads an IformFile object to the WWWROOT folder. discontinued because of the use of two different projects,
+        //which means uploading a store picture to this wwwroot will not have use since the UserApplication doesnt have acces to that.   
+        public static string ProcessUploadedFile(IFormFile image, string subfolder, IWebHostEnvironment hostingenvironment)
+        {
+            string uniqueFileName = null;
+            if (image != null)
+            {
+                string uploadsFolder = $"{hostingenvironment.WebRootPath}/images/{subfolder}/";
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    image.CopyTo(fileStream);
+                }
 
-        //    }
+            }
 
-        //    return uniqueFileName;
-        //}
+            return uniqueFileName;
+        }
 
     }
 }

@@ -2,11 +2,7 @@
 @{
     //loads db context into this page
     var _context = ViewBag.Context as ApplicationDbContext;
-    //query for all stores which have been selected for this product
-    var storesOfProduct =
-      from store in _context.Stores
-      where store.Products.Any(x => x.Id == Model.Id)
-      select store;
+ 
     var allstores = _context.Stores.ToList();
     ViewData["Title"] = "Edit Product";
 }
@@ -69,10 +65,6 @@
 <div class="row">
     <form method="post" enctype="multipart/form-data" asp-action="EditProduct" asp-controller="Product">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        @{
-            //<input type="hidden" zorgt ervoor dat het pad van de al bestaande foto niet null word als hij bij de post method komt.
-        }
-        <input type="hidden" asp-for="ExistingPhotoPath"/>
         <div class="column">
             <table class="CostumMadeTable">
                 <thead>
@@ -117,12 +109,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <select asp-for=Place type="text" class="form-control" />
-                            <option value="Badkamer">Badkamer</option>
-                            <option value="Slaapkamer">Slaapkamer</option>
-                            <option value="Keuken">Keuken</option>
-                            <option value="Woonkamer">Woonkamer</option>
-                            <option value="Buiten">Buiten</option>
+                            <select asp-for="PlaceAsString" asp-items="@ViewBag.Places"></select>
                             <span asp-validation-for="Place" class="text-danger"></span>
                         </td>
 

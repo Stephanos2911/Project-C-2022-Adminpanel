@@ -113,13 +113,14 @@
                 </tr>
                 <tr>
                     <td>
-               <select asp-for=Place type="text" class="form-control" />
+               <select asp-for="PlaceAsString" type="text" class="form-control" />
                 <option value="Badkamer">Badkamer</option>
                 <option value="Slaapkamer">Slaapkamer</option>
                 <option value="Keuken">Keuken</option>
                 <option value="Woonkamer">Woonkamer</option>
                 <option value="Buiten">Buiten</option>
-                <span asp-validation-for="Place" class="text-danger"></span>
+                <option value="Gezondheid">Gezondheid</option>
+                <span asp-validation-for="PlaceAsString" class="text-danger"></span>
                 </td>
                  
                 </tr>

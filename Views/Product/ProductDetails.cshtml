@@ -8,11 +8,17 @@
       from store in _context.Stores
       where store.Products.Any(x => x.Id == Model.Id)
       select store;
-    ViewData["Title"] = "Details";
-    //product image path
-    var photoPath = "~/images/ProductImages/" + Model.PhotoPath;
-    
- 
+
+    //converts byte image to string for Photo use.
+    string ProductImage = string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(Model.ProductImage));
+
+    //Converts Byte[] to Image
+    var StoresofProductToList = storesOfProduct.ToList();
+    List<string> StoreImages = new List<string>();
+    for (int i = 0; i < storesOfProduct.Count(); i++)
+    {
+        StoreImages.Add(string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(StoresofProductToList[i].StoreLogo)));
+    }
 }
 <link rel="stylesheet" href="~/css/productdetails.css"/>    
 <div class="row">
@@ -52,7 +58,7 @@
             <td class="PropertyName">Plaats</td>
         </tr>
         <tr>
-            <td class="DetailInfo">@Model.Place</td>
+            <td class="DetailInfo">@Model.PlaceAsString</td>
         <tr>
         <tr>
               <td class="PropertyName">Winkels</td>
@@ -60,16 +66,16 @@
         <tr>
              <td class="DetailInfo">
                   @{
-                      foreach (var item in storesOfProduct)
+                      foreach (var item in StoreImages)
                            {
-                                   <img src="~/images/StoreLogos/@item.LogoPath" asp-append-version="true" height="80" width="80" />
+                                   <img src="@item" asp-append-version="true" height="80" width="80" />
                            }
                    }
              </td>
         <tr>
             <td>
                         <a class="btn btn-bewerk" asp-action="EditProduct" asp-route-id="@Model.Id">Bewerk</a>
-                        <a class="btn btn-verwijder" asp-action="DeleteEmployee" asp-route-id="@Model.Id">Verwijder Product</a>
+                        <a class="btn btn-verwijder" asp-action="ConfirmDeleteProduct" asp-route-id="@Model.Id">Verwijder Product</a>
                         <div class="center">
                             <input type="checkbox" id="click">
                             <label for="click" class="click-me">Verwijder Product</label>
@@ -79,7 +85,7 @@
                                     Weet u zeker dat u "@Model.Name" wilt verwijderen? <br>
                                     (ID: @Model.Id)
                                 </p>
-                                <form asp-action="DeleteEmployee">
+                                <form asp-action="ConfirmDeleteProduct" asp-route-id="@Model.Id">
                                     <div class="btn-pop up">
                                         <input type="hidden" asp-for="@Model.Id" />
                                         <input type="submit" value="Definitief Verwijderen" class="btn btn-defverwijder" />
@@ -111,7 +117,7 @@
         </tr>
         <tr>
              <td class="DetailInfo">
-                 <img src="@photoPath" asp-append-version="true" height="450" align="middle"/>
+                 <img src="@ProductImage" asp-append-version="true" height="450" align="middle"/>
              </td>               
         </tr>
         <tr>

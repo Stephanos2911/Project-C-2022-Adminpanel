@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<Project_C.Models.Store>
 @using Project_C.Models.UserModels;
+@using Project_C.Models;
 
 @{
     bool IsLoggedIn = false;
@@ -14,10 +15,15 @@
             IsAdmin = true;
         }
     }
+
+    var ModelToList = Model.ToList();
+    List<string> StoreImages = new List<string>();
+    for (int i = 0; i < ModelToList.Count(); i++)
+    {
+        StoreImages.Add(string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(ModelToList[i].StoreLogo)));
     }
-@{
-    ViewData["Title"] = "StoreIndex";
 }
+
 
 <h1>Winkels</h1>
 
@@ -50,31 +56,30 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @for(int i = 0; i < ModelToList.Count(); i++)
         {
-            <tr>
+                        <tr>
                 <td>
-                    @item.Name
+                    @ModelToList[i].Name
                 </td>
                 <td>
-                    @item.SiteLink
+                    @ModelToList[i].SiteLink
                 </td>
                 <td>
-                    @{
-                        var photoPath = "~/images/StoreLogos/" + item.LogoPath;
-                    }
-                    <img class="img-fluid" src="@photoPath"  asp-append-version="true" style="width:12%" />
+                    <img class="img-fluid" src="@StoreImages[i]"  asp-append-version="true" style="width:12%" />
                 </td>
                 <td>
                     <form asp-action="View">
                         <div class="btn-group">
-                            <a class="btn btn-bekijk" asp-action="StoreDetails" asp-route-id="@item.Id">Bekijk</a>
-                            <a class="btn btn-bewerk" asp-action="EditStore" asp-route-id="@item.Id">Bewerk</a>
+                            <a class="btn btn-bekijk" asp-action="StoreDetails" asp-route-id="@ModelToList[i].Id">Bekijk</a>
+                            <a class="btn btn-bewerk" asp-action="EditStore" asp-route-id="@ModelToList[i].Id">Bewerk</a>
                         </div>
                     </form>
                 </td>
             </tr>
         }
+
+        
         <wow>
             <div class="navigation">
                 <ul>

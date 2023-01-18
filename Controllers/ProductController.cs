@@ -124,17 +124,8 @@ namespace Project_C.Controllers
             return RedirectToAction("ProductIndex");
         }
 
-        [HttpGet]
-        public IActionResult DeleteProduct(Guid id)
-        {
-            CheckLogin();
-            Product selectedProduct = _context.Products.Find(id);
-            return View(selectedProduct);
-
-        }
 
         //Deletes the product and redirects to index after confirmation has been asked
-        [HttpPost, ActionName("DeleteProduct")]
         public IActionResult ConfirmDeleteProduct(Guid id)
         {
             CheckLogin();
@@ -183,7 +174,7 @@ namespace Project_C.Controllers
                 Name = product.Name,
                 Description = product.Description,
                 Price = product.Price,
-                Place = product.Place,
+                PlaceAsString = product.PlaceAsString,
                 ProductImage = StoreController.ImagetoByte(product.Photo),
                 //to use an Iframe in html, an embedded link from youtube is needed. To get this link, the user has to under go a couple steps on youtube.
                 //To simplify the process, we slice the video-ID at the correct position to create the correct embed link.
@@ -192,25 +183,25 @@ namespace Project_C.Controllers
             };
 
             //set Product.PlaceAsString to the corresponding name, so we can print the name of the room instead of the roomID.
-            switch (product.Place)
+            switch (newProduct.PlaceAsString)
             {
-                case 1:
-                    newProduct.PlaceAsString = "Keuken";
+                case "Keuken":
+                    newProduct.Place = 1;
                     break;
-                case 2:
-                    newProduct.PlaceAsString = "Badkamer";
+                case "Badkamer":
+                    newProduct.Place = 2;
                     break;
-                case 3:
-                    newProduct.PlaceAsString = "Woonkamer";
+                case "Woonkamer":
+                    newProduct.Place = 3;
                     break;
-                case 4:
-                    newProduct.PlaceAsString = "Slaapkamer";
+                case "Slaapkamer":
+                    newProduct.Place = 4;
                     break;
-                case 5:
-                    newProduct.PlaceAsString = "Gezondheid";
+                case "Gezondheid":
+                    newProduct.Place = 5;
                     break;
-                case 6:
-                    newProduct.PlaceAsString = "Buiten";
+                case "Buiten":
+                    newProduct.Place = 6;
                     break;
             }
 

@@ -3,9 +3,17 @@
 This Web-Application was created for Project C at Hogeschool Rotterdam. It's built in ASP.NET (C#) following the Model-View-Controller architecture.
 The User interface consists of CSHTML files, a file extension by Microsoft which allows C# code to be used alongside HTML and CSS code.
 For Logic, C# is used alongside Entity-FrameworkCore, an ORM by Microsoft that is built on the use of C# Object classes as tables in the Database.
-This Readme file should be able to explain every aspect of this application. 
+This Readme file aims to explain all global aspects of this application. 
 
-GitHub: https://github.com/Stephanos2911/AdminApplication
+-GitHub: https://github.com/Stephanos2911/AdminApplication
+
+To login as Administrator: 
+-Email : Mehmet@gmail.com
+-Password: Mehmet123
+
+To login as Employee: 
+-Email : Ashkel@gmail.com
+-Password: Ashkel123
 
 **WebServer**
 

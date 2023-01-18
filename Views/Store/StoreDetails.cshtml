@@ -2,7 +2,8 @@
 
 @{
     ViewData["Title"] = "Details";
-    var photoPath = "~/images/StoreLogos/" + Model.LogoPath;
+
+    string ImageDataUrl = string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(Model.StoreLogo));
 }
 
 <link rel="stylesheet" href="~/css/storedetails.css"/>  
@@ -79,7 +80,7 @@
                 </tr>
                 <tr>
                     <td class="DetailInfo">
-                        <img src="@photoPath" asp-append-version="true" height="353" align="middle" />
+                        <img src="@ImageDataUrl" asp-append-version="true" height="353" align="middle" />
                     </td>
                 </tr>
             </tbody>

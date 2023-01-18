@@ -3,77 +3,21 @@
 @{
     //loads db context into this page
     var _context = ViewBag.Context as ApplicationDbContext;
-
     //query for all stores which have been selected for this product
-    var StoreLogosofProduct =
-      (from store in _context.Stores
+    var storesOfProduct =
+      from store in _context.Stores
       where store.Products.Any(x => x.Id == Model.Id)
-      select store.StoreLogo).ToList();
-
-
-    List<string> imageDataURL = new List<string>();
-    for (int i = 0; i < StoreLogosofProduct.Count; i++)
-    {
-        imageDataURL.Add(string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(StoreLogosofProduct[i])));
-    }
-    string ProductimageDataURL = string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(Model.ProductImage));
+      select store;
     ViewData["Title"] = "Details";
+    //product image path
+    var photoPath = "~/images/ProductImages/" + Model.PhotoPath;
+    
+ 
 }
-
-<style>
-    * {
-        box-sizing: border-box;
-    }
-
-    .row {
-        margin-left: -5px;
-        margin-right: -5px;
-    }
-
-    .column {
-        float: left;
-        width: 50%;
-        padding: 5px;
-    }
-
-    .row::after {
-        content: "";
-        clear: both;
-        display: table;
-    }
-
-    table {
-        border-collapse: collapse;
-        border-spacing: 0;
-        width: 100%;
-        border: 1px solid #ddd;
-    }
-
-    th, td {
-        text-align: left;
-        padding: 16px;
-    }
-    th {
-        background-color: #f2f2f2;
-    }
-
-    tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-    .PropertyName{
-        font-family: Arial;
-        font-size: 25px;
-    }
-    .DetailInfo{
-        font-family: Arial;
-        font-size: 18px;
-    }
-</style>
-
-
+<link rel="stylesheet" href="~/css/productdetails.css"/>    
 <div class="row">
     <div class="column">
-        <table class="CostumMadeTable">
+        <table class="table">
     <thead>
         <tr>
             <th><h2>Details</h2></th>
@@ -85,6 +29,12 @@
         </tr>
         <tr>
             <td class="DetailInfo">@Model.Name</td>
+        </tr>
+        <tr>
+            <td class="PropertyName">Id</td>
+        </tr>
+        <tr>
+            <td class="DetailInfo">@Model.Id</td>
         </tr>
         <tr>
             <td class="PropertyName" >Beschrijving</td>
@@ -102,7 +52,7 @@
             <td class="PropertyName">Plaats</td>
         </tr>
         <tr>
-            <td class="DetailInfo">@Model.PlaceAsString</td>
+            <td class="DetailInfo">@Model.Place</td>
         <tr>
         <tr>
               <td class="PropertyName">Winkels</td>
@@ -110,16 +60,37 @@
         <tr>
              <td class="DetailInfo">
                   @{
-                           for (int i =0; i < imageDataURL.Count; i++)
+                      foreach (var item in storesOfProduct)
                            {
-                                   <img src="@imageDataURL[i]" asp-append-version="true" height="80" width="80" />
+                                   <img src="~/images/StoreLogos/@item.LogoPath" asp-append-version="true" height="80" width="80" />
                            }
                    }
              </td>
         <tr>
             <td>
-                        <a class="btn btn-primary" asp-action="EditProduct" asp-route-id="@Model.Id">Bewerk</a>
-                        <a class="btn btn-danger" asp-action="DeleteProduct" asp-route-id="@Model.Id">Verwijder</a>
+                        <a class="btn btn-bewerk" asp-action="EditProduct" asp-route-id="@Model.Id">Bewerk</a>
+                        <a class="btn btn-verwijder" asp-action="DeleteEmployee" asp-route-id="@Model.Id">Verwijder Product</a>
+                        <div class="center">
+                            <input type="checkbox" id="click">
+                            <label for="click" class="click-me">Verwijder Product</label>
+                            <div class="content">
+                                <label for="click" class="fas fa-check"></label>
+                                <p>
+                                    Weet u zeker dat u "@Model.Name" wilt verwijderen? <br>
+                                    (ID: @Model.Id)
+                                </p>
+                                <form asp-action="DeleteEmployee">
+                                    <div class="btn-pop up">
+                                        <input type="hidden" asp-for="@Model.Id" />
+                                        <input type="submit" value="Definitief Verwijderen" class="btn btn-defverwijder" />
+                                        <a class="backbutton" asp-action="ProductDetails" asp-route-id="@Model.Id">Ga Terug</a>
+                                    </div>
+                                </form>
+                                <div class="line"></div>
+                                <a asp-action="Startpagina" asp-controller="Application" class="close-btn">
+                                </a>
+                            </div>
+                        </div>
             </td>
         </tr>
     </tbody>
@@ -140,7 +111,7 @@
         </tr>
         <tr>
              <td class="DetailInfo">
-                 <img src="@ProductimageDataURL" asp-append-version="true" height="425" align="middle"/>
+                 <img src="@photoPath" asp-append-version="true" height="450" align="middle"/>
              </td>               
         </tr>
         <tr>
@@ -149,7 +120,7 @@
 
       </tbody>
         </table>
-        <iframe width="642" height="275"
+        <iframe width="642" height="315"
                 src=@Model.VideoLink>
         </iframe>
     </div>

@@ -1,0 +1,431 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900');
+
+:root {
+    --clr: #222327;
+}
+
+h1  {
+
+    position: absolute;
+    left: 50px;
+    top: 5px;
+    justify-content: center;
+}
+
+.container {
+
+}
+
+thead {
+    font-size: 23px;
+    background-color: #deae62;
+    color: #ffffff;
+    text-align: left;
+}
+.table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+    .table tbody tr:nth-of-type(even) {
+        background-color: #f3f3f3;
+    }
+
+    .table tbody tr:last-of-type {
+        border-bottom: 8px solid #deae62;
+    }
+
+/*tbody */{
+    border: black 7px;
+
+    
+}
+table {
+    border-collapse: collapse;
+    top: 150px;
+    left: 120px;
+    position: absolute;
+    margin: 12px 0;
+    border-spacing: 2px;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 2px 12px rgba(32,32,32,.5);
+    background: white;
+    border-spacing: 20px;
+
+}
+
+ td, tr {
+     width: 10px;
+     height: 60px;
+
+ }
+
+ .table {
+     width: 1600px;
+     border-spacing: 20px;
+ }
+
+wow {
+    display: flex;
+    position: absolute;
+    left: 40%;
+    top: 20%;
+    justify-content: center;
+    align-items: center;
+    /*min-height: 100vh;*/
+    height: 0px;
+}
+
+
+
+h1 {
+    position: absolute;
+    left: 750px;
+    top: 20px;
+    font-size: 3em;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background: -webkit-linear-gradient(#67637a, orange);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(2px 2px #67637a);
+    height: 100px;
+}
+
+
+/* NIEUWE WERKNEMER KNOP*/
+.btn.btn-success {
+    position: absolute;
+    top: 8%;
+    left: 780px;
+}
+
+
+.navigation {
+    position: relative;
+    width: 00px;
+    height: 0px;
+    background: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    border-inline-color: black;
+}
+
+    .navigation ul {
+        display: flex;
+        width: 3180px;
+    }
+
+
+.navigation ul lit {
+    position: absolute;
+    left: 900px;
+    bottom: 500px;
+    list-style: none;
+    width: 80px;
+    height: 70px;
+    z-index: 1;
+}
+
+    .navigation ul lit a {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        font-weight: 500;
+    }
+
+        .navigation ul lit a .icon /* opmaak van de thuisknoppen */ {
+            position: absolute;
+            display: block;
+            line-height: 1.5em;
+            white-space: nowrap;
+            font-size: 8.5em;
+            text-align: center;
+            transition: 0.5s;
+            color: #deae62;
+            padding-left: 25px;
+            margin: 2px;
+        }
+
+    .navigation ul lit:hover a .icon /* hover van de thuisknoppen */ {
+        transform: translateX(-35px);
+    }
+
+    .navigation ul lit a .text /* de lettergrootte van de thuisknoppen / posities */ {
+        position: absolute;
+        color: black;
+        font-size: 1.75em;
+        letter-spacing: 0.10em;
+        transition: 0.5s;
+        bottom: 40px;
+        opacity: 1;
+        visibility: hidden;
+    }
+
+    .navigation ul lit:hover a .text /* hover van de thuisknoppen */ {
+        opacity: 1;
+        transform: translateY(10px);
+        visibility: hidden;
+    }
+
+        /* TERUG KNOP */
+        .navigation ul terug {
+            position: relative;
+            list-style: none;
+            width: 80px;
+            height: 70px;
+            z-index: 1;
+            right: 720px;
+            bottom: 580px;
+        }
+
+            .navigation ul terug a {
+                position: relative;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                width: 100%;
+                font-weight: 500;
+            }
+
+                .navigation ul terug a .icon /* opmaak van de thuisknoppen */ {
+                    position: absolute;
+                    display: block;
+                    line-height: 1.5em;
+                    white-space: nowrap;
+                    font-size: 7.5em;
+                    text-align: center;
+                    transition: 0.5s;
+                    color: #deae62;
+                    padding-left: 25px;
+                    margin: 2px;
+                }
+
+            .navigation ul terug:hover a .icon /* hover van de thuisknoppen */ {
+                transform: translateY(-35px);
+            }
+
+            .navigation ul terug a .text /* de lettergrootte van de thuisknoppen / posities */ {
+                position: absolute;
+                color: red;
+                font-size: 1.75em;
+                font-weight: bold;
+                letter-spacing: 0.10em;
+                transition: 0.5s;
+                bottom: -5px;
+                left: 11px;
+                opacity: 0;
+         
+            }
+
+            .navigation ul terug:hover a .text /*woorden verstoppen en tevoorschijn halen als hover op knop*/ {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+.center {
+    position: absolute;
+    top: 33%;
+    left: 75%
+}
+
+/*.content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+} */
+
+#click {
+    display: none;
+}
+
+
+
+.click-me {
+    /*    display: block;*/
+    position: absolute;
+    width: 100px;
+    height: 40px;
+    top: -15px;
+    right: -40px;
+    background: #aa3131;
+    border: 0px #aa3131;
+    color: black;
+    text-align: center;
+    place-content: center;
+    place-content: center;
+    align-items: center;
+    font-size: 22px;
+    border-radius: 0px;
+    cursor: pointer;
+    line-height: 35px;
+    transition: .5s;
+    font-size: medium;
+    box-shadow: #ffffff 0 -25px 18px -14px inset,rgba(4, 187, 99, .15) 0 1px 2px,#f3f3f3 0 2px 4px,black 0 4px 8px,#f3f3f3 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+}
+
+
+    .click-me:hover {
+        color: white;
+    }
+
+.content /*midden in popup*/ {
+    position: fixed;
+    top: 500px;
+    left: 900px;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    width: 600px;
+    height: 180px;
+    background: white;
+    border-radius: 3px;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,4);
+    z-index: 2;
+
+}
+#text {
+    position: fixed;
+    text-align: center;
+}
+
+#click:checked ~ .content {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+ ul {
+     height: 0px;
+         width: 0px;
+ }
+
+p {
+    position: fixed;
+    top: 20px;
+    left: 100px;
+    text-align:center;
+    white-space: pre-line;
+     
+}
+
+.btn-pop up {
+    position: absolute;
+    left: 1000px;
+}
+
+input[type=submit] {
+    position: fixed;
+    left: 90px;
+    bottom: 10px;
+    width: 200px;
+
+}
+
+.backbutton {
+    position: fixed;
+    left: 310px;
+    bottom: 20px;
+    color: white;
+    width: 200px;
+    border-radius: 4px;
+    background-color: green;
+    text-align: center;
+    place-content: center;
+    justify-items: center;
+    height: 38px; 
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    place-items: center;
+    background-position: center;
+    margin: auto;
+    display: flex
+}
+
+.backbutton:hover {
+    color: white;
+    opacity: 1;
+}
+
+/* POSITIE UITLOGKNOP*/
+.Uitloggen {
+     position: absolute;
+     top: 480px;
+     left: 80px;
+ }
+
+/* POSITIE TERUGKNOP*/
+.Teruggaan {
+    position: absolute;
+    top: 480px;
+    left: 40px;
+}
+
+
+/*KLEUR WERKNEMER TOEVOEG KNOP*/
+.btn.btn-success {
+    color: black;
+    background-color: #deae62;
+    border: #deae62;
+}
+
+/*.btn.btn-danger {
+    position: absolute;
+    left: 200px;
+}*/
+
+/*KNOPPEN RIJ IN TABEL */
+.btn.btn-bewerk {
+    position: absolute;
+    height: 40px;
+    width: 100px;
+    right: 20px;
+    top: -15px;
+    background: #f8dd85;
+    border: 0px #f8dd85;
+    color: black;
+    text-align: center;
+    place-content: center;
+    place-content: center;
+    align-items: center;
+    font-size: 22px;
+    border-radius: 0px;
+    cursor: pointer;
+    line-height: 35px;
+    transition: .5s;
+    font-size: medium;
+    
+    border: 0;
+    box-shadow: #ffffff 0 -25px 18px -14px inset,rgba(4, 187, 99, .15) 0 1px 2px,#f3f3f3 0 2px 4px,black 0 4px 8px,#f3f3f3 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+}
+
+.btn.btn-bekijk {
+    height: 40px;
+    width: 100px;
+    background: #51c6eb;
+    border: 0px #51c6eb;
+    color: black;
+    text-align: center;
+    place-content: center;
+    place-content: center;
+    align-items: center;
+    font-size: 22px;
+    border-radius: 0px;
+    cursor: pointer;
+    line-height: 35px;
+    transition: .5s;
+    font-size: medium;
+    position: absolute;
+    right: 130px;
+    top: -15px;
+    box-shadow: #ffffff 0 -25px 18px -14px inset,rgba(4, 187, 99, .15) 0 1px 2px,#f3f3f3 0 2px 4px,black 0 4px 8px,#f3f3f3 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+}

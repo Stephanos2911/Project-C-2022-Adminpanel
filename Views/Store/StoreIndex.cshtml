@@ -1,21 +1,27 @@
 ﻿@model IEnumerable<Project_C.Models.Store>
+@using Project_C.Models.UserModels;
 
 @{
-    ViewData["Title"] = "StoreIndex";
-    //loads db context into this page
-    var _context = ViewBag.Context as ApplicationDbContext;
+    bool IsLoggedIn = false;
+    bool IsAdmin = false;
 
 
-    List<string> imageDataURL = new List<string>();
-    for(int i = 0; i <Model.ToList().Count; i++)
+    if(Project_C.Models.UserModels.CurrentEmployee.currentEmployee != null)
     {
-        imageDataURL.Add(string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(Model.ToList()[i].StoreLogo)));
+        IsLoggedIn = true;
+        if (Project_C.Models.UserModels.CurrentEmployee.currentEmployee.IsAdmin == true)
+        {
+            IsAdmin = true;
+        }
     }
+    }
+@{
+    ViewData["Title"] = "StoreIndex";
 }
 
 <h1>Winkels</h1>
 
-
+<link rel="stylesheet" href="~/css/winkelpagina.css">
 <a asp-controller="Store" asp-action="AddStore"><input class="btn btn-success" value="Nieuwe Winkel" /></a>
 <style>
     table {
@@ -44,31 +50,58 @@
         </tr>
     </thead>
     <tbody>
-        @{
-        var ModeltoList = Model.ToList();
-        for (int i =0; i < ModeltoList.Count; i++)
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
-                        @ModeltoList[i].Name
+                    @item.Name
                 </td>
                 <td>
-                        @ModeltoList[i].SiteLink
+                    @item.SiteLink
                 </td>
                 <td>
-                    <img class="img-fluid" src="@imageDataURL[i]"  asp-append-version="true" style="width:12%" />
+                    @{
+                        var photoPath = "~/images/StoreLogos/" + item.LogoPath;
+                    }
+                    <img class="img-fluid" src="@photoPath"  asp-append-version="true" style="width:12%" />
                 </td>
                 <td>
                     <form asp-action="View">
                         <div class="btn-group">
-                                <a class="btn btn-primary" asp-action="StoreDetails" asp-route-id="@ModeltoList[i].Id">Details</a>
-                                <a class="btn btn-primary" asp-action="EditStore" asp-route-id="@ModeltoList[i].Id">Bewerk</a>
-                                <a class="btn btn-danger" asp-action="DeleteStore" asp-route-id="@ModeltoList[i].Id">Verwijder</a>
+                            <a class="btn btn-bekijk" asp-action="StoreDetails" asp-route-id="@item.Id">Bekijk</a>
+                            <a class="btn btn-bewerk" asp-action="EditStore" asp-route-id="@item.Id">Bewerk</a>
                         </div>
                     </form>
                 </td>
             </tr>
         }
-        }
+        <wow>
+            <div class="navigation">
+                <ul>
+                                                    <terug>
+                    <a asp-action="HomePage" asp-controller="Access" class="Teruggaan">
+                                        <span class="icon">
+                                <ion-icon name="return-up-back-sharp"></ion-icon>
+                        </span>
+                            <span class="text">Thuispagina</span>
+                            </a>
+                    </terug>
+                    <lit>
+                    <a asp-action="Logout" asp-controller="Access" class="Uitloggen">
+                        
+                        <span class="icon">
+                            <ion-icon name="log-out-sharp"></ion-icon>
+                        </span>
+                            <span class="text">Uitloggen</span>
+
+                        </a>
+                    </lit>
+                    <div class="index"></div>
+                </ul>
+            </div>
+            <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+            <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+            </>
+        </wow>
     </tbody>
 </table>

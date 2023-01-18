@@ -72,6 +72,7 @@
         @{
             //<input type="hidden" zorgt ervoor dat het pad van de al bestaande foto niet null word als hij bij de post method komt.
         }
+        <input type="hidden" asp-for="ExistingPhotoPath"/>
         <div class="column">
             <table class="CostumMadeTable">
                 <thead>
@@ -116,7 +117,12 @@
                     </tr>
                     <tr>
                         <td>
-                            <select asp-for="PlaceAsString" asp-items="@ViewBag.Places"></select>
+                            <select asp-for=Place type="text" class="form-control" />
+                            <option value="Badkamer">Badkamer</option>
+                            <option value="Slaapkamer">Slaapkamer</option>
+                            <option value="Keuken">Keuken</option>
+                            <option value="Woonkamer">Woonkamer</option>
+                            <option value="Buiten">Buiten</option>
                             <span asp-validation-for="Place" class="text-danger"></span>
                         </td>
 

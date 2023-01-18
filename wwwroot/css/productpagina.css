@@ -1,0 +1,314 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900');
+
+:root {
+    --clr: #222327;
+    --redline: red;
+}
+
+thead {
+    font-size: 23px;
+    background-color: #deae62;
+    color: #ffffff;
+    text-align: left;
+}
+
+.table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+    .table tbody tr:nth-of-type(even) {
+        background-color: #f3f3f3;
+    }
+
+    .table tbody tr:last-of-type {
+        border-bottom: 8px solid #deae62;
+    }
+
+/*tbody */ {
+    border: black 7px;
+}
+
+table {
+    border-collapse: collapse;
+    top: 150px;
+    left: 120px;
+    position: absolute;
+    margin: 12px 0;
+    border-spacing: 2px;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 2px 12px rgba(32,32,32,.5);
+    background: white;
+    border-spacing: 20px;
+}
+
+td, tr {
+    width: 10px;
+    height: 60px;
+}
+
+.table {
+    width: 1600px;
+    border-spacing: 20px;
+}
+h1 body {
+    display: flex;
+    position: absolute;
+    left: -140%;
+    top: 50%;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: var();
+}
+
+wow {
+    display: flex;
+    position: absolute;
+    left: 40%;
+    top: 20%;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: var();
+     /* font-size: x-large; */
+
+}
+
+.table body { /* dit is voor de balk met gegevens (naam en plek) */
+    /*display: flex;*/
+    position: absolute;
+    left: -140%;
+    top: 30%;
+
+}
+a .btn.btn-success body {
+    /*display: flex;*/
+    position: absolute;
+    top: 20%;
+    left: -142%;
+
+}
+
+
+
+
+.navigation {
+    position: relative;
+    width: 400px;
+    height: 50px;
+    background: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    border-inline-color: black;
+}
+
+    .navigation ul {
+        display: flex;
+        width: 3180px;
+    }
+
+        .navigation ul li {
+            position: relative;
+            list-style: none;
+            width: 80px;
+            height: 70px;
+            z-index: 1
+        }
+
+            .navigation ul li a {
+                position: relative;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                width: 100%;
+                font-weight: 500;
+            }
+
+                .navigation ul li a .icon {
+                    position: relative;
+                    display: block;
+                    line-height: 75px;
+                    font-size: 1.5em;
+                    text-align: center;
+                    transition: 0.5s;
+                    color: black;
+                }
+
+            .navigation ul li.active a .icon {
+                transform: translateY(-35px);
+            }
+
+            .navigation ul li a .text {
+                position: absolute;
+                color: black;
+                font-size: 0.75em;
+                letter-spacing: 0.05em;
+                transition: 0.5s;
+                opacity: 0;
+            }
+
+            .navigation ul li.active a .text {
+                opacity: 1;
+                transform: translateY(10px);
+                }
+
+
+
+
+        .navigation ul terug a .icon /* opmaak van de thuisknoppen */ {
+            position: absolute;
+            top: 10px;
+            display: block;
+            line-height: 1.5em;
+            white-space: nowrap;
+            font-size: 7.5em;
+            text-align: center;
+            transition: 0.5s;
+            color: #deae62;
+            padding-left: 25px;
+            margin: 2px;
+            width: 200px;
+        }
+
+        .navigation ul terug:hover a .icon /* hover van de thuisknoppen */ {
+            transform: translateY(-35px);
+        }
+
+        .navigation ul terug a .text /* de lettergrootte van de thuisknoppen / posities */ {
+            position: absolute;
+            color: red;
+            font-size: 1.75em;
+            font-weight: bold;
+            letter-spacing: 0.10em;
+            transition: 0.5s;
+            bottom: -5px;
+            left: 11px;
+            opacity: 0;
+        }
+
+        .navigation ul terug:hover a .text /*woorden verstoppen en tevoorschijn halen als hover op knop*/ {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+.Teruggaan {
+    position: absolute;
+    bottom: 700px;
+    right: 1150px;
+}
+
+h1 {
+    position: absolute;
+    left: 750px;
+    top: 20px;
+    font-size: 3em;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background: -webkit-linear-gradient(#67637a, orange);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(2px 2px #67637a);
+    height: 100px;
+}
+/*KLEUR WERKNEMER TOEVOEG KNOP*/
+.btn.btn-success {
+    color: black;
+    background-color: #deae62;
+    border: #deae62;
+    position: absolute;
+    top: 8%;
+    left: 780px;
+}
+
+/*KNOPPEN RIJ IN TABEL */
+.btn.btn-bewerk {
+    position: absolute;
+    height: 40px;
+    width: 100px;
+    right: 20px;
+    top: -15px;
+    background: #f8dd85;
+    border: 0px #f8dd85;
+    color: black;
+    text-align: center;
+    place-content: center;
+    place-content: center;
+    align-items: center;
+    font-size: 22px;
+    border-radius: 0px;
+    cursor: pointer;
+    line-height: 35px;
+    transition: .5s;
+    font-size: medium;
+    border: 0;
+    box-shadow: #ffffff 0 -25px 18px -14px inset,rgba(4, 187, 99, .15) 0 1px 2px,#f3f3f3 0 2px 4px,black 0 4px 8px,#f3f3f3 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+}
+
+.btn.btn-bekijk {
+    height: 40px;
+    width: 100px;
+    background: #51c6eb;
+    border: 0px #51c6eb;
+    color: black;
+    text-align: center;
+    place-content: center;
+    place-content: center;
+    align-items: center;
+    font-size: 22px;
+    border-radius: 0px;
+    cursor: pointer;
+    line-height: 35px;
+    transition: .5s;
+    font-size: medium;
+    position: absolute;
+    right: 130px;
+    top: -15px;
+    box-shadow: #ffffff 0 -25px 18px -14px inset,rgba(4, 187, 99, .15) 0 1px 2px,#f3f3f3 0 2px 4px,black 0 4px 8px,#f3f3f3 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+}
+
+
+    .navigation ul lit a {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        font-weight: 500;
+    }
+
+        .navigation ul lit a .icon /* opmaak van de thuisknoppen */ {
+            position: relative;
+            display: block;
+            line-height: 1.5em;
+            white-space: nowrap;
+            font-size: 8.5em;
+            text-align: center;
+            transition: 0.5s;
+            color: black;
+            padding-left: 25px;
+            margin: 2px;
+        }
+
+    .navigation ul lit:hover a .icon /* hover van de thuisknoppen */ {
+        transform: translateY(-35px);
+    }
+
+    .navigation ul lit a .text /* de lettergrootte van de thuisknoppen / posities */ {
+        position: absolute;
+        color: black;
+        font-size: 1.75em;
+        letter-spacing: 0.10em;
+        transition: 0.5s;
+        bottom: 40px;
+        opacity: 0;
+    }
+
+    .navigation ul lit:hover a .text /* hover van de thuisknoppen */ {
+        opacity: 1;
+        transform: translateY(10px);
+    }
+

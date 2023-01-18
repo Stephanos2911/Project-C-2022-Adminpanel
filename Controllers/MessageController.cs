@@ -37,8 +37,8 @@ namespace Project_C.Controllers
             return View(_context.Messages.Find(id));
         }
 
-        //
-        //sets the IsAnswered property of the message to true, then saves it to database.
+       
+        //sets the IsAnswered property of the message to true and adds the employee name who answered it, then saves it to database.
         public IActionResult AnswerMessage(Guid id)
         {
             CheckLogin();

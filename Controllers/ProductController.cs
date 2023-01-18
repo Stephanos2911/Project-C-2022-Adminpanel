@@ -79,31 +79,30 @@ namespace Project_C.Controllers
                 productToBeUpdated.PlaceAsString = productChanges.PlaceAsString;
 
                 //Every room (as string) corresponds to an Integer, which is used as a RoomID in the UserApplication to query all Products of a certain room.
-                //here we use a switch to set the Place(int) property to the correct integer of the room.
-                switch (productChanges.Place)
+                //here we use a switch to set the Place property to the correct integer of the room.
+                switch (productToBeUpdated.PlaceAsString)
                 {
-                    case 1:
-                        productToBeUpdated.PlaceAsString = "Keuken";
+                    case "Keuken":
+                        productToBeUpdated.Place = 1;
                         break;
-                    case 2:
-                        productToBeUpdated.PlaceAsString = "Badkamer";
+                    case "Badkamer":
+                        productToBeUpdated.Place = 2;
                         break;
-                    case 3:
-                        productToBeUpdated.PlaceAsString = "Woonkamer";
+                    case "Woonkamer":
+                        productToBeUpdated.Place = 3;
                         break;
-                    case 4:
-                        productToBeUpdated.PlaceAsString = "Slaapkamer";
+                    case "Slaapkamer":
+                        productToBeUpdated.Place = 4;
                         break;
-                    case 5:
-                        productToBeUpdated.PlaceAsString = "Gezondheid";
+                    case "Gezondheid":
+                        productToBeUpdated.Place = 5;
                         break;
-                    case 6:
-                        productToBeUpdated.PlaceAsString = "Buiten";
+                    case "Buiten":
+                        productToBeUpdated.Place = 6;
                         break;
                 }
             }
 
-            productToBeUpdated.Place = productChanges.Place;
             productToBeUpdated.Name = productChanges.Name;
 
             //if the link entered in the edit form is unchanged, dont process the link.
@@ -182,7 +181,7 @@ namespace Project_C.Controllers
                 Stores = product.Stores != null ? ProcessChosenStores(product.Stores) : null
             };
 
-            //set Product.PlaceAsString to the corresponding name, so we can print the name of the room instead of the roomID.
+            //set Product.Place to the corresponding Integer, so we can route all products of a room in UserApplication
             switch (newProduct.PlaceAsString)
             {
                 case "Keuken":

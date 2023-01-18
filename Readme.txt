@@ -1,4 +1,4 @@
-﻿***Admin Application***
+﻿***Web Application Project C***
 
 This Web-Application was created for Project C at Hogeschool Rotterdam. It's built in ASP.NET (C#) following the Model-View-Controller architecture.
 The User interface consists of CSHTML files, a file extension by Microsoft which allows C# code to be used alongside HTML and CSS code.
@@ -17,9 +17,10 @@ To login as Employee:
 
 **WebServer**
 
-To Visit this Application : 145.24.222.31:8500
+To Visit the AdminApplication : 145.24.222.31:8500
+To Visit the UserApplication : 145.24.222.31:8501
 
-The latest version of this application is running on a Virtual Windows Machine from Hogeschool Rotterdam, using IIS. 
+The latest version of both applications are running on a Virtual Windows Machine from Hogeschool Rotterdam, using IIS. 
 To enter this virtual machine, use Remote Destkop Connection built in to windows. 
 Connection: 145.24.222.31:8100
 Login using Username: win-1033554 and Password: X%243Hp66KQ

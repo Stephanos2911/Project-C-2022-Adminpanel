@@ -4,7 +4,7 @@
     ViewData["Title"] = "Edit Employee";
 }
 
-<h1>Bewerk "@Model.Username"</h1>
+<h1>Bewerk - @Model.Username's Account</h1>
 
 <style>
     * {
@@ -33,11 +33,34 @@
         border-spacing: 0;
         width: 100%;
         border: 1px solid #ddd;
+        border-collapse: collapse;
+    top: 150px;
+    left: 120px;
+    position: absolute;
+    margin: 12px 0;
+    border-spacing: 2px;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 2px 12px rgba(32,32,32,.5);
+    background: white;
+    border-spacing: 20px;
+
     }
 
-    th, td {
+    td, tr {
+        width: 10px;
+        height: 60px;
+    }
+
+    .table {
+        width: 1600px;
+        border-spacing: 20px;
+    }
+
+    thead {
+        font-size: 23px;
+        background-color: #deae62;
+        color: #ffffff;
         text-align: left;
-        padding: 16px;
     }
 
     th {
@@ -48,6 +71,18 @@
         background-color: #f2f2f2;
     }
 
+    .table tbody tr {
+        border-bottom: 1px solid #dddddd;
+    }
+
+        .table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .table tbody tr:last-of-type {
+            border-bottom: 8px solid #deae62;
+        }
+
     .PropertyName {
         font-family: Arial;
         font-size: 25px;
@@ -57,6 +92,59 @@
         font-family: Arial;
         font-size: 18px;
     }
+
+    h1 {
+        position: absolute;
+        left: 700px;
+        top: 60px;
+        font-family: 'Times New Roman';
+    }
+    .btn.btn-bewerk {
+    position: absolute;
+    height: 40px;
+    width: 160px;
+    right: 950px;
+    top: 100px;
+    background: rgba(0, 100, 200);
+    border: 0px #f8dd85;
+    color: black;
+    text-align: center;
+    place-content: center;
+    place-content: center;
+    align-items: center;
+    font-size: 22px;
+    border-radius: 0px;
+    cursor: pointer;
+    line-height: 35px;
+    transition: .5s;
+    font-size: medium;
+    border: 0;
+    box-shadow: #ffffff 0 -25px 18px -14px inset,rgba(4, 187, 99, .15) 0 1px 1px,#f3f3f3 0 2px 4px,black 0 4px 8px,#f3f3f3 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+        }
+    .btn.btn-terug
+
+    {
+        position: absolute;
+        height: 40px;
+        width: 100px;
+        right: 820px;
+        top: 110px;
+        background: rgba(200, 20, 0);
+        border: 0px #f8dd85;
+        color: black;
+        text-align: center;
+        place-content: center;
+        place-content: center;
+        align-items: center;
+        font-size: 22px;
+        border-radius: 0px;
+        cursor: pointer;
+        line-height: 35px;
+        transition: .5s;
+        font-size: medium;
+        border: 0;
+        box-shadow: #ffffff 0 -25px 18px -14px inset,rgba(4, 187, 99, .15) 0 1px 1px,#f3f3f3 0 2px 1px,black 0 4px 8px,#f3f3f3 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+    }
 </style>
 
 
@@ -64,7 +152,7 @@
     <form method="post" enctype="multipart/form-data" asp-action="EditEmployee" asp-controller="Employee">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="column">
-            <table class="CostumMadeTable">
+            <table class="table">
                 <thead>
                     <tr>
                         <th><h2>Details</h2></th>
@@ -119,8 +207,8 @@
 
                 </tbody>
             </table>
-            <input type="submit" value="Bijwerken" class="btn btn-success" />
-            <a class="btn btn-primary" asp-controller="Employee" asp-action="EmployeeIndex">Terug</a>
+            <input type="submit" value="Bijwerken voltooien" class="btn btn-bewerk" />
+            <a class="btn btn-terug" asp-controller="Employee" asp-action="EmployeeIndex">Terug</a>
         </div>
 
     </form>

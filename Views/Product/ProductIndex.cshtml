@@ -1,17 +1,32 @@
 ﻿@model IEnumerable<Project_C.Models.Product>
+@using Project_C.Models.UserModels;
 
+@{
+    bool IsLoggedIn = false;
+    bool IsAdmin = false;
+
+
+    if(Project_C.Models.UserModels.CurrentEmployee.currentEmployee != null)
+    {
+        IsLoggedIn = true;
+        if (Project_C.Models.UserModels.CurrentEmployee.currentEmployee.IsAdmin == true)
+        {
+            IsAdmin = true;
+        }
+    }
+    }
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>Producten</h1>
 
-
+<link rel="stylesheet" href="~/css/productpagina.css">
 <a asp-controller="Product" asp-action="AddProduct"><input class="btn btn-success" value="Nieuw Product" /></a>
 <style>
     table {
-        border-collapse: collapse;
-        width: 100%;
+/*        border-collapse: collapse;
+        width: 100%;*/
     }
 
     tr:nth-child(even) {
@@ -50,13 +65,40 @@
                 <td>
                     <form asp-action="View">
                         <div class="btn-group">
-                            <a class="btn btn-primary" asp-action="ProductDetails" asp-route-id="@item.Id">Details</a>
-                            <a class="btn btn-primary" asp-action="EditProduct" asp-route-id="@item.Id">Bewerk</a>
-                            <a class="btn btn-danger" asp-action="DeleteProduct" asp-route-id="@item.Id">Verwijder</a>
+                            <a class="btn btn-bekijk" asp-action="ProductDetails" asp-route-id="@item.Id">Bekijk</a>
+                            <a class="btn btn-bewerk" asp-action="EditProduct" asp-route-id="@item.Id">Bewerk</a>
                         </div>
                     </form>
                 </td>
             </tr>
         }
+<wow>
+        <div class="navigation">
+        <ul>
+                                <terug>
+                    <a asp-action="HomePage" asp-controller="Access" class="Teruggaan">
+                                        <span class="icon">
+                                <ion-icon name="return-up-back-sharp"></ion-icon>
+                        </span>
+                            <span class="text">Thuispagina</span>
+                            </a>
+                    </terug>
+                            <lit>
+                                <a asp-action="Logout" asp-controller="Access" class="Uitloggen">
+
+                                    <span class="icon">
+                                        <ion-icon name="log-out-sharp"></ion-icon>
+                                    </span>
+                                    <span class="text">Uitloggen</span>
+
+                                </a>
+                            </lit>
+      
+        </ul>
+    </div>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    </>
+        </wow>
     </tbody>
 </table>

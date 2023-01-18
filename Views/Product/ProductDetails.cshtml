@@ -14,61 +14,10 @@
     
  
 }
-
-<style>
-    * {
-        box-sizing: border-box;
-    }
-
-    .row {
-        margin-left: -5px;
-        margin-right: -5px;
-    }
-
-    .column {
-        float: left;
-        width: 50%;
-        padding: 5px;
-    }
-
-    .row::after {
-        content: "";
-        clear: both;
-        display: table;
-    }
-
-    table {
-        border-collapse: collapse;
-        border-spacing: 0;
-        width: 100%;
-        border: 1px solid #ddd;
-    }
-
-    th, td {
-        text-align: left;
-        padding: 16px;
-    }
-    th {
-        background-color: #f2f2f2;
-    }
-
-    tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-    .PropertyName{
-        font-family: Arial;
-        font-size: 25px;
-    }
-    .DetailInfo{
-        font-family: Arial;
-        font-size: 18px;
-    }
-</style>
-
-
+<link rel="stylesheet" href="~/css/productdetails.css"/>    
 <div class="row">
     <div class="column">
-        <table class="CostumMadeTable">
+        <table class="table">
     <thead>
         <tr>
             <th><h2>Details</h2></th>
@@ -119,8 +68,29 @@
              </td>
         <tr>
             <td>
-                        <a class="btn btn-primary" asp-action="EditProduct" asp-route-id="@Model.Id">Bewerk</a>
-                        <a class="btn btn-danger" asp-action="DeleteProduct" asp-route-id="@Model.Id">Verwijder</a>
+                        <a class="btn btn-bewerk" asp-action="EditProduct" asp-route-id="@Model.Id">Bewerk</a>
+                        <a class="btn btn-verwijder" asp-action="DeleteEmployee" asp-route-id="@Model.Id">Verwijder Product</a>
+                        <div class="center">
+                            <input type="checkbox" id="click">
+                            <label for="click" class="click-me">Verwijder Product</label>
+                            <div class="content">
+                                <label for="click" class="fas fa-check"></label>
+                                <p>
+                                    Weet u zeker dat u "@Model.Name" wilt verwijderen? <br>
+                                    (ID: @Model.Id)
+                                </p>
+                                <form asp-action="DeleteEmployee">
+                                    <div class="btn-pop up">
+                                        <input type="hidden" asp-for="@Model.Id" />
+                                        <input type="submit" value="Definitief Verwijderen" class="btn btn-defverwijder" />
+                                        <a class="backbutton" asp-action="ProductDetails" asp-route-id="@Model.Id">Ga Terug</a>
+                                    </div>
+                                </form>
+                                <div class="line"></div>
+                                <a asp-action="Startpagina" asp-controller="Application" class="close-btn">
+                                </a>
+                            </div>
+                        </div>
             </td>
         </tr>
     </tbody>

@@ -1,19 +1,112 @@
-﻿
-<div id="demo" class="carousel slide" data-bs-ride="carousel">  
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-            <img src="~/images/HomePage/Sol Slide Show.jpg" alt="Img1" class="d-block" style="width:100%">
+﻿@using Project_C.Models.UserModels;
+
+@{
+    bool IsLoggedIn = false;
+    bool IsAdmin = false;
+
+
+    if(Project_C.Models.UserModels.CurrentEmployee.currentEmployee != null)
+    {
+        IsLoggedIn = true;
+        if (Project_C.Models.UserModels.CurrentEmployee.currentEmployee.IsAdmin == true)
+        {
+            IsAdmin = true;
+        }
+    }
+    }
+<head>
+<link rel="stylesheet" href="~/css/adminhome.css">
+</head>
+<body>
+    <div class="welkomtekst">Welkom @CurrentEmployee.currentEmployee.Username </div>
+    <div class="lines_product2"></div>
+    <div class="lines_product"></div>
+    <div class="lines_product3"></div>
+    <div class="lines_product4"></div>
+    
+    <div class="navigation">
+        <ul>
+            @{
+                if (IsLoggedIn)
+                {
+                    <bi>
+                    <span class="heart">
+                     <ion-icon name="heart-outline"></ion-icon>
+                </span>
+                        <span class="middleline">
+                            <ion-icon name="heart-outline"></ion-icon>
+                        </span>
+            </bi>
+           
+                    <li>
+                    <a asp-action="ProductIndex" asp-controller="Product" class="Producten">
+                        
+                        <span class="icon">
+                                <div href="/"><img src="~/images/producten.png"></div>
+                        </span>
+                            <span class="text">Producten </span>
+
+                        </a>
+                    </li>
+
+                    <win>
+                    <a asp-action="StoreIndex" asp-controller="Store" class="Winkels">
+                        
+                        <span class="icon">
+                                <div href="/"><img src="~/images/winkel.png"></div>
+                            
+                        </span>
+                            <span class="text">Winkels</span>
+                        
+                    </a>
+                    </win>
+
+                    <lit>
+                    <a asp-action="Logout" asp-controller="Access" class="Uitloggen">
+                        
+                        <span class="icon">
+                            <ion-icon name="log-out-sharp"></ion-icon>
+                        </span>
+                            <span class="text">Uitloggen</span>
+
+                        </a>
+                    </lit>
+                    <be>
+                    <a asp-action="Logout" asp-controller="Access" class="Uitloggen">
+                                        <span class="icon">
+                                
+                                <ion-icon name="mail-open-sharp"></ion-icon>
+                        </span>
+                            <span class="text">Berichten</span>
+                            </a>
+                    </be>
+                            if (IsAdmin)
+                            {
+                                <med>
+                                <a asp-action="EmployeeIndex" asp-controller="Employee" class="Medewerker">
+                                    
+                                     <span class="icon">
+                                    <div href="/"><img src="~/images/admin.png"></div>
+                                        </span>
+                                <span class="text">Medewerkers</span>
+
+                            </a>
+                                </med>
+                        <div class="index3"></div>
+                            }
+                        }
+                    
+                }
+            <div class="index"></div>
+            <div class="index1"></div>
+            <div class="index2"></div>
+            <div class="heartline"></div>
+            
+        </ul>
+        <b class="logo" href="/"><img src="~/images/Sol.png"></b>
     </div>
-    <div class="carousel-item">
-            <img src="~/images/HomePage/SolSlideShow2.jpg" alt="Img2" class="d-block" style="width:100%">
-    </div>
-    <div class="carousel-item">
-            <img src="~/images/HomePage/Saul.jpg" alt="New York" class="d-block" style="width:100%">
-    </div>
-    <div>
-        <h6>
-            In deze applicatie kunt u alle producten, leveranciers en gebruikers beheren. 
-        </h6>
-    </div>
-  </div>
-</div>
+
+
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>

@@ -1,0 +1,202 @@
+﻿
+* {
+    box-sizing: border-box;
+}
+
+.row {
+    margin-left: -5px;
+    margin-right: -5px;
+}
+
+.column {
+    float: left;
+    width: 50%;
+    padding: 5px;
+}
+
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #ddd;
+}
+
+th, td {
+    text-align: left;
+    padding: 16px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.PropertyName {
+    font-family: Arial;
+    font-size: 25px;
+}
+
+.DetailInfo {
+    font-family: Arial;
+    font-size: 18px;
+}
+.btn.btn-bewerk {
+    position: absolute;
+    height: 40px;
+    width: 160px;
+    right: 1250px;
+    top: 560px;
+    background: rgba(0, 100, 200);
+    border: 0px #f8dd85;
+    color: black;
+    text-align: center;
+    place-content: center;
+    place-content: center;
+    align-items: center;
+    font-size: 22px;
+    border-radius: 0px;
+    cursor: pointer;
+    line-height: 35px;
+    transition: .5s;
+    font-size: medium;
+    border: 0;
+    box-shadow: #ffffff 0 -25px 18px -14px inset,rgba(4, 187, 99, .15) 0 1px 1px,#f3f3f3 0 2px 4px,black 0 4px 8px,#f3f3f3 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+}
+
+.btn.btn-verwijder {
+    position: absolute;
+    height: 40px;
+    width: 170px;
+    right: 600px;
+    background: rgba(200, 20, 0);
+    border: 0px #f8dd85;
+    color: black;
+    text-align: center;
+    place-content: center;
+    place-content: center;
+    align-items: center;
+    font-size: 22px;
+    border-radius: 0px;
+    cursor: pointer;
+    line-height: 35px;
+    transition: .5s;
+    font-size: medium;
+    border: 0;
+    box-shadow: #ffffff 0 -25px 18px -14px inset,rgba(4, 187, 99, .15) 0 1px 1px,#f3f3f3 0 2px 1px,black 0 4px 8px,#f3f3f3 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+    visibility: hidden;
+}
+
+#click {
+    display: none;
+}
+
+
+
+.click-me {
+    /*    display: block;*/
+    position: absolute;
+    width: 170px;
+    height: 40px;
+    right: 1050px;
+    top: 560px;
+    background: rgba(200, 20, 0);
+    border: 0px #aa3131;
+    color: black;
+    text-align: center;
+    place-content: center;
+    place-content: center;
+    align-items: center;
+    font-size: 22px;
+    border-radius: 0px;
+    cursor: pointer;
+    line-height: 35px;
+    transition: .5s;
+    font-size: medium;
+    box-shadow: #ffffff 0 -25px 18px -14px inset,rgba(4, 187, 99, .15) 0 1px 2px,#f3f3f3 0 2px 4px,black 0 4px 8px,#f3f3f3 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+}
+
+
+    .click-me:hover {
+        color: white;
+    }
+
+.content /*midden in popup*/ {
+    position: fixed;
+    top: 500px;
+    left: 900px;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    width: 600px;
+    height: 180px;
+    background: white;
+    border-radius: 3px;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,4);
+    z-index: 2;
+}
+
+#text {
+    position: fixed;
+    text-align: center;
+}
+
+#click:checked ~ .content {
+    opacity: 1;
+    visibility: visible;
+}
+
+.backbutton {
+    position: absolute;
+    width: 170px;
+    height: 40px;
+    right: 100px;
+    top: 120px;
+    background: rgba(0, 200, 70);
+    border: 0px #aa3131;
+    color: black;
+    text-align: center;
+    place-content: center;
+    place-content: center;
+    align-items: center;
+    font-size: 22px;
+    border-radius: 0px;
+    cursor: pointer;
+    line-height: 35px;
+    transition: .5s;
+    font-size: medium;
+    text-decoration: none;
+    box-shadow: #ffffff 0 -25px 18px -14px inset,rgba(4, 187, 99, .15) 0 1px 2px,#f3f3f3 0 2px 4px,black 0 4px 8px,#f3f3f3 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+}
+
+.btn.btn-defverwijder {
+    position: absolute;
+    width: 180px;
+    height: 40px;
+    right: 350px;
+    top: 110px;
+    background: rgba(200, 20, 0);
+    border: 0px #aa3131;
+    color: black;
+    text-align: center;
+    place-content: center;
+    place-content: center;
+    align-items: center;
+    font-size: 22px;
+    border-radius: 0px;
+    cursor: pointer;
+    line-height: 30px;
+    transition: .5s;
+    font-size: medium;
+    box-shadow: #ffffff 0 -25px 18px -14px inset,rgba(4, 187, 99, .15) 0 1px 2px,#f3f3f3 0 2px 4px,black 0 4px 8px,#f3f3f3 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+}

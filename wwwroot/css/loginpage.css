@@ -1,0 +1,354 @@
+﻿/*#Email {
+    position: fixed;
+    top: 40%;
+    left: 600px;
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    font-size: 1.2rem;
+    margin: 0 auto;
+    padding: 1.5rem 2rem;
+    border-radius: 0.2rem;
+    background-color: rgb(255, 255, 255);
+    border: 6px solid white;
+    width: 90%;
+    display: block;
+    border-bottom: 0.3rem solid transparent;
+    transition: all 0.3s;
+    background-color: transparent;
+    transform: rotate(-180deg);
+}
+
+
+#Password {
+    position: absolute;
+    top: 50%;
+    left: 600px;
+    font-family: inherit;
+    width: 700px;
+    border: 0;
+    border-bottom: 2px solid $gray;
+    outline: 0;
+    font-size: 1.3rem;
+    color: white;
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+    background-color: white;
+}
+
+.email-group label {
+    position: fixed;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2rem;
+    margin-left: 2rem;
+    margin-top: 0.7rem;
+    display: block;
+    transition: all 0.3s;
+    transform: translateY(0rem);
+    top: 41%;
+    left: 32%;
+}
+
+.password-group label {
+    position: absolute;
+    top: 12.5%;
+    left: 34%;
+}
+#Email:placeholder-shown + .email-group label {
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transform: translateY(-4rem);
+    transform: translateY(-4rem);
+}
+
+
+    input [type="submit"] {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 50px;
+    border: 1px solid;
+    background: #ffcca1;
+    border-radius: 25px;
+    font-size: 18px;
+    color: black;
+    font-weight: 700;
+    cursor: pointer;
+    outline: none;
+}
+.loginhoofd {
+    position: absolute;
+    top: 200px;
+    left: 750px;
+    font-size: 50px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: black;
+    font-weight: bold;
+    opacity: 1;
+    background-color: oldlace
+}
+.logintekst {
+    position: absolute;
+    bottom: 260px;
+    left: 450px;
+    font-size: 50px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: black;
+    font-weight: bold;
+    opacity: 1;
+    background-color: oldlace
+}
+.loginhoofd .icon {
+    top: 0px;
+    left: 60px;
+    background-color: oldlace*/
+}
+
+/*img {
+    position: absolute;
+    bottom: 10%;
+    left: 750px;
+    height: auto;
+    max-width: 0%;
+}*/
+
+/*.bkg {
+    position: fixed;
+    color: grey;
+    height: 700px;
+    width: 1300px;
+    border: 1px solid ;
+    top: 180px;
+    background-color: oldlace;
+
+}*/
+
+input {
+    caret-color: orange;
+
+}
+
+/*body*/ {
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #ecf0f3;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    place-items: center;
+    overflow: hidden;
+    font-family: poppins;
+    background: #ecf0f3;
+    bottom: 200px;
+}
+
+/*.container */{
+    position: fixed;
+    width: 350px;
+    height: 300px;
+    border-radius: 20px;
+    padding: -10px;
+    box-sizing: border-box;
+    background: #ecf0f3;
+    box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+    width: 900px;
+    bottom: 120px;
+}
+
+/*img {
+    height: 200px;
+    width: 200px;
+    max-width: 20%;
+    max-height: 70%;
+    margin: auto;
+    border-radius: 50%;
+    box-sizing: border-box;
+    box-shadow: 7px 7px 10px #cbced1, -7px -7px 10px white;
+}*/
+
+/*label, input, button*/ {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    background: #ecf0f3;
+    font-size: x-large;
+
+}
+label {
+    margin-top: -2px;
+   
+  
+}
+/*div .email-group*/ {
+    width: 800px;
+}
+/*div .password-group */{
+    width: 800px;
+}
+
+    label:nth-of-type(2) {
+        margin-top: 0px;
+    }
+
+input::placeholder {
+    color: gray;
+}
+
+/*input*/ {
+    background: orange;
+    padding: 20px;
+    padding-left: 20px;
+    height: 50px;
+    font-size: 14px;
+    border-radius: 50px;
+    box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
+    width: 300%;
+}
+
+/*button*/ {
+    color: white;
+    margin-top: 20px;
+    background: #1DA1F2;
+    height: 40px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 900;
+    box-shadow: 6px 6px 6px #cbced1, -6px -6px 6px white;
+    transition: 0.5s;
+
+}
+/*.btn btn-succes*/ {
+    color: orange;
+    background-color: orange;
+}
+
+    /*button:hover*/ {
+        box-shadow: none;
+    }
+
+logo {
+    width: 100%;
+    position: fixed;
+    max-width: 10%;
+    height: auto;
+    top: 10px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    place-items: center;
+    right: 1300px;
+    visibility: hidden;
+    opacity: 0;
+}
+
+/*.logobkg*/ {
+    position: relative;
+    width: 1100px;
+    height: 400px;
+    border-radius: 20px;
+    padding: 10px;
+    box-sizing: border-box;
+    background: #ecf0f3;
+    box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+    position: fixed;
+    top: 10px;
+    right: 400px;
+}
+
+img {
+    position: fixed;
+    top: 150px;
+    width: 200px;
+    left: 850px;
+}
+
+
+/*.col-md-4 {
+    text-align: center;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    place-items: center;
+}*/
+
+form {
+    position: fixed;
+    width: 350px;
+    height: 300px;
+    border-radius: 20px;
+    right: 500px;
+    width: 900px;
+    bottom: 290px;
+}
+body {
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    background: white;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    font-family: 'Sans Serif Collection';
+    background: white;
+    bottom: 800px;
+}
+.container {
+    width: 0px;
+}
+
+
+div .email-group {
+    position: fixed;
+    left: 700px;
+    width: 500px;
+}
+div .password-group {
+    position: fixed;
+    left: 700px;
+    width: 500px;
+    top: 500px;
+}
+
+input[type=submit] {
+    position: fixed;
+    top: 600px;
+    text-align: center;
+    margin: auto;
+    left: 900px;
+    color: black;
+    background-color: orange;
+    border: orange;
+}
+
+.logobkg {
+    border: 2px solid black;
+    position: fixed;
+    top: 660px;
+    width: 700px;
+    width: 600px;
+    height: 300px;
+    border-radius: 10px;
+    position: fixed;
+    top: 360px;
+    left: 640px;
+    border: solid;
+    border-color: black;
+    background-image: url("/img/backarrow.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 125px;
+    font-family: "Times New Roman", Times, serif;
+    font-size: xx-large;
+    color: black;
+    line-height: 350px;
+    text-align: center;
+    text-decoration: none;
+    z-index: -1;
+}

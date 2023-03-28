@@ -1,4 +1,4 @@
-﻿***Web Application Project C***
+﻿# Web Application Project C
 
 This Web-Application was created for Project C at Hogeschool Rotterdam. It's built in ASP.NET (C#) following the Model-View-Controller architecture.
 The User interface consists of CSHTML files, a file extension by Microsoft which allows C# code to be used alongside HTML and CSS code.
@@ -15,7 +15,7 @@ To login as Employee:
 -Email : Ashkel@gmail.com
 -Password: Ashkel123
 
-**WebServer**
+## WebServer
 
 To Visit the AdminApplication : 145.24.222.31:8500
 To Visit the UserApplication : 145.24.222.31:8501
@@ -26,7 +26,7 @@ Connection: 145.24.222.31:8100
 Login using Username: win-1033554 and Password: X%243Hp66KQ
 
 
-**Database**
+## Database
 
 Login to The MySQL server with this account:
 Username: admin
@@ -38,14 +38,14 @@ It's installed using the NuGet installer inside of Visual Studio. At Runtime, a 
 ConnectionString found at the top of AppSettings.Json. Interaction with the database is done using the _context object found in every controller's constructor (except AccessController, 
 which is only used for logging in). All database interactions such as CRUD and Queries are performed with the _context.
 
-**Architecture**
+## Architecture 
 
 This application follows MVC, thus every component is found under it's corresponding folder (using name conventions). 
 The Product, Store, Employee and Message controller are all built on similar code. Every IActionResult/ViewResult method calls 
 it's corresponding CSHTML file in the Views folder (folder name is the same as controller name), or can be redirected to an other view
 using the RedirectToAction function. 
 
-**GET and POST**
+## GET and POST
 
 I'm now going to use the process of adding a product to the database to explain the use of GET/POST and Entity-Framework.
 
@@ -58,6 +58,4 @@ gets sent to the AddProduct[HTPPPOST] method inside of ProductController. Here a
 Our application now has a valid Product.cs object to be written into our database. We can do this using the _context.Add(NewProductObject) function.
 The only thing then left to do is the use of the _context.SaveChanges() function, which actually performs the SQL command to our database. This function is called at the end of 
 every Add,Delete or edit function, without it no data is written.
-
-
 

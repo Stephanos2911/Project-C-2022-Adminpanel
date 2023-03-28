@@ -13,6 +13,7 @@ namespace Project_C.Controllers
             _context = context;
         }
 
+        // This function checks if the user is logged in, and redirects them to the login page if they are not
         public RedirectToActionResult CheckLogin()
         {
             if (!CurrentEmployee.IsLoggedIn())
@@ -22,7 +23,7 @@ namespace Project_C.Controllers
             return null;
         }
 
-        //loads all messages in order of unanswered first into MessageIndex.html
+        // This function loads all messages and orders them by unanswered first, and displays them in the MessageIndex view
         public IActionResult MessageIndex()
         {
             CheckLogin();
@@ -30,15 +31,14 @@ namespace Project_C.Controllers
             return View(allMessages.OrderBy(x => x.IsAnswered));
         }
 
-        //sends message object to MessageDetails.html
+        // This function displays a specific message by ID in the MessageDetails view
         public IActionResult MessageDetails(Guid id)
         {
             CheckLogin();
             return View(_context.Messages.Find(id));
         }
 
-       
-        //sets the IsAnswered property of the message to true and adds the employee name who answered it, then saves it to database.
+        // This function sets the IsAnswered property of a message to true, adds the name of the employee who answered it, and saves it to the database
         public IActionResult AnswerMessage(Guid id)
         {
             CheckLogin();
@@ -50,25 +50,26 @@ namespace Project_C.Controllers
             return RedirectToAction("MessageDetails", new { id = id });
         }
 
-
+        // This function displays the DeleteMessage view for a specific message by ID
         [HttpGet]
-        public IActionResult DeleteMessage(Guid id) 
+        public IActionResult DeleteMessage(Guid id)
         {
             CheckLogin();
             return View(id);
         }
 
-        //deletes message from database
+        // This function deletes a specific message by ID from the database
         [HttpPost, ActionName("DeleteMessage")]
         public IActionResult ConfirmDeleteMessage(Guid id)
         {
             CheckLogin();
-            //Delete message from db
+            // Delete the message from the database
             _context.Messages.Remove(_context.Messages.Find(id));
             _context.SaveChanges();
 
-            //redirect to index
+            // Redirect to the MessageIndex page
             return RedirectToAction("MessageIndex");
         }
+
     }
 }

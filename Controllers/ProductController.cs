@@ -25,27 +25,40 @@ namespace Project_C.Controllers
             places = new List<string> { "Keuken", "Badkamer", "Woonkamer", "Slaapkamer", "Gezondheid", "Buiten" };
         }
 
+        // This action method checks if an employee is logged in. If not, it redirects to the LoginPage.
         public RedirectToActionResult CheckLogin()
         {
+            // If no employee is currently logged in, redirect to the LoginPage.
             if (!CurrentEmployee.IsLoggedIn())
             {
                 return RedirectToAction("LoginPage", "Access");
             }
+
+            // If an employee is logged in, return null.
             return null;
         }
 
+        // This action method retrieves all products from the database and returns them in a view.
         public IActionResult ProductIndex()
         {
+            // Check if an employee is logged in.
             CheckLogin();
+
+            // Return the ProductIndex view with all products from the database.
             return View(_context.Products);
-            
         }
 
+        // This action method handles GET requests to the EditProduct endpoint.
         [HttpGet]
         public IActionResult EditProduct(Guid id)
         {
+            // Check if an employee is logged in.
             CheckLogin();
+
+            // Retrieve the product to be edited from the database.
             Product selectedProduct = _context.Products.Find(id);
+
+            // Create a new ProductEditModel object with the properties of the selected product.
             ProductEditModel productEditViewModel = new ProductEditModel
             {
                 Id = selectedProduct.Id,
@@ -57,29 +70,33 @@ namespace Project_C.Controllers
                 VideoLink = selectedProduct.VideoLink
             };
 
+            // Create a SelectList containing all possible values for the Place property and set the selected value to the current value of the selected product.
             ViewBag.Places = new SelectList(places, selectedProduct.PlaceAsString);
-            return View(productEditViewModel);
 
+            // Return the EditProduct view with the ProductEditModel object.
+            return View(productEditViewModel);
         }
 
+        // This action method handles POST requests to the EditProduct endpoint.
         [HttpPost]
         public IActionResult EditProduct(ProductEditModel productChanges)
         {
+            // Check if an employee is logged in.
             CheckLogin();
 
-            //get product to be updated
+            // Retrieve the product to be updated from the database.
             Product productToBeUpdated = _context.Products.Find(productChanges.Id);
+
+            // Update the product's Description and Price properties with the values from the form.
             productToBeUpdated.Description = productChanges.Description;
             productToBeUpdated.Price = productChanges.Price;
 
-            //check if the PlaceAsString is different, meaning a different option has been chosen for Place in the form.
+            // If the PlaceAsString property has changed, update the Place and PlaceAsString properties accordingly.
             if(productToBeUpdated.PlaceAsString != productChanges.PlaceAsString)
             {
-                //replace the string with the new string
                 productToBeUpdated.PlaceAsString = productChanges.PlaceAsString;
 
-                //Every room (as string) corresponds to an Integer, which is used as a RoomID in the UserApplication to query all Products of a certain room.
-                //here we use a switch to set the Place property to the correct integer of the room.
+                // Use a switch statement to set the Place property to the correct integer value based on the selected room.
                 switch (productToBeUpdated.PlaceAsString)
                 {
                     case "Keuken":
@@ -103,35 +120,40 @@ namespace Project_C.Controllers
                 }
             }
 
+            // Update the product's Name property with the value from the form.
             productToBeUpdated.Name = productChanges.Name;
 
-            //if the link entered in the edit form is unchanged, dont process the link.
-            //voorkomt exception waarbij een al verwerkte link nog een keer verwerkt word.
+            // If the VideoLink property has changed, update it to the new link.
             if (productToBeUpdated.VideoLink != productChanges.VideoLink)
             {
+                // Extract the video ID from the YouTube link and create a new embed link.
                 productToBeUpdated.VideoLink = $"https://www.youtube.com/embed/{productChanges.VideoLink.Substring(32, 11)}";
             }
 
-            //is there a file uploaded?
+            // If a new photo has been uploaded, update the product's ProductImage property with the new image.
             if (productChanges.Photo != null)
             {
-                //delete the old photo and assign the new path to the updated product object.
                 productToBeUpdated.ProductImage = StoreController.ImagetoByte(productChanges.Photo);
             }
 
+            // Save changes to the database and redirect to the ProductIndex page.
             _context.SaveChanges();
             return RedirectToAction("ProductIndex");
         }
+
 
 
         //Deletes the product and redirects to index after confirmation has been asked
         public IActionResult ConfirmDeleteProduct(Guid id)
         {
             CheckLogin();
+            //finds the product in the database with the given id
             Product selectedProduct = _context.Products.Find(id);
+            //removes the selected product from the database
             _context.Products.Remove(selectedProduct);
+            //saves the changes to the database
             _context.SaveChanges();
-
+            //redirects to the ProductIndex action in the same controller
             return RedirectToAction("ProductIndex");
         }
 
@@ -140,15 +162,19 @@ namespace Project_C.Controllers
             CheckLogin();
             if (id == null)
             {
+                //returns 404 Not Found if the given id is null
                 return NotFound();
             }
 
+            //finds the product in the database with the given id
             var product = _context.Products.Find(id);
             if (product == null)
             {
+                //returns 404 Not Found if the product with the given id is not found in the database
                 return NotFound();
             }
 
+            //returns the ProductDetails view with the found product as its model
             return View(product);
         }
 
@@ -156,8 +182,10 @@ namespace Project_C.Controllers
         public IActionResult AddProduct()
         {
             CheckLogin();
+            //creates an empty ProductViewModel object as the model for the AddProduct view
             ProductViewModel model = new ProductViewModel();
-            return View(model);           
+            //returns the AddProduct view with the empty model
+            return View(model);
         }
 
         //creates the product and adds to database 
@@ -204,8 +232,11 @@ namespace Project_C.Controllers
                     break;
             }
 
+            //add the new product to the database
             _context.Products.Add(newProduct);
+            //saves the changes to the database
             _context.SaveChanges();
+            //redirects to the ProductIndex action in the same controller
             return RedirectToAction("ProductIndex");
 
         }

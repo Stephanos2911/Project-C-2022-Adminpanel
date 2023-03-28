@@ -25,27 +25,29 @@ namespace Project_C.Controllers
             return null;
         }
 
-        //Employee index page
+        // Controller action for the employee index page
         public IActionResult EmployeeIndex()
         {
-            CheckLogin();
-            return View(_context.Employees);
+            CheckLogin(); // Check if the user is logged in
+            return View(_context.Employees); // Display a view of all employees
         }
 
-        //Add Employee Page
+        // Controller action for the add employee page (HTTP GET)
         [HttpGet]
-        public IActionResult AddEmployee() {
-            CheckLogin();
-            return View();
+        public IActionResult AddEmployee()
+        {
+            CheckLogin(); // Check if the user is logged in
+            return View(); // Display a view for adding a new employee
         }
 
-        //Adds employee to database and redirects to index 
+        // Controller action for adding a new employee to the database (HTTP POST)
         [HttpPost]
         public IActionResult AddEmployee(EmployeeCreateModel newEmployeemodel)
         {
-            CheckLogin();
-            if (ModelState.IsValid)
+            CheckLogin(); // Check if the user is logged in
+            if (ModelState.IsValid) // Check if the data model is valid
             {
+                // Create a new employee object with the data from the form
                 Employee newEmployee = new Employee()
                 {
                     Id = Guid.NewGuid(),
@@ -55,51 +57,59 @@ namespace Project_C.Controllers
                     IsAdmin = newEmployeemodel.IsAdmin == "Administrator" ? true : false
                 };
 
+                // Add the new employee to the database and save changes
                 _context.Employees.Add(newEmployee);
                 _context.SaveChanges();
             }
 
+            // Redirect to the employee index page
             return RedirectToAction("EmployeeIndex");
         }
 
-        //Details page for employee
+        // Controller action for the employee details page
         public IActionResult EmployeeDetails(Guid id)
         {
-            CheckLogin();
-            var currentEmployee = _context.Employees.Find(id);
-            if (currentEmployee == null)
+            CheckLogin(); // Check if the user is logged in
+            var currentEmployee = _context.Employees.Find(id); // Find the employee with the specified ID
+            if (currentEmployee == null) // If the employee doesn't exist, return a 404 error
             {
                 return NotFound();
             }
 
+            // Display a view of the employee's details
             return View(currentEmployee);
         }
 
-        //directs to delete page
+        // Controller action for the delete employee page (HTTP GET)
         [HttpGet]
         public IActionResult DeleteEmployee(Guid id)
         {
-            CheckLogin();
-            return View(_context.Employees.Find(id));
+            CheckLogin(); // Check if the user is logged in
+            return View(_context.Employees.Find(id)); // Display a view for deleting the specified employee
         }
 
-        //actually removes employee from database then redirects to index
+        // Controller action for deleting an employee from the database (HTTP POST)
         [HttpPost, ActionName("DeleteEmployee")]
         public IActionResult ConfirmDeleteEmployee(Guid id)
         {
-            CheckLogin();
-            _context.Employees.Remove(_context.Employees.Find(id));
-            _context.SaveChanges();
-            return RedirectToAction("EmployeeIndex");
+            CheckLogin(); // Check if the user is logged in
+            _context.Employees.Remove(_context.Employees.Find(id)); // Remove the employee with the specified ID from the database
+            _context.SaveChanges(); // Save changes to the database
+            return RedirectToAction("EmployeeIndex"); // Redirect to the employee index page
         }
 
 
-        //finds employee and converts it to an employeecreatemodel for modifying.
+
+        // Finds the employee with the specified id and creates a new EmployeeCreateModel based on it, 
+        // which will be used to modify the employee.
         [HttpGet]
         public IActionResult EditEmployee(Guid id)
         {
             CheckLogin();
+            // Find employee by id.
             Employee currentEmployee = _context.Employees.Find(id);
+
+            // Create new EmployeeCreateModel with data from current employee.
             EmployeeCreateModel employeeCreateModel = new EmployeeCreateModel()
             {
                 Id = currentEmployee.Id,
@@ -108,30 +118,38 @@ namespace Project_C.Controllers
                 Email = currentEmployee.Email,
                 IsAdmin = currentEmployee.IsAdmin == true ? "Administrator" : "Medewerker"
             };
+
+            // Return the view with the new EmployeeCreateModel.
             return View(employeeCreateModel);
         }
 
 
-        //updates the employee
+        // Updates the employee with the data from the submitted EmployeeCreateModel.
         [HttpPost]
         public IActionResult EditEmployee(EmployeeCreateModel employeechanges)
         {
             CheckLogin();
             if (ModelState.IsValid)
             {
-                //find employee in database
+                // Find employee in database by id.
                 Employee employeeToBeUpdated = _context.Employees.Find(employeechanges.Id);
-                //modify it here 
+
+                // Modify the employee with the data from the submitted EmployeeCreateModel.
                 employeeToBeUpdated.Username = employeechanges.Username;
                 employeeToBeUpdated.Password = employeechanges.Password;
                 employeeToBeUpdated.Email = employeechanges.Email;
                 employeeToBeUpdated.IsAdmin = employeechanges.IsAdmin == "Administrator" ? true : false;
-                //saves changes made to record in database
+
+                // Save the changes to the employee record in the database.
                 _context.SaveChanges();
 
+                // Redirect to the EmployeeIndex page.
                 return RedirectToAction("EmployeeIndex");
             }
+
+            // If ModelState is not valid, redirect to the EmployeeIndex page.
             return RedirectToAction("EmployeeIndex");
         }
+
     }
 }

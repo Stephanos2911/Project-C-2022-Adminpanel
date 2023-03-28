@@ -248,7 +248,10 @@ namespace Project_C.Controllers
             ICollection<Store> stores = new Collection<Store>();
             foreach (var storeId in selectedStores)
             {
-                stores.Add(_context.Stores.Find(storeId));
+                if(storeId != null)
+                {
+                    stores.Add(_context.Stores.Find(storeId));
+                }
             }
             return stores;
         }

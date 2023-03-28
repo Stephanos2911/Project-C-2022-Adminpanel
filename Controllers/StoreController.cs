@@ -115,10 +115,13 @@ namespace Project_C.Controllers
 
         public static byte[] ImagetoByte(IFormFile logoFile)
         {
-            MemoryStream ms = new MemoryStream();
-            logoFile.CopyTo(ms);
-            return ms.ToArray();
+            using (MemoryStream ms = new MemoryStream())
+            {
+                logoFile.CopyTo(ms);
+                return ms.ToArray();
+            }
         }
+
 
         // The StoreDetails action method displays the details of a store with the given id.
         // If no id is provided or if the store with the given id is not found, a 404 Not Found status code is returned.
